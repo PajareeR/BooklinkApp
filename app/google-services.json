@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "244333168070",
+    "firebase_url": "https://booklink-94984.firebaseio.com",
+    "project_id": "booklink-94984",
+    "storage_bucket": "booklink-94984.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244333168070:android:1d8b5c780f62eb14",
+        "android_client_info": {
+          "package_name": "th.ac.su.booklink.booklink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244333168070-9d4s4835btqa6v59lbr92joo1tngcg8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHbHKYwWd3kMJKVXV9sO3a0nqZ4IbB1Pg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_Home"
+        android:icon="@drawable/thome"/>
+
+    <item
+        android:id="@+id/item_Award"
+        android:icon="@drawable/taward"/>
+
+    <item
+        android:id="@+id/item_Celebrity"
+        android:icon="@drawable/tceleb"/>
+
+    <item
+        android:id="@+id/item_Bookself"
+        android:icon="@drawable/tbookself"
+        />
+
+
+</menu>

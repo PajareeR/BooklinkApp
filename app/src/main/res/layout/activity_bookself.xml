@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textBookself"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ชั้นหนังสือ"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textFav"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:onClick="OnclickMybookself"
+
+                    android:text="หนังสือเล่มโปรด"
+                    tools:ignore="OnClick" />
+                <TextView
+                    android:id="@+id/textRead"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:onClick="OnclickMybookself"
+                    android:text="อ่านแล้ว"
+                    tools:ignore="OnClick" />
+                <TextView
+                    android:id="@+id/textWant"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:onClick="OnclickMybookself"
+                    android:text="อยากซื้อ"
+                    tools:ignore="OnClick" />
+                <TextView
+                    android:id="@+id/textBought"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:onClick="OnclickMybookself"
+                    android:text="ซื้อแล้ว"
+                    tools:ignore="OnClick" />
+                <TextView
+                    android:id="@+id/textReading"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:onClick="OnclickMybookself"
+                    android:text="กำลังอ่าน"
+                    tools:ignore="OnClick" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/imageBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+            </RelativeLayout>
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:padding="5dp">-->
+                <!--<ImageView-->
+                    <!--android:layout_width="110dp"-->
+                    <!--android:layout_height="150dp"-->
+                    <!--android:layout_marginLeft="7dp"-->
+
+                    <!--android:src="@drawable/ooo"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="110dp"-->
+                    <!--android:layout_height="150dp"-->
+                    <!--android:layout_marginLeft="117dp"-->
+
+                    <!--android:src="@drawable/ooo"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="110dp"-->
+                    <!--android:layout_height="150dp"-->
+                    <!--android:layout_marginLeft="227dp"-->
+
+                    <!--android:src="@drawable/ooo"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="110dp"-->
+                    <!--android:layout_height="150dp"-->
+                    <!--android:layout_marginLeft="7dp"-->
+                    <!--android:layout_marginTop="157dp"-->
+
+                    <!--android:src="@drawable/ooo"/>-->
+            </LinearLayout>
+            
+
+
+    </ScrollView>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/colorAccent"
+        app:menu="@menu/button_nav"/>
+
+
+</RelativeLayout>
