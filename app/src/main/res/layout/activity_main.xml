@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:itemTextColor="@color/colorAccent"
-        app:itemIconTint="@color/colorAccent"
+        app:itemTextColor="@color/colorPrimary"
+        app:itemIconTint="@color/colorPrimary"
         app:menu="@menu/button_nav"/>
 
 

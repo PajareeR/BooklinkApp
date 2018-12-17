@@ -36,7 +36,7 @@
                 android:id="@+id/btnRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/common_google_signin_btn_icon_disabled"
+                android:src="@drawable/tread"
                 android:onClick="Onclicktobookself"
 
                 />
@@ -45,7 +45,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/common_google_signin_btn_icon_disabled"
+                android:src="@drawable/twant"
                 android:onClick="Onclicktobookself"
 
                 />
@@ -54,7 +54,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/common_google_signin_btn_icon_disabled"
+                android:src="@drawable/tbought"
                 android:onClick="Onclicktobookself"
 
                 />
@@ -62,7 +62,7 @@
                 android:id="@+id/btnReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/common_google_signin_btn_icon_disabled"
+                android:src="@drawable/treading"
                 android:onClick="Onclicktobookself"
 
                 />

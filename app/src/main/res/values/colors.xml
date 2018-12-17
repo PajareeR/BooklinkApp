@@ -3,4 +3,7 @@
     <color name="colorPrimary">#40C4E0</color>
     <color name="colorPrimaryDark">#22ACBF</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorTao">#C2C4C6</color>
+
+
 </resources>

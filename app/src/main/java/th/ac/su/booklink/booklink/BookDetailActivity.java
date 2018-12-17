@@ -134,10 +134,10 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch(obj.getString(type))
                             {
                                 case "true":
-                                    btnFav.setImageResource(R.drawable.bfav);
+                                    btnFav.setImageResource(R.drawable.tfav);
                                     break;
                                 case "false":
-                                    btnFav.setImageResource(R.drawable.tfav);
+                                    btnFav.setImageResource(R.drawable.bfav);
                                     break;
                             }
                             break;
@@ -146,10 +146,10 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch(obj.getString(type))
                             {
                                 case "true":
-                                    btnRead.setImageResource(R.drawable.common_google_signin_btn_icon_light);
+                                    btnRead.setImageResource(R.drawable.tread);
                                     break;
                                 case "false":
-                                    btnRead.setImageResource(R.drawable.common_google_signin_btn_icon_dark);
+                                    btnRead.setImageResource(R.drawable.bread);
                                     break;
                             }
                             break;
@@ -158,10 +158,10 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch(obj.getString(type))
                             {
                                 case "true":
-                                    btnWant.setImageResource(R.drawable.common_google_signin_btn_icon_light);
+                                    btnWant.setImageResource(R.drawable.twant);
                                     break;
                                 case "false":
-                                    btnWant.setImageResource(R.drawable.common_google_signin_btn_icon_dark);
+                                    btnWant.setImageResource(R.drawable.bwant);
                                     break;
                             }
                             break;
@@ -170,10 +170,10 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch(obj.getString(type))
                             {
                                 case "true":
-                                    btnBought.setImageResource(R.drawable.common_google_signin_btn_icon_light);
+                                    btnBought.setImageResource(R.drawable.tbought);
                                     break;
                                 case "false":
-                                    btnBought.setImageResource(R.drawable.common_google_signin_btn_icon_dark);
+                                    btnBought.setImageResource(R.drawable.bbought);
                                     break;
                             }
                             break;
@@ -182,10 +182,10 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch(obj.getString(type))
                             {
                                 case "true":
-                                    btnReading.setImageResource(R.drawable.common_google_signin_btn_icon_light);
+                                    btnReading.setImageResource(R.drawable.treading);
                                     break;
                                 case "false":
-                                    btnReading.setImageResource(R.drawable.common_google_signin_btn_icon_dark);
+                                    btnReading.setImageResource(R.drawable.breading);
                                     break;
                             }
                     }

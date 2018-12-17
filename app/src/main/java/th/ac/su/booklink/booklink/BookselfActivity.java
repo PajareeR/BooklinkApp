@@ -26,17 +26,28 @@ import java.util.Iterator;
 public class BookselfActivity extends AppCompatActivity {
 
     ArrayList<String> imageAL = new ArrayList<>();
-    TextView textFav;
+    TextView textFav, textRead, textWant, textBought, textReading;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();//barTop
+
         setContentView(R.layout.activity_bookself);
 
         textFav = (TextView) findViewById(R.id.textFav);
+        textRead = (TextView) findViewById(R.id.textRead);
+        textWant = (TextView) findViewById(R.id.textWant);
+        textBought = (TextView) findViewById(R.id.textBought);
+        textReading = (TextView) findViewById(R.id.textReading);
 
         textFav.performClick();
+        textRead.performClick();
+        textWant.performClick();
+        textBought.performClick();
+        textReading.performClick();
+
     }
 
     public void OnclickMybookself(View view) {
@@ -48,13 +59,17 @@ public class BookselfActivity extends AppCompatActivity {
                 loadBook("fav");
                 break;
             case R.id.textRead:
-
+                loadBook("read");
                 break;
             case R.id.textWant:
+                loadBook("want");
                 break;
             case R.id.textBought:
+                loadBook("bought");
+
                 break;
             case R.id.textReading:
+                loadBook("reading");
                 break;
         }
 
