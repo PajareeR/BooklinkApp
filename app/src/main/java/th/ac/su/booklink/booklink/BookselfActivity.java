@@ -1,8 +1,13 @@
 package th.ac.su.booklink.booklink;
 
+import android.content.Intent;
 import android.media.Image;
+import android.support.design.widget.BottomNavigationView;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -175,8 +180,32 @@ public class BookselfActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(BookselfActivity.this);
         requestQueue.add(request);
 
-
         getImage();
+
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item_Home:
+                        startActivity(new Intent(BookselfActivity.this, MainActivity.class));
+
+                        return true;
+                    case R.id.item_Award:
+                        return true;
+                    case R.id.item_Celebrity:
+                        return true;
+                    case R.id.item_Bookself:
+                        return true;
+                }
+                return false;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.item_Bookself);
+
+
+
     }
+
 
 }
