@@ -206,6 +206,9 @@ public class BookselfActivity extends AppCompatActivity {
 
 
     }
-
+    public void OnclickBookDetail(View view){
+        UserDetail.bookserect = "9786161826192";
+        startActivity(new Intent(BookselfActivity.this,MainActivity.class));
+    }
 
 }

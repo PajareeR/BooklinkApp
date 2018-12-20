@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.item_Home:
                         return true;
                     case R.id.item_Award:
+                        startActivity(new Intent(MainActivity.this, AwardActivity.class));
+
                         return true;
                     case R.id.item_Celebrity:
                         return true;
