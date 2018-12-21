@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class AwardActivity extends AppCompatActivity {
 
     ListView simpleList;
-    String  Item[] = {"Apple", "Banana", "Lemon", "Cherry", "Strawberry", "Avocado"};
-    int flags[] = {R.drawable.sewrite, R.drawable.samakom, R.drawable.sevenbooks, R.drawable.nay, R.drawable.pan, R.drawable.vankeaw};
+    String  Item[] = {"รางวัลซีไรต์", "รางวัลหนังสือดีเด่น กระทรวงศึกษาธิการ", "รางวัลเซเว่นบุ๊คอวอร์ด", "รางวัลนายอินทร์อะวอร์ด", "รางวัลแว่นแก้ว", "รางวัลเรื่องสั้นมูลนิธิ สุภาว์ เทวกุล", "รางวัลพานแว่นฟ้า", "รางวัลสมาคมนักเขียนแห่งประเทศไทย"};
+    int flags[] = {R.drawable.sewrite, R.drawable.suksa, R.drawable.sevenbooks, R.drawable.nay, R.drawable.vankeaw, R.drawable.supa, R.drawable.pan, R.drawable.samakom};
 
 
     @Override

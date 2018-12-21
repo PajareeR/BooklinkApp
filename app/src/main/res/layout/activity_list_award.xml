@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
                 android:paddingTop="25dp"
+                android:textColor="#000"
                 android:text="รางวัลซีไรต์" />
 
 
