@@ -21,7 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BookDetailActivity extends AppCompatActivity {
-    TextView NameBook, AuthorBook, TitleBook, PublisherBook, CatagoryBook;
+    TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook;
     ImageView ImageBook;
     ImageButton btnFav, btnRead, btnWant, btnBought, btnReading;
 
@@ -35,7 +35,10 @@ public class BookDetailActivity extends AppCompatActivity {
         AuthorBook = (TextView) findViewById(R.id.AuthorBook);
         TitleBook = (TextView) findViewById(R.id.TitleBook);
         PublisherBook = (TextView) findViewById(R.id.PublisherBook);
-        CatagoryBook = (TextView) findViewById(R.id.CatagoryBook);
+        CategoryBook = (TextView) findViewById(R.id.CatagoryBook);
+        ISBNBook = (TextView) findViewById(R.id.ISBNBook); //xx
+        AdditionBook = (TextView) findViewById(R.id.AdditionBook);
+
 
         ImageBook = (ImageView) findViewById(R.id.ImageBook) ;
 
@@ -57,7 +60,10 @@ public class BookDetailActivity extends AppCompatActivity {
                     TitleBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("titlebook"));
 
                     PublisherBook.setText("สำนักพิมพ์ : "+obj.getJSONObject(UserDetail.bookserect).getString("publisherbook"));
-                    CatagoryBook.setText("หมวดหมู่ : "+obj.getJSONObject(UserDetail.bookserect).getString("catagorybook"));
+                    CategoryBook.setText("หมวดหมู่ : "+obj.getJSONObject(UserDetail.bookserect).getString("catagorybook"));
+                    //ISBNBook.setText("รหัส ISBN : "+obj.getJSONObject(UserDetail.bookserect).getString("9786161826192")); //XX
+                    AdditionBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("additionbook"));
+
 
 
 
