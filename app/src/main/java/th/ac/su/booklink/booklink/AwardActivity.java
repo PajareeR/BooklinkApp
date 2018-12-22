@@ -19,8 +19,10 @@ public class AwardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_award);
+        getSupportActionBar().hide();//barTop
 
-        simpleList = (ListView)findViewById(R.id.ListView);
+
+        simpleList = (ListView)findViewById(R.id.ListAward);
         AwardAdapter customAdapter = new AwardAdapter(getApplicationContext(), Item, flags);
         simpleList.setAdapter(customAdapter);
     }
