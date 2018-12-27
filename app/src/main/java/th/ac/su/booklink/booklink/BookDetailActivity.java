@@ -2,6 +2,7 @@ package th.ac.su.booklink.booklink;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -81,6 +82,8 @@ public class BookDetailActivity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(BookDetailActivity.this);
         requestQueue.add(request);
+
+        setStatusData("load");
     }
 
     public void Onclicktobookself(View view) {
@@ -113,92 +116,86 @@ public class BookDetailActivity extends AppCompatActivity {
     }
 
     public void setStatusData (final String type) {
-        String url = "https://booklink-94984.firebaseio.com/Users/"+UserDetail.username+"/bookselfs/"+UserDetail.bookserect+".json"; //หัวใหญ่
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+        String url = "https://booklink-94984.firebaseio.com/Users/"+UserDetail.username+"/bookselfs.json"; //หัวใหญ่
+        final StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    JSONObject obj = new JSONObject(response);
+                    try {
+                    JSONObject objBookSelfs = new JSONObject(response);
+                    if(!objBookSelfs.has(UserDetail.bookserect)){
+                        DatabaseReference statusReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://booklink-94984.firebaseio.com");
+                        statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child("fav")
+                                .setValue("false");
+                        statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child("read")
+                                .setValue("false");
+                        statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child("want")
+                                .setValue("false");
+                        statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child("bought")
+                                .setValue("false");
+                        statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child("reading")
+                                .setValue("false");
 
-                    DatabaseReference statusReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://booklink-94984.firebaseio.com");
+                        setStatusData(type);
+                    }else {
+                        JSONObject obj = objBookSelfs.getJSONObject(UserDetail.bookserect);
+                        switch(obj.getString("fav"))
+                        {
+                            case "true":
+                                btnFav.setImageResource(R.drawable.bfav);
+                                break;
+                            case "false":
+                                btnFav.setImageResource(R.drawable.tfav);
+                                break;
+                        }
+                        switch(obj.getString("read"))
+                        {
+                            case "true":
+                                btnRead.setImageResource(R.drawable.bread);
+                                break;
+                            case "false":
+                                btnRead.setImageResource(R.drawable.tread);
+                                break;
+                        }
+                        switch(obj.getString("want"))
+                        {
+                            case "true":
+                                btnWant.setImageResource(R.drawable.bwant);
+                                break;
+                            case "false":
+                                btnWant.setImageResource(R.drawable.twant);
+                                break;
+                        }
+                        switch(obj.getString("bought"))
+                        {
+                            case "true":
+                                btnBought.setImageResource(R.drawable.bbought);
+                                break;
+                            case "false":
+                                btnBought.setImageResource(R.drawable.tbought);
+                                break;
+                        }
+                        switch(obj.getString("reading"))
+                        {
+                            case "true":
+                                btnReading.setImageResource(R.drawable.breading);
+                                break;
+                            case "false":
+                                btnReading.setImageResource(R.drawable.treading);
+                                break;
+                        }
 
-//                    if (type.equals("want")&& obj.getString("bought").equals("true")){
-//                        statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child(type)
-//                                .setValue("false");
-//                    }else {
-//                        statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child(type)
-//                            .setValue(((obj.getString(type).equals("true"))? "false":"true"));
-//                    }
-                    //ซื้อแล้ว ห้ามอยากซื้อนะ
 
-                    statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child(type)
-                            .setValue(((obj.getString(type).equals("true"))? "false":"true"));
+                        if(type != "load"){
+                            DatabaseReference statusReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://booklink-94984.firebaseio.com");
+                            statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child(type)
+                                    .setValue(((obj.getString(type).equals("true"))? "false":"true"));
+
+                            setChangeStatus(type , obj.getString(type));
+                        }
 
 
-                    switch (type) {
-                        case  "fav":
-                            switch(obj.getString(type))
-                            {
-                                case "true":
-                                    btnFav.setImageResource(R.drawable.tfav);
-                                    break;
-                                case "false":
-                                    btnFav.setImageResource(R.drawable.bfav);
-                                    break;
-                            }
-                            break;
-
-                        case  "read":
-                            switch(obj.getString(type))
-                            {
-                                case "true":
-                                    btnRead.setImageResource(R.drawable.tread);
-                                    break;
-                                case "false":
-                                    btnRead.setImageResource(R.drawable.bread);
-                                    break;
-                            }
-                            break;
-
-                        case  "want":
-                            switch(obj.getString(type))
-                            {
-                                case "true":
-                                    btnWant.setImageResource(R.drawable.twant);
-                                    break;
-                                case "false":
-                                    btnWant.setImageResource(R.drawable.bwant);
-                                    break;
-                            }
-                            break;
-
-                        case  "bought":
-                            switch(obj.getString(type))
-                            {
-                                case "true":
-                                    btnBought.setImageResource(R.drawable.tbought);
-                                    break;
-                                case "false":
-                                    btnBought.setImageResource(R.drawable.bbought);
-                                    break;
-                            }
-                            break;
-
-                        case  "reading":
-                            switch(obj.getString(type))
-                            {
-                                case "true":
-                                    btnReading.setImageResource(R.drawable.treading);
-                                    break;
-                                case "false":
-                                    btnReading.setImageResource(R.drawable.breading);
-                                    break;
-                            }
                     }
-
-
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -213,6 +210,71 @@ public class BookDetailActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(BookDetailActivity.this);
         requestQueue.add(request);
 
+
+
+    }
+
+    private void setChangeStatus(String type, String status) {
+                    switch (type) {
+                        case  "fav":
+                            switch(status)
+                            {
+                                case "true":
+                                    btnFav.setImageResource(R.drawable.tfav);
+                                    break;
+                                case "false":
+                                    btnFav.setImageResource(R.drawable.bfav);
+                                    break;
+                            }
+                            break;
+
+                        case  "read":
+                            switch(status)
+                            {
+                                case "true":
+                                    btnRead.setImageResource(R.drawable.tread);
+                                    break;
+                                case "false":
+                                    btnRead.setImageResource(R.drawable.bread);
+                                    break;
+                            }
+                            break;
+
+                        case  "want":
+                            switch(status)
+                            {
+                                case "true":
+                                    btnWant.setImageResource(R.drawable.twant);
+                                    break;
+                                case "false":
+                                    btnWant.setImageResource(R.drawable.bwant);
+                                    break;
+                            }
+                            break;
+
+                        case  "bought":
+                            switch(status)
+                            {
+                                case "true":
+                                    btnBought.setImageResource(R.drawable.tbought);
+                                    break;
+                                case "false":
+                                    btnBought.setImageResource(R.drawable.bbought);
+                                    break;
+                            }
+                            break;
+
+                        case  "reading":
+                            switch(status)
+                            {
+                                case "true":
+                                    btnReading.setImageResource(R.drawable.treading);
+                                    break;
+                                case "false":
+                                    btnReading.setImageResource(R.drawable.breading);
+                                    break;
+                            }
+                    }
     }
 
 }

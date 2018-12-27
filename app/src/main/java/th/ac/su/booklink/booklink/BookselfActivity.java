@@ -1,12 +1,14 @@
 package th.ac.su.booklink.booklink;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.support.design.widget.BottomNavigationView;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,8 +32,10 @@ import java.util.Iterator;
 
 public class BookselfActivity extends AppCompatActivity {
 
-    ArrayList<String> imageAL = new ArrayList<>();
+    ArrayList<ImageDetail> imageAL = new ArrayList<>();
     TextView textFav, textRead, textWant, textBought, textReading;
+    RelativeLayout imageBox;
+    String nowStatus;
 
 
     @Override
@@ -41,6 +45,8 @@ public class BookselfActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_bookself);
 
+        imageBox = (RelativeLayout) findViewById(R.id.imageBox);
+
         textFav = (TextView) findViewById(R.id.textFav);
         textRead = (TextView) findViewById(R.id.textRead);
         textWant = (TextView) findViewById(R.id.textWant);
@@ -48,36 +54,56 @@ public class BookselfActivity extends AppCompatActivity {
         textReading = (TextView) findViewById(R.id.textReading);
 
         textFav.performClick();
-        textRead.performClick();
-        textWant.performClick();
-        textBought.performClick();
-        textReading.performClick();
+
 
     }
 
     public void OnclickMybookself(View view) {
         TextView btnSerect = (TextView) view;
+        imageBox.removeAllViews();
+
         switch(btnSerect.getId())
         {
 
             case R.id.textFav:
+                nowStatus = "fav";
+                setTextColor(textFav);
                 loadBook("fav");
                 break;
             case R.id.textRead:
+                nowStatus = "read";
+                setTextColor(textRead);
                 loadBook("read");
                 break;
             case R.id.textWant:
+                nowStatus = "want";
+                setTextColor(textWant);
                 loadBook("want");
                 break;
             case R.id.textBought:
+                nowStatus = "bought";
+                setTextColor(textBought);
                 loadBook("bought");
-
                 break;
             case R.id.textReading:
+                nowStatus = "reading";
+                setTextColor(textReading);
                 loadBook("reading");
                 break;
         }
 
+
+    }
+
+    private void setTextColor(TextView textWantColor) {
+        textFav.setTextColor(Color.BLACK);
+        textRead.setTextColor(Color.BLACK);
+        textWant.setTextColor(Color.BLACK);
+        textBought.setTextColor(Color.BLACK);
+        textReading.setTextColor(Color.BLACK);
+
+
+        textWantColor.setTextColor(getResources().getColor(R.color.colorPrimary));
 
     }
 
@@ -101,35 +127,43 @@ public class BookselfActivity extends AppCompatActivity {
 
                     while (i.hasNext()) {
                         key = i.next().toString();
+                        for (int j = 0 ; j < imageAL.size() ;  j++){
+                            if (imageAL.get(j).getImagePath().contains(key) && imageAL.get(j).getImageStatus().equals(nowStatus)){
+                                countImage+=1;
 
-                        if (imageAL.contains(key)){
-                            countImage+=1;
-                            if(countImage>3 || countImage==1){
-                                countImage =1;
 //                                LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(100, 150);//o
-                                LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(220, 320);//o
+                                    LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(220 , 320);//o
 
-                                layparam.setMargins(7,0,0,0);//o
+                                switch (countImage){
+                                    case  1:
+                                        layparam.setMargins(7,0,0,0);//o
+                                        break;
+                                    case 2:
+                                        layparam.setMargins(227,0,0,0);//o
+                                        break;
+                                    default :
+                                        layparam.setMargins(447,0,0,0);//o
+                                        countImage = 0;
+                                        break;
+                                }
 
-                                ImageView image = new ImageView(BookselfActivity.this);//o
-                                image.setLayoutParams(layparam);//o
+                                    ImageView image = new ImageView(BookselfActivity.this);//o
+                                    image.setLayoutParams(layparam);//o
 
-                                Picasso.get().load(obj.getJSONObject(key).getString("imgbook")).into(image);
+                                    Picasso.get().load(obj.getJSONObject(key).getString("imgbook")).into(image);
 
-                                imageBox.addView(image);//o
-                                //Image.Setonclick
-                                //set Userdetail.bookselect
-                                //staractvity
+                                    imageBox.addView(image);//o
+                                    //Image.Setonclick
+                                    //set Userdetail.bookselect
+                                    //staractvity
+
 
                             }
-
                         }
+                }
 
 
-                    }
-
-
-                } catch (JSONException e) {
+            } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -158,7 +192,10 @@ public class BookselfActivity extends AppCompatActivity {
                     while (i.hasNext()) {
                         key = i.next().toString();
                         if (obj.getJSONObject(key).getString(type).equals("true")) {
-                            imageAL.add(key);
+                            ImageDetail image = new ImageDetail();
+                            image.setImagePath(key);
+                            image.setImageStatus(type);
+                            imageAL.add(image);
 
                         }
                     }
@@ -202,7 +239,6 @@ public class BookselfActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.item_Bookself);
-
 
 
     }

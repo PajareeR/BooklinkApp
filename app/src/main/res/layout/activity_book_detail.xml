@@ -30,6 +30,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true">
             <ImageButton
+                android:layout_margin="20dp"
+                android:background="@null"
                 android:id="@+id/btnFav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,6 +39,10 @@
                 android:onClick="Onclicktobookself"
                 />
             <ImageButton
+                android:layout_margin="20dp"
+
+                android:background="@null"
+
                 android:id="@+id/btnRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,6 +51,10 @@
 
                 />
             <ImageButton
+                android:layout_margin="20dp"
+
+                android:background="@null"
+
                 android:id="@+id/btnWant"
 
                 android:layout_width="wrap_content"
@@ -54,6 +64,10 @@
 
                 />
             <ImageButton
+                android:layout_margin="20dp"
+
+                android:background="@null"
+
                 android:id="@+id/btnBought"
 
                 android:layout_width="wrap_content"
@@ -63,6 +77,10 @@
 
                 />
             <ImageButton
+                android:layout_margin="20dp"
+
+                android:background="@null"
+
                 android:id="@+id/btnReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,6 +28,7 @@ import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
     ImageView ImageQuote;
+    LinearLayout quoteBoxLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageQuote = (ImageView) findViewById(R.id.ImageQuote);
+        quoteBoxLayout  = (LinearLayout) findViewById(R.id.quoteBox);
 
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -45,13 +48,28 @@ public class MainActivity extends AppCompatActivity {
                     Iterator i = obj.keys();
                     String key = "";
 
-                    LinearLayout quoteBox = (LinearLayout) findViewById(R.id.quoteBox);//o
-
 
                     while (i.hasNext()) {
                         key = i.next().toString();
 
-                        Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(ImageQuote);
+                        ImageView imageView = new ImageView(MainActivity.this);
+                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT
+                        );
+
+                        quoteBoxLayout.addView(imageView, layoutParams);
+
+
+                        final String finalKey = key;
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                OnclickBookDetail(finalKey);
+                            }
+                        });
+
+                        Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(imageView);
 
                     }
 
@@ -90,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.item_Home);
     }
-    public void OnclickBookDetail(View view){
-        UserDetail.bookserect = "9786161826192";
+    public void OnclickBookDetail(String bookName){
+        Log.d("dddd",bookName);
+        UserDetail.bookserect = bookName;
         startActivity(new Intent(MainActivity.this,BookDetailActivity.class));
     }
 }
