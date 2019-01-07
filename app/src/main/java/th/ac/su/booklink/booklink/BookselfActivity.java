@@ -62,6 +62,8 @@ public class BookselfActivity extends AppCompatActivity {
         TextView btnSerect = (TextView) view;
         imageBox.removeAllViews();
 
+        imageAL.clear();
+
         switch(btnSerect.getId())
         {
 
@@ -129,21 +131,20 @@ public class BookselfActivity extends AppCompatActivity {
                         key = i.next().toString();
                         for (int j = 0 ; j < imageAL.size() ;  j++){
                             if (imageAL.get(j).getImagePath().contains(key) && imageAL.get(j).getImageStatus().equals(nowStatus)){
-                                countImage+=1;
+                                countImage+=1; //4
 
 //                                LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(100, 150);//o
                                     LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(220 , 320);//o
 
-                                switch (countImage){
+                                switch (countImage % 3){
                                     case  1:
-                                        layparam.setMargins(7,0,0,0);//o
+                                        layparam.setMargins(7,350* (countImage/3),0,0);//o
                                         break;
                                     case 2:
-                                        layparam.setMargins(227,0,0,0);//o
+                                        layparam.setMargins(227,350* (countImage/3),0,0);//o
                                         break;
                                     default :
-                                        layparam.setMargins(447,0,0,0);//o
-                                        countImage = 0;
+                                        layparam.setMargins(447,350* ((countImage/3)-1),0,0);//o
                                         break;
                                 }
 

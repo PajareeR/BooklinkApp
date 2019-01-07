@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,15 +28,12 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView ImageQuote;
     LinearLayout quoteBoxLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ImageQuote = (ImageView) findViewById(R.id.ImageQuote);
         quoteBoxLayout  = (LinearLayout) findViewById(R.id.quoteBox);
 
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
@@ -52,24 +50,31 @@ public class MainActivity extends AppCompatActivity {
                     while (i.hasNext()) {
                         key = i.next().toString();
 
-                        ImageView imageView = new ImageView(MainActivity.this);
-                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT
-                        );
+                        if (!obj.getJSONObject(key).getString("quotebook").equals("nill")){
+                            ImageView imageView = new ImageView(MainActivity.this);
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    400
+                            );
+                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            imageView.setLayoutParams(layoutParams);
 
-                        quoteBoxLayout.addView(imageView, layoutParams);
+
+                            quoteBoxLayout.addView(imageView);
 
 
-                        final String finalKey = key;
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                OnclickBookDetail(finalKey);
-                            }
-                        });
+                            final String finalKey = key;
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    OnclickBookDetail(finalKey);
+                                }
+                            });
 
-                        Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(imageView);
+                            Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(imageView);
+                        }
+
+
 
                     }
 
@@ -109,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.item_Home);
     }
     public void OnclickBookDetail(String bookName){
-        Log.d("dddd",bookName);
         UserDetail.bookserect = bookName;
         startActivity(new Intent(MainActivity.this,BookDetailActivity.class));
     }

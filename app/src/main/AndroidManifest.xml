@@ -19,7 +19,8 @@
         <activity android:name=".BookDetailActivity" />
         <activity android:name=".BookselfActivity" />
         <activity android:name=".AwardActivity" />
-        <activity android:name=".ListAwardActivity"></activity>
+        <activity android:name=".ListAwardActivity" />
+        <activity android:name=".InsideAwardActivity"></activity>
     </application>
 
 </manifest>

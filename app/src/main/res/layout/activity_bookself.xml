@@ -14,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <TextView
                 android:id="@+id/textBookself"
                 android:layout_width="match_parent"
@@ -30,7 +29,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
+
 
                     android:onClick="OnclickMybookself"
 
@@ -42,27 +42,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:onClick="OnclickMybookself"
                     android:text="อ่านแล้ว"
                     tools:ignore="OnClick" />
                 <TextView
                     android:id="@+id/textWant"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:onClick="OnclickMybookself"
                     android:text="อยากซื้อ"
                     tools:ignore="OnClick" />
                 <TextView
                     android:id="@+id/textBought"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:onClick="OnclickMybookself"
                     android:text="ซื้อแล้ว"
                     tools:ignore="OnClick" />
@@ -72,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:onClick="OnclickMybookself"
                     android:text="กำลังอ่าน"
                     tools:ignore="OnClick" />

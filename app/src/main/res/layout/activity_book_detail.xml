@@ -152,6 +152,27 @@
         />
 
 
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@layout/rounded_border_edittext"
+            android:id="@+id/edtComment"/>
+        <ImageButton
+            android:id="@+id/btnSendComment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/nay"
+            />
+
+    <LinearLayout
+        android:id="@+id/commentBox"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
 </ScrollView>

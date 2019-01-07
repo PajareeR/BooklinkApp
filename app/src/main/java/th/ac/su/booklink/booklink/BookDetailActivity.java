@@ -4,8 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -14,6 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -21,10 +26,20 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
+
 public class BookDetailActivity extends AppCompatActivity {
     TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook;
     ImageView ImageBook;
-    ImageButton btnFav, btnRead, btnWant, btnBought, btnReading;
+    ImageButton btnFav, btnRead, btnWant, btnBought, btnReading,btnSendComment;
+    EditText edtComment;
+
+    LinearLayout commentBox;
+
+    DatabaseReference commentReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +54,7 @@ public class BookDetailActivity extends AppCompatActivity {
         CategoryBook = (TextView) findViewById(R.id.CatagoryBook);
         ISBNBook = (TextView) findViewById(R.id.ISBNBook); //xx
         AdditionBook = (TextView) findViewById(R.id.AdditionBook);
+        btnSendComment = (ImageButton) findViewById(R.id.btnSendComment);
 
 
         ImageBook = (ImageView) findViewById(R.id.ImageBook) ;
@@ -48,6 +64,10 @@ public class BookDetailActivity extends AppCompatActivity {
         btnWant = (ImageButton) findViewById(R.id.btnWant);
         btnBought = (ImageButton) findViewById(R.id.btnBought);
         btnReading = (ImageButton) findViewById(R.id.btnReading);
+
+        edtComment = (EditText)findViewById(R.id.edtComment);
+
+        commentBox = (LinearLayout)findViewById(R.id.commentBox);
 
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -62,7 +82,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     PublisherBook.setText("สำนักพิมพ์ : "+obj.getJSONObject(UserDetail.bookserect).getString("publisherbook"));
                     CategoryBook.setText("หมวดหมู่ : "+obj.getJSONObject(UserDetail.bookserect).getString("catagorybook"));
-                    //ISBNBook.setText("รหัส ISBN : "+obj.getJSONObject(UserDetail.bookserect).getString("9786161826192")); //XX
+                    ISBNBook.setText("รหัส ISBN : "+UserDetail.bookserect); //XX
                     AdditionBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("additionbook"));
 
 
@@ -84,7 +104,79 @@ public class BookDetailActivity extends AppCompatActivity {
         requestQueue.add(request);
 
         setStatusData("load");
+
+        btnSendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertComment();
+
+            }
+        });
+
+        commentReference = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books/"+UserDetail.bookserect+"/comments");
+        commentReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Map<String, String> map = (Map)dataSnapshot.getValue();
+                String comment = map.get("comment").toString();
+                String user = map.get("user").toString();
+
+                TextView textComment = new TextView(BookDetailActivity.this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+
+                textComment.setText(user + "\n"+comment);
+                textComment.setLayoutParams(layoutParams);
+
+
+                commentBox.addView(textComment);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
     }
+
+    private void insertComment() {
+        String comment = edtComment.getText().toString() ;
+
+        String id = UUID.randomUUID().toString();
+
+        if (!comment.equals("")){
+
+
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("user", UserDetail.username);
+            map.put("comment", comment);
+            commentReference.push().setValue(map);
+            edtComment.setText("");
+
+
+        }
+    }
+
 
     public void Onclicktobookself(View view) {
         ImageButton btnSerect = (ImageButton) view;
