@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@drawable/nay"/>
+    <EditText
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:background="@layout/rounded_border_edittext"
+        android:id="@+id/edtUser"
+        android:hint="username"/>
+
+    <EditText
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:background="@layout/rounded_border_edittext"
+        android:id="@+id/edtPass"
+        android:hint="password"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/btnLogin"/>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btnFBLogin"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/btnRegis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ลงทะเบียน"/>
+
+</LinearLayout>

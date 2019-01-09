@@ -97,12 +97,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.item_Home:
+//                        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                         return true;
                     case R.id.item_Award:
                         startActivity(new Intent(MainActivity.this, AwardActivity.class));
 
                         return true;
                     case R.id.item_Celebrity:
+                        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                         return true;
                     case R.id.item_Bookself:
                         startActivity(new Intent(MainActivity.this, BookselfActivity.class));
