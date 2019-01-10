@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp">
 
     <ImageView
         android:layout_width="100dp"
@@ -11,23 +13,29 @@
         android:layout_gravity="center"
         android:background="@drawable/nay"/>
     <EditText
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:background="@layout/rounded_border_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_button"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
         android:id="@+id/usernameId"
         android:hint="username"/>
 
     <EditText
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:background="@layout/rounded_border_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_button"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
         android:id="@+id/emailId"
         android:hint="email"/>
 
     <EditText
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:background="@layout/rounded_border_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_button"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
         android:id="@+id/passwordId"
         android:hint="password"/>
 

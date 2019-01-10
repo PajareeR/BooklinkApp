@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#22ACBF</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorTao">#C2C4C6</color>
+    <color name="colorWhite">#f2f2f2</color>
+
 
 
 </resources>
