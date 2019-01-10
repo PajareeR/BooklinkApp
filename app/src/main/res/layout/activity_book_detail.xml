@@ -8,7 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BookDetailActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -99,70 +100,95 @@
         android:src="@drawable/ooo"
         android:scaleType="centerCrop"/>
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/NameBook"
-        android:text="ชื่อเรื่อง"/>
+        android:text="ชื่อเรื่อง"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/AuthorBook"/>
+        android:id="@+id/AuthorBook"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="คำโปรย"/>
+        android:text="คำโปรย"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"/>
 
     <TextView
         android:id="@+id/TitleBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         />
     <TextView
         android:id="@+id/PublisherBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         />
     <TextView
         android:id="@+id/CatagoryBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         />
     <TextView
         android:id="@+id/ISBNBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ข้อมูลเพิ่มเติม"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         />
     <TextView
         android:id="@+id/AdditionBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="เล่มคล้ายกัน"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         />
 
 
         <EditText
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@layout/rounded_border_edittext"
-            android:id="@+id/edtComment"/>
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border_button"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="20dp"
+            android:id="@+id/edtComment"
+            android:fontFamily="@font/csprajad"
+            android:textSize="20dp"
+            android:hint="รีวิวของคุณ"/>
         <ImageButton
             android:id="@+id/btnSendComment"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/nay"
             />
+
 
     <LinearLayout
         android:id="@+id/commentBox"

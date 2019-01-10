@@ -18,6 +18,9 @@
                 android:id="@+id/textBookself"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/sukhumvitsetsemibold"
+                android:paddingTop="20dp"
+                android:layout_marginLeft="20dp"
                 android:textSize="40dp"
                 android:text="ชั้นหนังสือ"/>
             <LinearLayout
@@ -25,11 +28,13 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/textFav"
+                    android:fontFamily="@font/sukhumvitsetsemibold"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="14dp"
+                    android:textSize="16dp"
+
 
 
                     android:onClick="OnclickMybookself"
@@ -38,39 +43,48 @@
                     tools:ignore="OnClick" />
                 <TextView
                     android:id="@+id/textRead"
+                    android:fontFamily="@font/sukhumvitsetsemibold"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="14dp"
+                    android:textSize="16dp"
                     android:onClick="OnclickMybookself"
                     android:text="อ่านแล้ว"
                     tools:ignore="OnClick" />
                 <TextView
                     android:id="@+id/textWant"
+                    android:fontFamily="@font/sukhumvitsetsemibold"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="14dp"
+                    android:textSize="16dp"
+
                     android:onClick="OnclickMybookself"
                     android:text="อยากซื้อ"
                     tools:ignore="OnClick" />
                 <TextView
                     android:id="@+id/textBought"
+                    android:fontFamily="@font/sukhumvitsetsemibold"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="14dp"
+                    android:textSize="16dp"
+
                     android:onClick="OnclickMybookself"
                     android:text="ซื้อแล้ว"
                     tools:ignore="OnClick" />
                 <TextView
                     android:id="@+id/textReading"
+                    android:fontFamily="@font/sukhumvitsetsemibold"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:textSize="14dp"
+                    android:textSize="16dp"
+
                     android:onClick="OnclickMybookself"
                     android:text="กำลังอ่าน"
                     tools:ignore="OnClick" />
