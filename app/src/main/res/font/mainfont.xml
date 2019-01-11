@@ -12,6 +12,11 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
+        android:font="@font/sukhumvitsettext"
+        />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
         android:font="@font/sukhumvitsetbold"
         />
     <font

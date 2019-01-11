@@ -77,7 +77,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(response);
 
                     NameBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("bookname"));
-                    AuthorBook.setText("นักเขียน"+obj.getJSONObject(UserDetail.bookserect).getString("authorname"));
+                    AuthorBook.setText("นักเขียน : "+obj.getJSONObject(UserDetail.bookserect).getString("authorname"));
                     TitleBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("titlebook"));
 
                     PublisherBook.setText("สำนักพิมพ์ : "+obj.getJSONObject(UserDetail.bookserect).getString("publisherbook"));
