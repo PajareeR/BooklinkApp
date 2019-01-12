@@ -65,21 +65,31 @@
             android:layout_gravity="center"/>
         <TextView
             android:id="@+id/btnRegis"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sukhumvitsetbold"
-            android:textSize="16dp"
-            android:paddingTop="20dp"
-            android:text="ลงทะเบียน"
+            android:fontFamily="@font/sukhumvitsetsemibold"
+            android:textSize="18dp"
+            android:paddingTop="15dp"
+            android:background="@drawable/stock_borderblue"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimary"
+            android:paddingBottom="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="สมัครใช้งาน"
+
+            android:gravity="center"
+
             android:layout_gravity="center"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="or Log in with"
+        android:text="ลงชื่อเข้าใช้ด้วย"
+        android:fontFamily="@font/sukhumvitsetbold"
         android:textSize="16dp"
-        android:textStyle="bold"
         android:textColor="#000"
-        android:paddingTop="100dp"
+        android:paddingTop="80dp"
+
         android:layout_gravity="center"/>
 
     <RelativeLayout

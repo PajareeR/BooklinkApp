@@ -1,4 +1,4 @@
-package th.ac.su.booklink.booklink;
+package th.ac.su.booklink.booklink.Details;
 
 public class ImageDetail {
 

@@ -4,40 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp">
+
+    android:background="@drawable/bgapp">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:background="@drawable/nay"/>
+        android:background="@drawable/logo"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/border_button"
+        android:background="@drawable/stock_border"
+
         android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/usernameId"
-        android:hint="username"/>
+        android:fontFamily="@font/sukhumvitsettext"
+        android:textSize="18dp"
+        android:hint="ชื่อผู้ใช้"
+        />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/border_button"
+        android:background="@drawable/stock_border"
         android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="@font/sukhumvitsettext"
+        android:textSize="18dp"
         android:id="@+id/emailId"
-        android:hint="email"/>
+        android:hint="อีเมล"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/border_button"
+        android:background="@drawable/stock_border"
         android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/sukhumvitsettext"
+        android:textSize="18dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/passwordId"
-        android:hint="password"/>
+        android:hint="รหัสผ่าน"/>
 
     <Button
         android:layout_width="match_parent"
@@ -46,7 +61,11 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Register"
+        android:text="สมัครสมาชิก"
+        android:fontFamily="@font/sukhumvitsetsemibold"
+        android:textSize="18dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/btnRegis"/>
 
 </LinearLayout>

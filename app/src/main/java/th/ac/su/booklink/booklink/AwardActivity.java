@@ -6,20 +6,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 
-import java.sql.Struct;
 import java.util.ArrayList;
+
+import th.ac.su.booklink.booklink.Adapters.AwardAdapter;
+import th.ac.su.booklink.booklink.Adapters.BookAwardAdapter;
+import th.ac.su.booklink.booklink.Details.AwardDetail;
+import th.ac.su.booklink.booklink.Details.BookAwardDetail;
+import th.ac.su.booklink.booklink.Details.UserDetail;
 
 public class AwardActivity extends AppCompatActivity {
 
     ListView simpleList;
-    String  Item[] = {"รางวัลซีไรต์", "รางวัลหนังสือดีเด่น กระทรวงศึกษาธิการ", "รางวัลเซเว่นบุ๊คอวอร์ด", "รางวัลนายอินทร์อะวอร์ด", "รางวัลแว่นแก้ว", "รางวัลเรื่องสั้นมูลนิธิ สุภาว์ เทวกุล", "รางวัลพานแว่นฟ้า", "รางวัลสมาคมนักเขียนแห่งประเทศไทย"};
-    int flags[] = {R.drawable.sewrite, R.drawable.suksa, R.drawable.sevenbooks, R.drawable.nay, R.drawable.vankeaw, R.drawable.supa, R.drawable.pan, R.drawable.samakom};
 
-    int award;
 
 
     @Override
@@ -30,14 +30,13 @@ public class AwardActivity extends AppCompatActivity {
 
 
         simpleList = (ListView)findViewById(R.id.ListAward);
-        AwardAdapter customAdapter = new AwardAdapter(getApplicationContext(), Item, flags);
+        AwardAdapter customAdapter = new AwardAdapter(getApplicationContext(),AwardDetail.Item, AwardDetail.logo);
         simpleList.setAdapter(customAdapter);
         simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                award = position;
-                Log.d("rrrr",Item[award]);
-
+                UserDetail.awardserect = position;
+                startActivity(new Intent(AwardActivity.this, ListAwardActivity.class));
 
             }
         });

@@ -32,6 +32,8 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import th.ac.su.booklink.booklink.Details.UserDetail;
+
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
 

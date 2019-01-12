@@ -1,4 +1,4 @@
-package th.ac.su.booklink.booklink;
+package th.ac.su.booklink.booklink.Adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -11,18 +11,22 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import th.ac.su.booklink.booklink.R;
+
 public class AwardAdapter extends BaseAdapter {
 
     Context context;
     String Item[];
     int flags[];
     LayoutInflater inflter;
+    View view;
+
 
     public AwardAdapter(Context context, String[] Item, int[] flags) {
         this.context = context;
         this.Item = Item;
         this.flags = flags;
-        inflter = (LayoutInflater.from(context));
+        inflter = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -41,8 +45,9 @@ public class AwardAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.activity_list_award, null);
+    public View getView(final int i, View convertView, ViewGroup parent) {
+
+        view = inflter.inflate(R.layout.list_item_award,parent,false);
         TextView item = (TextView) view.findViewById(R.id.item);
         ImageView image = (ImageView) view.findViewById(R.id.image);
         item.setText(Item[i]);

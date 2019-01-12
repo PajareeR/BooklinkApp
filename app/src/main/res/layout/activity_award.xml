@@ -9,24 +9,30 @@
 
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="รางวัล"
+            android:textSize="20dp"/>
 
 
-            <ListView
+        <ListView
 
-                android:id="@+id/ListAward"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:divider="@color/colorTao"
-                android:dividerHeight="1dp"
-                />
+            android:id="@+id/ListAward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/colorTao"
+            android:dividerHeight="1dp"
+            />
 
 
-        </LinearLayout>
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav_view"

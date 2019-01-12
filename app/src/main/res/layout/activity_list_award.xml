@@ -4,29 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListAwardActivity"
+    tools:context=".AwardActivity"
     android:scrollbars="none">
 
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:padding="5dp"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/sewrite"/>
-            <TextView
-                android:id="@+id/item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:paddingTop="25dp"
-                android:textColor="#000"
-                android:text="รางวัลซีไรต์" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titleAward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="รางวัล"
+            android:textSize="20dp"/>
+
+
+        <ListView
+
+            android:id="@+id/ListAward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/colorTao"
+            android:dividerHeight="1dp"
+            />
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemTextColor="@color/colorPrimary"
+        app:itemIconTint="@color/colorPrimary"
+        app:menu="@menu/button_nav"/>
+
 
 
 
