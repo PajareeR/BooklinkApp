@@ -12,16 +12,18 @@
         android:layout_marginBottom="75dp"
         android:scrollbars="none">
 
-
         <LinearLayout
             android:id="@+id/quoteBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp">
         </LinearLayout>
 
     </ScrollView>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"

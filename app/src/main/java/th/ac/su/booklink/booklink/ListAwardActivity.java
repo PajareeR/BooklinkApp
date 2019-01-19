@@ -43,6 +43,8 @@ public class ListAwardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();//barTop
+
         setContentView(R.layout.activity_list_award);
 
         titileAward = (TextView) findViewById(R.id.titleAward);

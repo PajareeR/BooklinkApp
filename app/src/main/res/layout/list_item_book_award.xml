@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imgBook"
-        android:layout_width="170dp"
-        android:layout_height="270dp"
+        android:layout_width="120dp"
+        android:layout_height="170dp"
         android:padding="5dp"
         android:scaleType="fitXY"
         android:layout_marginBottom="5dp"
@@ -21,31 +21,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <TextView
             android:id="@+id/bookName"
+            android:paddingTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
-            android:paddingTop="25dp"
             android:textColor="#000"
+            android:fontFamily="@font/sukhumvitsetbold"
             android:text="รางวัลซีไรต์" />
         <TextView
             android:id="@+id/authorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:paddingTop="25dp"
-            android:textColor="#000"
-            android:text="รางวัลซีไรต์" />
+            android:textSize="16dp"
+            android:fontFamily="@font/sukhumvitsetmedium"
+            android:textColor="@color/colorTao"
+            android:text="นักเขียน" />
         <TextView
             android:id="@+id/awardName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:paddingTop="25dp"
+            android:textSize="16dp"
+
+            android:paddingTop="20dp"
             android:textColor="#000"
+            android:fontFamily="@font/sukhumvitsetmedium"
             android:text="รางวัลซีไรต์" />
 
     </LinearLayout>

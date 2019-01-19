@@ -230,10 +230,14 @@ public class BookselfActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.item_Award:
+                        startActivity(new Intent(BookselfActivity.this, AwardActivity.class));
+
                         return true;
                     case R.id.item_Celebrity:
                         return true;
                     case R.id.item_Bookself:
+                        startActivity(new Intent(BookselfActivity.this, BookDetailActivity.class));
+
                         return true;
                 }
                 return false;

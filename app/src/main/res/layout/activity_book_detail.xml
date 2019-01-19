@@ -19,78 +19,76 @@
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_back"
+            android:src="@drawable/backicon"
             android:onClick="Onclicktobookself"
             android:background="@null"
-android:layout_marginTop="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             />
 
         <LinearLayout
-
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true">
+
             <ImageButton
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@null"
                 android:id="@+id/btnFav"
+                android:layout_marginRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tfav"
                 android:onClick="Onclicktobookself"
                 />
+
             <ImageButton
-                android:layout_margin="20dp"
-
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
                 android:background="@null"
-
                 android:id="@+id/btnRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tread"
                 android:onClick="Onclicktobookself"
-
                 />
+
             <ImageButton
-                android:layout_margin="20dp"
-
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="20dp"
                 android:background="@null"
-
                 android:id="@+id/btnWant"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/twant"
                 android:onClick="Onclicktobookself"
-
                 />
             <ImageButton
-                android:layout_margin="20dp"
-
+                android:layout_marginTop="20dp"
                 android:background="@null"
-
+                android:layout_marginBottom="10dp"
                 android:id="@+id/btnBought"
-
+                android:layout_marginRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tbought"
                 android:onClick="Onclicktobookself"
-
                 />
+
             <ImageButton
-                android:layout_margin="20dp"
-
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@null"
-
+                android:layout_marginRight="20dp"
                 android:id="@+id/btnReading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/treading"
                 android:onClick="Onclicktobookself"
-
                 />
 
         </LinearLayout>
@@ -216,15 +214,19 @@ android:layout_marginTop="20dp"
             android:background="@drawable/border_button"
             android:layout_marginTop="20dp"
             android:paddingLeft="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:id="@+id/edtComment"
             android:fontFamily="@font/csprajad"
             android:textSize="20dp"
             android:hint="รีวิวของคุณ"/>
         <ImageButton
             android:id="@+id/btnSendComment"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/nay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btnsend"
+            android:background="@null"
+
             />
 <!--</LinearLayout>-->
 

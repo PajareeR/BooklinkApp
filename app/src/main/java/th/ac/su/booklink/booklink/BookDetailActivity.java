@@ -86,9 +86,6 @@ public class BookDetailActivity extends AppCompatActivity {
                     ISBNBook.setText("รหัส ISBN : "+UserDetail.bookserect); //XX
                     AdditionBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("additionbook"));
 
-
-
-
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
 
                 } catch (JSONException e) {
@@ -139,19 +136,15 @@ public class BookDetailActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -162,22 +155,16 @@ public class BookDetailActivity extends AppCompatActivity {
 
     private void insertComment() {
         String comment = edtComment.getText().toString() ;
-
         String id = UUID.randomUUID().toString();
 
         if (!comment.equals("")){
-
-
             Map<String, String> map = new HashMap<String, String>();
             map.put("user", UserDetail.username);
             map.put("comment", comment);
             commentReference.push().setValue(map);
             edtComment.setText("");
-
-
         }
     }
-
 
     public void Onclicktobookself(View view) {
         ImageButton btnSerect = (ImageButton) view;
@@ -204,7 +191,6 @@ public class BookDetailActivity extends AppCompatActivity {
                 setStatusData("reading");
                 break;
         }
-
 
     }
 
@@ -291,15 +277,12 @@ public class BookDetailActivity extends AppCompatActivity {
                                     break;
                             }
 
-
                             if (type != "load") {
                                 statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child(type)
                                         .setValue(((obj.getString(type).equals("true")) ? "false" : "true"));
 
                                 setChangeStatus(type, obj.getString(type));
                             }
-
-
                         }
 
                     } catch (JSONException e) {

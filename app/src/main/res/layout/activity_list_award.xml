@@ -20,7 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="รางวัล"
-            android:textSize="20dp"/>
+            android:textColor="#000"
+            android:fontFamily="@font/sukhumvitsetbold"
+            android:textSize="30dp"/>
 
 
         <ListView
@@ -28,8 +30,8 @@
             android:id="@+id/ListAward"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@color/colorTao"
             android:dividerHeight="1dp"
+
             />
 
 
