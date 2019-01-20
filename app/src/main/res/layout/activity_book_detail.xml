@@ -98,7 +98,6 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/ImageBook"
-        android:src="@drawable/ooo"
         android:scaleType="centerCrop"/>
 
     <TextView
@@ -130,6 +129,8 @@
         android:paddingTop="20dp"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
+        android:textSize="16dp"
+
         android:fontFamily="@font/sukhumvitsetbold"/>
 
     <TextView
@@ -142,16 +143,24 @@
         android:paddingLeft="20dp"
         android:textSize="20dp"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorTao"
+        android:layout_marginTop="10dp"/>
+
 
     <TextView
         android:id="@+id/PublisherBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
         android:paddingRight="20dp"
         android:textColor="#000"
         android:fontFamily="@font/sukhumvitsettext"
         android:paddingLeft="20dp"
+        android:textSize="16dp"
+
         />
 
     <TextView
@@ -162,6 +171,9 @@
         android:paddingLeft="20dp"
         android:textColor="#000"
         android:fontFamily="@font/sukhumvitsettext"
+        android:textSize="16dp"
+
+
         />
 
     <TextView
@@ -172,14 +184,24 @@
         android:paddingLeft="20dp"
         android:textColor="#000"
         android:fontFamily="@font/sukhumvitsettext"
+        android:textSize="16dp"
+
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorTao"
+        android:layout_marginTop="10dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ข้อมูลเพิ่มเติม"
+        android:paddingTop="10dp"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
         android:textColor="#000"
+        android:textSize="16dp"
+
         android:fontFamily="@font/sukhumvitsettext"
         />
     <TextView
@@ -189,16 +211,26 @@
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
         android:textSize="20dp"
+        android:textColor="#000"
+
         android:fontFamily="@font/csprajad"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorTao"
+        android:layout_marginTop="10dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="เล่มคล้ายกัน"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+
         android:textColor="#000"
-        android:textSize="18dp"
+        android:textSize="16dp"
+
         android:fontFamily="@font/sukhumvitsetsemibold"
         />
 
