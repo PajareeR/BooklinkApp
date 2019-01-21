@@ -25,7 +25,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +77,6 @@
                 android:src="@drawable/tbought"
                 android:onClick="Onclicktobookself"
                 />
-
             <ImageButton
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
@@ -90,7 +88,6 @@
                 android:src="@drawable/treading"
                 android:onClick="Onclicktobookself"
                 />
-
         </LinearLayout>
     </RelativeLayout>
 
@@ -99,6 +96,11 @@
         android:layout_height="300dp"
         android:id="@+id/ImageBook"
         android:scaleType="centerCrop"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorbg">
 
     <TextView
         android:layout_width="match_parent"
@@ -145,10 +147,9 @@
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/colorTao"
+        android:layout_height="8dp"
+        android:background="@color/colordivi"
         android:layout_marginTop="10dp"/>
-
 
     <TextView
         android:id="@+id/PublisherBook"
@@ -160,7 +161,6 @@
         android:fontFamily="@font/sukhumvitsettext"
         android:paddingLeft="20dp"
         android:textSize="16dp"
-
         />
 
     <TextView
@@ -172,8 +172,6 @@
         android:textColor="#000"
         android:fontFamily="@font/sukhumvitsettext"
         android:textSize="16dp"
-
-
         />
 
     <TextView
@@ -185,12 +183,11 @@
         android:textColor="#000"
         android:fontFamily="@font/sukhumvitsettext"
         android:textSize="16dp"
-
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/colorTao"
+        android:layout_height="8dp"
+        android:background="@color/colordivi"
         android:layout_marginTop="10dp"/>
     <TextView
         android:layout_width="match_parent"
@@ -201,7 +198,6 @@
         android:paddingLeft="20dp"
         android:textColor="#000"
         android:textSize="16dp"
-
         android:fontFamily="@font/sukhumvitsettext"
         />
     <TextView
@@ -212,13 +208,12 @@
         android:paddingLeft="20dp"
         android:textSize="20dp"
         android:textColor="#000"
-
         android:fontFamily="@font/csprajad"
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/colorTao"
+        android:layout_height="8dp"
+        android:background="@color/colordivi"
         android:layout_marginTop="10dp"/>
     <TextView
         android:layout_width="match_parent"
@@ -227,12 +222,28 @@
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
-
         android:textColor="#000"
         android:textSize="16dp"
-
         android:fontFamily="@font/sukhumvitsetsemibold"
         />
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="160dp"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ooo"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ชื่อหนังสือ"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/sukhumvitsetmedium"/>
 
         <!--<LinearLayout-->
             <!--android:layout_width="300dp"-->
@@ -240,8 +251,13 @@
             <!--android:orientation="horizontal"-->
             <!--android:layout_marginRight="20dp"-->
             <!--android:layout_marginLeft="20dp">-->
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/border_button"
             android:layout_marginTop="20dp"
@@ -257,11 +273,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/btnsend"
+            android:layout_marginTop="20dp"
             android:background="@null"
-
+            android:layout_alignParentRight="true"
             />
-<!--</LinearLayout>-->
 
+        </LinearLayout>
+    </LinearLayout>
+<!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/commentBox"
@@ -270,10 +289,7 @@
         android:layout_height="wrap_content"
         android:paddingRight="20dp"
         android:paddingLeft="20dp">
-
     </LinearLayout>
-
-
 
 </LinearLayout>
 </ScrollView>

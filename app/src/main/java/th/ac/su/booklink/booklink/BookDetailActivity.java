@@ -88,6 +88,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
 
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

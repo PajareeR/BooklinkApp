@@ -5,9 +5,10 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorTao">#C2C4C6</color>
     <color name="colorwwhite">#f2f2f2</color>
-
+    <color name="colorbg">#F9F9FA</color>
+    <color name="colorline">#EEEEEE</color>
+    <color name="coloricon">#DADADB</color>
+    <color name="colordivi">#F0EFEF</color>
     <color name="colorWhite">#ffffff</color>
-
-
 
 </resources>

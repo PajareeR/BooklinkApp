@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorbg">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/sukhumvitsetbold"
+        android:text="หน้าหลัก"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_button"
+        android:layout_marginTop="80dp"
+        android:paddingLeft="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="ค้นหาหนังสือ"
+        android:elevation="6dp"
+        android:fontFamily="@font/sukhumvitsettext"
+        android:textSize="18dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#000"
+        android:layout_marginTop="160dp"
+        android:fontFamily="@font/sukhumvitsetbold"
+        android:text="ประโยคเด็ด"/>
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="75dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -19,7 +52,8 @@
             android:orientation="vertical"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="200dp"
+           >
         </LinearLayout>
 
     </ScrollView>

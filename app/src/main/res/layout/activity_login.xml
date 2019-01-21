@@ -40,7 +40,8 @@
         android:fontFamily="@font/sukhumvitsettext"
         android:textSize="18dp"
         android:id="@+id/edtPass"
-        android:hint="รหัสผ่าน"/>
+        android:hint="รหัสผ่าน"
+        />
 
     <Button
         android:layout_width="match_parent"

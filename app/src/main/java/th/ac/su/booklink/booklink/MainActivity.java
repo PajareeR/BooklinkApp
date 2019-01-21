@@ -1,6 +1,7 @@
 package th.ac.su.booklink.booklink;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -54,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
                             ImageView imageView = new ImageView(MainActivity.this);
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
-                                    400
+                                    390
+
                             );
+
                             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                             imageView.setLayoutParams(layoutParams);
 
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                             });
 
                             Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(imageView);
+
                         }
 
 

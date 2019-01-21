@@ -138,13 +138,13 @@ public class BookselfActivity extends AppCompatActivity {
 
                                 switch (countImage % 3){
                                     case  1:
-                                        layparam.setMargins(7,350* (countImage/3),0,0);//o
+                                        layparam.setMargins(10,350* (countImage/3),0,0);//o
                                         break;
                                     case 2:
-                                        layparam.setMargins(227,350* (countImage/3),0,0);//o
+                                        layparam.setMargins(230,350* (countImage/3),0,0);//o
                                         break;
                                     default :
-                                        layparam.setMargins(447,350* ((countImage/3)-1),0,0);//o
+                                        layparam.setMargins(450,350* ((countImage/3)-1),0,0);//o
                                         break;
                                 }
 
@@ -236,7 +236,7 @@ public class BookselfActivity extends AppCompatActivity {
                     case R.id.item_Celebrity:
                         return true;
                     case R.id.item_Bookself:
-                        startActivity(new Intent(BookselfActivity.this, BookDetailActivity.class));
+                       // startActivity(new Intent(BookselfActivity.this, BookselfActivity.class));
 
                         return true;
                 }
