@@ -47,7 +47,7 @@
             android:paddingTop="20dp"
             android:textColor="#000"
             android:fontFamily="@font/sukhumvitsetmedium"
-            android:text="รางวัลซีไรต์" />
+            android:text="" />
 
     </LinearLayout>
 

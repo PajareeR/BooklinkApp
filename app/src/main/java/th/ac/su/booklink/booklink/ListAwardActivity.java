@@ -71,7 +71,6 @@ public class ListAwardActivity extends AppCompatActivity {
                         if (obj.getJSONObject(key).getJSONObject("award")
                                 .has(AwardDetail.ItemId[UserDetail.awardserect])){
 
-
                             bookAward.add( new BookAwardDetail(
                                     key,
                                     obj.getJSONObject(key).getString("bookname"),

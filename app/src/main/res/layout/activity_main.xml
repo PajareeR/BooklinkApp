@@ -7,56 +7,73 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:background="@color/colorbg">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:layout_marginLeft="20dp"
-        android:textColor="#000"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/sukhumvitsetbold"
-        android:text="หน้าหลัก"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/border_button"
-        android:layout_marginTop="80dp"
-        android:paddingLeft="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="ค้นหาหนังสือ"
-        android:elevation="6dp"
-        android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="18dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_marginLeft="20dp"
-        android:textColor="#000"
-        android:layout_marginTop="160dp"
-        android:fontFamily="@font/sukhumvitsetbold"
-        android:text="ประโยคเด็ด"/>
-
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:orientation="vertical"
+        android:layout_marginBottom="55dp">
 
-        <LinearLayout
-            android:id="@+id/quoteBox"
+        <TextView
+
+            android:onClick="OnTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="20dp"
+            android:textSize="30dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="200dp"
-           >
-        </LinearLayout>
+            android:textColor="#000"
+            android:fontFamily="@font/sukhumvitsetbold"
+            android:text="หน้าหลัก"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="search"
+            android:onClick="onButtonShowPopupWindowClick"/>
 
-    </ScrollView>
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:background="@drawable/border_button"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:hint="ค้นหาฟนังสือ"-->
+            <!--android:elevation="6dp"-->
+            <!--android:fontFamily="@font/sukhumvitsettext"-->
+            <!--android:textSize="18dp"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sukhumvitsetbold"
+            android:text="ประโยคเด็ด"/>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/quoteBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="30dp"/>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav_view"

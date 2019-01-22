@@ -153,6 +153,15 @@ public class BookselfActivity extends AppCompatActivity {
 
                                     Picasso.get().load(obj.getJSONObject(key).getString("imgbook")).into(image);
 
+                                final int index = j;
+                                image.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            UserDetail.bookserect = imageAL.get(index).getImagePath();
+                                            startActivity(new Intent(BookselfActivity.this,BookDetailActivity.class));
+                                        }
+                                    });
+
                                     imageBox.addView(image);//o
                                     //Image.Setonclick
                                     //set Userdetail.bookselect

@@ -18,6 +18,13 @@ public class BookAwardDetail {
         this.award = award;
     }
 
+    public BookAwardDetail(String id, String title, String authoor, String imgPath) {
+        this.id = id;
+        this.title = title;
+        this.authoor = authoor;
+        this.imgPath = imgPath;
+    }
+
     public String getId() {
         return id;
     }

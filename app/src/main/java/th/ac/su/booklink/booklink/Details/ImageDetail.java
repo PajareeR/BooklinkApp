@@ -5,6 +5,7 @@ public class ImageDetail {
     private String imagePath;
     private String imageStatus;
 
+
     public String getImagePath() {
         return imagePath;
     }
