@@ -17,7 +17,7 @@ public class AwardDetail {
    public static String  ItemId[] = {
            "sewrite",
            "suksa",
-           "sevenbooks",
+           "seven",
            "nay",
            "vankeaw",
            "supa",

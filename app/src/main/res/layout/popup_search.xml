@@ -14,17 +14,16 @@
         android:paddingLeft="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="ค้นหาฟนังสือ"
+        android:hint="ค้นหาหนังสือ"
         android:elevation="6dp"
         android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="18dp"/>
+        android:textSize="16dp"/>
 
     <ListView
         android:id="@+id/listSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="1dp"
-
 
         />
 

@@ -10,8 +10,8 @@
 
     <ImageView
         android:layout_marginTop="30dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_gravity="center"
         android:background="@drawable/logo"
         />
@@ -24,7 +24,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:hint="ชื่อผู้ใช้"
         android:id="@+id/edtUser"
         />
@@ -38,9 +38,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:id="@+id/edtPass"
         android:hint="รหัสผ่าน"
+        android:inputType="textPassword"
         />
 
     <Button
@@ -56,32 +57,24 @@
         android:textSize="18dp"
         android:text="ลงชื่อเข้าใช้"
         android:id="@+id/btnLogin"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="หรือ"
-            android:fontFamily="@font/sukhumvitsettext"
-            android:textSize="16dp"
-            android:paddingTop="20dp"
-            android:layout_gravity="center"/>
-        <TextView
-            android:id="@+id/btnRegis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sukhumvitsetsemibold"
-            android:textSize="18dp"
-            android:paddingTop="15dp"
-            android:background="@drawable/stock_borderblue"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/colorPrimary"
-            android:paddingBottom="15dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="สมัครใช้งาน"
+    <TextView
+        android:id="@+id/btnRegis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sukhumvitsetsemibold"
+        android:textSize="18dp"
+        android:paddingTop="15dp"
+        android:background="@drawable/stock_borderblue"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary"
+        android:paddingBottom="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="สมัครใช้งาน"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
-            android:gravity="center"
 
-            android:layout_gravity="center"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,7 +82,7 @@
         android:fontFamily="@font/sukhumvitsetbold"
         android:textSize="16dp"
         android:textColor="#000"
-        android:paddingTop="80dp"
+        android:paddingTop="20dp"
 
         android:layout_gravity="center"/>
 
@@ -114,6 +107,7 @@
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:paddingLeft="20dp"
+        android:fontFamily="@font/sukhumvitsetbold"
 
 
         />

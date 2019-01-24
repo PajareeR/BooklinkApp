@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 public class MainActivity extends AppCompatActivity {
     LinearLayout quoteBoxLayout;
     ArrayList<BookAwardDetail> bookSearch = new ArrayList<>();
+    public ListView listSearch;
 
 
 
@@ -104,14 +106,7 @@ public class MainActivity extends AppCompatActivity {
                                 obj.getJSONObject(key).getString("imgbook")
                         ));
 
-
-
-
-
-
                     }
-
-
 
                 } catch (JSONException e) {
                 e.printStackTrace();
@@ -159,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void onButtonShowPopupWindowClick(View view) {
 
 
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                ArrayList<BookAwardDetail> search = new ArrayList<>();
+                final ArrayList<BookAwardDetail> search = new ArrayList<>();
 
                 String searchStr = String.valueOf(s);
 
@@ -202,7 +198,16 @@ public class MainActivity extends AppCompatActivity {
 
                     BookSearchAdapter customAdapter = new BookSearchAdapter(search,MainActivity.this);
                     listSearch.setAdapter(customAdapter);
+                    listSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            UserDetail.bookserect = search.get(position).getId();
+                            startActivity(new Intent(MainActivity.this, BookDetailActivity.class));
+
+                        }
+                    });
                 }
+
             }
 
             @Override
@@ -210,9 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
 
         final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, 1000, true);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -223,5 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
     }
 }
