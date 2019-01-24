@@ -23,11 +23,18 @@
             android:layout_marginLeft="20dp"
             android:textColor="#000"
             android:fontFamily="@font/sukhumvitsetbold"
-            android:text="หน้าหลัก"/>
+            android:text="หน้าหลัก"
+            android:layout_marginTop="10dp"/>
+
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/search"
+            android:backgroundTint="#000"
+            android:layout_gravity="right"
+            android:layout_marginTop="-40dp"
             android:onClick="onButtonShowPopupWindowClick"/>
 
         <!--<EditText-->
