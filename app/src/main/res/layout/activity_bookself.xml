@@ -21,25 +21,25 @@
                 android:fontFamily="@font/sukhumvitsetsemibold"
                 android:paddingTop="20dp"
                 android:layout_marginLeft="20dp"
-                android:textSize="40dp"
+                android:textSize="30dp"
+                android:textColor="#000"
                 android:text="ชั้นหนังสือ"/>
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/textFav"
                     android:fontFamily="@font/sukhumvitsetsemibold"
-
+android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:textSize="16dp"
-
-
+                    android:layout_margin="5dp"
+                    android:textSize="15dp"
 
                     android:onClick="OnclickMybookself"
-
-                    android:text="หนังสือเล่มโปรด"
+android:paddingLeft="15dp"
+                    android:text="เล่มโปรด"
                     tools:ignore="OnClick" />
                 <TextView
                     android:id="@+id/textRead"
@@ -47,8 +47,11 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:layout_margin="5dp"
+                    android:textSize="14dp"
+
+
+
                     android:onClick="OnclickMybookself"
                     android:text="อ่านแล้ว"
                     tools:ignore="OnClick" />
@@ -58,8 +61,10 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:layout_margin="5dp"
+                    android:textSize="14dp"
+
+
 
                     android:onClick="OnclickMybookself"
                     android:text="อยากซื้อ"
@@ -70,8 +75,10 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:textSize="16dp"
+                    android:layout_margin="5dp"
+                    android:textSize="14dp"
+
+
 
                     android:onClick="OnclickMybookself"
                     android:text="ซื้อแล้ว"
@@ -82,9 +89,8 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:textSize="16dp"
-
+                    android:layout_margin="5dp"
+                    android:textSize="14dp"
                     android:onClick="OnclickMybookself"
                     android:text="กำลังอ่าน"
                     tools:ignore="OnClick" />

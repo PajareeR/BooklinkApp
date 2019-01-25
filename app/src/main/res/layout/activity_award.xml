@@ -7,8 +7,6 @@
     tools:context=".AwardActivity"
     android:scrollbars="none">
 
-
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -24,23 +22,17 @@
             android:fontFamily="@font/sukhumvitsetbold"
             android:textColor="#000"
             android:textSize="30dp"/>
-
-
         <ListView
-
             android:id="@+id/ListAward"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@color/colordivi"
             android:dividerHeight="1dp"
-
             />
-
-
     </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
+        android:id="@+id/bottom_nav_view_award"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -48,7 +40,5 @@
         app:itemTextColor="@color/colorPrimary"
         app:itemIconTint="@color/colorPrimary"
         app:menu="@menu/button_nav"/>
-
-
 
 </RelativeLayout>

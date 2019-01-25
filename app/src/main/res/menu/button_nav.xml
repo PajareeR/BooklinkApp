@@ -3,20 +3,28 @@
 
     <item
         android:id="@+id/item_Home"
-        android:icon="@drawable/thome"/>
+        android:icon="@drawable/thome"
+        android:title="หน้าหลัก"
+       />
 
     <item
         android:id="@+id/item_Award"
-        android:icon="@drawable/taward"/>
+        android:icon="@drawable/taward"
+        android:title="รางวัลการันตี"
+
+        />
 
     <item
         android:id="@+id/item_Celebrity"
-        android:icon="@drawable/tceleb"/>
+        android:icon="@drawable/tceleb"
+        android:title="คนดังอ่าน"
+        />
 
     <item
         android:id="@+id/item_Bookself"
         android:icon="@drawable/tbookself"
-        />
+        android:title="ชั้นหนังสือ"
+       />
 
 
 </menu>

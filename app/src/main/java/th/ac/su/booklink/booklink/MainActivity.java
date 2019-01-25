@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//barTop
-
         setContentView(R.layout.activity_main);
         quoteBoxLayout  = (LinearLayout) findViewById(R.id.quoteBox);
 
@@ -75,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
                             ImageView imageView = new ImageView(MainActivity.this);
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
-                                    390
+                                    270
                             );
 
-                            layoutParams.setMargins(0,30,0,0);
+                            layoutParams.setMargins(0,20,0,0);
 
                             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                             imageView.setLayoutParams(layoutParams);
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.item_Award:
                         startActivity(new Intent(MainActivity.this, AwardActivity.class));
-
                         return true;
                     case R.id.item_Celebrity:
                         startActivity(new Intent(MainActivity.this, RegisterActivity.class));

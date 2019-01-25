@@ -15,7 +15,6 @@
         android:layout_marginBottom="55dp">
 
         <TextView
-
             android:onClick="OnTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +57,6 @@
             android:fontFamily="@font/sukhumvitsetbold"
             android:text="ประโยคเด็ด"/>
 
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -67,19 +65,14 @@
             <LinearLayout
                 android:id="@+id/quoteBox"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginBottom="30dp"/>
-
+                />
         </ScrollView>
 
-
     </LinearLayout>
-
-
-
 
 
     <android.support.design.widget.BottomNavigationView

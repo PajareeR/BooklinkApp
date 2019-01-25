@@ -9,15 +9,16 @@
     <EditText
         android:id="@+id/edtSearch"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/border_button"
         android:paddingLeft="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="ค้นหาหนังสือ"
-        android:elevation="6dp"
+        android:elevation="4dp"
         android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="16dp"/>
+        android:textSize="14dp"/>
 
     <ListView
         android:id="@+id/listSearch"

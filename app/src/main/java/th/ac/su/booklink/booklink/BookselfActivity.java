@@ -133,20 +133,22 @@ public class BookselfActivity extends AppCompatActivity {
                             if (imageAL.get(j).getImagePath().contains(key) && imageAL.get(j).getImageStatus().equals(nowStatus)){
                                 countImage+=1; //4
 
-//                                LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(100, 150);//o
-                                    LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(220 , 320);//o
+
+                                    LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(130 , 220);//o
 
                                 switch (countImage % 3){
                                     case  1:
-                                        layparam.setMargins(10,350* (countImage/3),0,0);//o
+                                        layparam.setMargins(20,210* (countImage/3),0,0);//o
                                         break;
                                     case 2:
-                                        layparam.setMargins(230,350* (countImage/3),0,0);//o
+                                        layparam.setMargins(170,210* (countImage/3),0,0);//o
                                         break;
                                     default :
-                                        layparam.setMargins(450,350* ((countImage/3)-1),0,0);//o
+                                        layparam.setMargins(320,210* ((countImage/3)-1),0,0);//o
                                         break;
                                 }
+
+
 
                                     ImageView image = new ImageView(BookselfActivity.this);//o
                                     image.setLayoutParams(layparam);//o
@@ -163,14 +165,54 @@ public class BookselfActivity extends AppCompatActivity {
                                     });
 
                                     imageBox.addView(image);//o
-                                    //Image.Setonclick
-                                    //set Userdetail.bookselect
-                                    //staractvity
 
 
                             }
                         }
                 }
+
+//                    while (i.hasNext()) {
+//                        key = i.next().toString();
+//                        for (int j = 0 ; j < imageAL.size() ;  j++){
+//                            if (imageAL.get(j).getImagePath().contains(key) && imageAL.get(j).getImageStatus().equals(nowStatus)){
+//                                countImage+=1; //4
+//
+//
+//                                LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(220 , 320);//o
+//
+//                                switch (countImage % 3){
+//                                    case  1:
+//                                        layparam.setMargins(10,350* (countImage/3),0,0);//o
+//                                        break;
+//                                    case 2:
+//                                        layparam.setMargins(230,350* (countImage/3),0,0);//o
+//                                        break;
+//                                    default :
+//                                        layparam.setMargins(450,350* ((countImage/3)-1),0,0);//o
+//                                        break;
+//                                }
+//
+//
+//                                ImageView image = new ImageView(BookselfActivity.this);//o
+//                                image.setLayoutParams(layparam);//o
+//
+//                                Picasso.get().load(obj.getJSONObject(key).getString("imgbook")).into(image);
+//
+//                                final int index = j;
+//                                image.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        UserDetail.bookserect = imageAL.get(index).getImagePath();
+//                                        startActivity(new Intent(BookselfActivity.this,BookDetailActivity.class));
+//                                    }
+//                                });
+//
+//                                imageBox.addView(image);//o
+//
+//
+//                            }
+//                        }
+//                    }
 
 
             } catch (JSONException e) {

@@ -143,7 +143,7 @@
         android:textColor="#000"
         android:fontFamily="@font/csprajad"
         android:paddingLeft="20dp"
-        android:textSize="20dp"
+        android:textSize="18dp"
         />
     <View
         android:layout_width="match_parent"
@@ -206,7 +206,8 @@
         android:layout_height="wrap_content"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
-        android:textSize="20dp"
+        android:textSize="18dp"
+
         android:textColor="#000"
         android:fontFamily="@font/csprajad"
         />
@@ -257,24 +258,27 @@
             android:orientation="horizontal">
 
         <EditText
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:background="@drawable/border_button"
             android:layout_marginTop="20dp"
             android:paddingLeft="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:id="@+id/edtComment"
+            android:layout_weight=".70"
             android:fontFamily="@font/csprajad"
-            android:textSize="20dp"
-            android:hint="รีวิวของคุณ"/>
-        <ImageButton
+            android:elevation="2dp"
+            android:textSize="18dp"
+            android:hint="รีวิวของคุณ "
+            android:layout_marginBottom="20dp"/>
+        <Button
             android:id="@+id/btnSendComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btnsend"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btnsend"
             android:layout_marginTop="20dp"
-            android:background="@null"
+            android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             />
 

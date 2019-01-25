@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,8 +36,9 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 public class BookDetailActivity extends AppCompatActivity {
     TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook;
     ImageView ImageBook;
-    ImageButton btnFav, btnRead, btnWant, btnBought, btnReading,btnSendComment;
+    ImageButton btnFav, btnRead, btnWant, btnBought, btnReading;
     EditText edtComment;
+    Button btnSendComment;
 
     LinearLayout commentBox;
 
@@ -55,7 +57,7 @@ public class BookDetailActivity extends AppCompatActivity {
         CategoryBook = (TextView) findViewById(R.id.CatagoryBook);
         ISBNBook = (TextView) findViewById(R.id.ISBNBook); //xx
         AdditionBook = (TextView) findViewById(R.id.AdditionBook);
-        btnSendComment = (ImageButton) findViewById(R.id.btnSendComment);
+        btnSendComment = (Button) findViewById(R.id.btnSendComment);
 
 
         ImageBook = (ImageView) findViewById(R.id.ImageBook) ;
