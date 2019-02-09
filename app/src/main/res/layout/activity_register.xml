@@ -16,7 +16,8 @@
        />
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+
         android:background="@drawable/stock_border"
 
         android:layout_marginTop="20dp"
@@ -25,48 +26,56 @@
         android:layout_marginRight="20dp"
         android:id="@+id/usernameId"
         android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="18dp"
+        android:textSize="16dp"
+
         android:hint="ชื่อผู้ใช้"
         />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+
         android:background="@drawable/stock_border"
         android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="18dp"
+        android:textSize="16dp"
+
         android:id="@+id/emailId"
         android:hint="อีเมล"/>
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+
         android:background="@drawable/stock_border"
         android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
         android:layout_marginLeft="20dp"
         android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:layout_marginRight="20dp"
         android:id="@+id/passwordId"
         android:hint="รหัสผ่าน"/>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+
         android:background="@drawable/border_button"
         android:layout_marginTop="20dp"
         android:textColor="@color/colorWhite"
         android:backgroundTint="@color/colorPrimary"
         android:text="สมัครสมาชิก"
         android:fontFamily="@font/sukhumvitsetsemibold"
-        android:textSize="18dp"
+        android:textSize="16dp"
+
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:id="@+id/btnRegis"/>
+
+
 
 </LinearLayout>

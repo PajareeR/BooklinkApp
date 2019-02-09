@@ -17,7 +17,8 @@
         />
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+
         android:background="@drawable/stock_border"
         android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
@@ -31,7 +32,8 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+
         android:background="@drawable/stock_border"
         android:paddingLeft="20dp"
         android:layout_marginTop="20dp"
@@ -46,7 +48,7 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@drawable/border_button"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
@@ -54,7 +56,8 @@
         android:textColor="@color/colorWhite"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/sukhumvitsetsemibold"
-        android:textSize="18dp"
+        android:textSize="16dp"
+
         android:text="ลงชื่อเข้าใช้"
         android:id="@+id/btnLogin"/>
     <TextView
@@ -62,12 +65,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/sukhumvitsetsemibold"
-        android:textSize="18dp"
-        android:paddingTop="15dp"
+        android:textSize="16dp"
+        android:paddingTop="10dp"
         android:background="@drawable/stock_borderblue"
         android:layout_marginTop="20dp"
         android:textColor="@color/colorPrimary"
-        android:paddingBottom="15dp"
+        android:paddingBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="สมัครใช้งาน"
@@ -82,9 +85,8 @@
         android:fontFamily="@font/sukhumvitsetbold"
         android:textSize="16dp"
         android:textColor="#000"
-        android:paddingTop="20dp"
-
-        android:layout_gravity="center"/>
+android:layout_marginTop="70dp"
+        android:layout_gravity="center_horizontal"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -101,7 +103,7 @@
         android:id="@+id/btnFBLogin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="18dp"
+        android:textSize="16dp"
     android:backgroundTint="#3c5898"
         android:layout_gravity="bottom"
         android:paddingBottom="10dp"
