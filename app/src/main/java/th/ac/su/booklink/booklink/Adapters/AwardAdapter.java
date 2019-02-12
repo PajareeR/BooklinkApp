@@ -10,7 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import th.ac.su.booklink.booklink.BookCelebActivity;
+import th.ac.su.booklink.booklink.Model;
 import th.ac.su.booklink.booklink.R;
 
 public class AwardAdapter extends BaseAdapter {
@@ -27,6 +30,10 @@ public class AwardAdapter extends BaseAdapter {
         this.Item = Item;
         this.flags = flags;
         inflter = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public AwardAdapter(List<Model> models, BookCelebActivity bookCelebActivity) {
+
     }
 
     @Override

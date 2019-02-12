@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, AwardActivity.class));
                         return true;
                     case R.id.item_Celebrity:
-                        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                        startActivity(new Intent(MainActivity.this, CelebActivity.class));
                         return true;
                     case R.id.item_Bookself:
                         startActivity(new Intent(MainActivity.this, BookselfActivity.class));

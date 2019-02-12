@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CelebActivity">
+    tools:context=".CelebActivity"
+    android:background="@color/colorbg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="55dp">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#000"
+        android:fontFamily="@font/sukhumvitsetbold"
+        android:text="คนดังอ่าน"
+        android:layout_marginTop="10dp"/>
+
+
+
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/celebBox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+
+                />
+        </ScrollView>
+    </LinearLayout>
+
+
+
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemTextColor="@color/colorPrimary"
+        app:itemIconTint="@color/colorPrimary"
+        app:menu="@menu/button_nav"/>
+
+
+</RelativeLayout>

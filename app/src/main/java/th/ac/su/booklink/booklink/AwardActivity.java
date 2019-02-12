@@ -44,7 +44,7 @@ public class AwardActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.item_Celebrity:
-                        startActivity(new Intent(AwardActivity.this, RegisterActivity.class));
+                        startActivity(new Intent(AwardActivity.this, CelebActivity.class));
                         return true;
                     case R.id.item_Bookself:
                         startActivity(new Intent(AwardActivity.this, BookselfActivity.class));

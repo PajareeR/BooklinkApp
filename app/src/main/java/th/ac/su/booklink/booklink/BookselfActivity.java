@@ -252,6 +252,7 @@ public class BookselfActivity extends AppCompatActivity {
                         }
                     }
 
+
 //                    NameBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("bookname"));
 //                    AuthorBook.setText("นักเขียน"+obj.getJSONObject(UserDetail.bookserect).getString("authorname"));
 //                    Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
@@ -285,6 +286,8 @@ public class BookselfActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.item_Celebrity:
+                        startActivity(new Intent(BookselfActivity.this, CelebActivity.class));
+
                         return true;
                     case R.id.item_Bookself:
                        // startActivity(new Intent(BookselfActivity.this, BookselfActivity.class));
