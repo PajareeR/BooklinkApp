@@ -282,7 +282,7 @@ public class BookDetailActivity extends AppCompatActivity {
                                     break;
                                 case "false":
                                     btnReading.setImageResource(R.drawable.treading);
-                                    Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือเกำลังอ่าน",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือกำลังอ่าน",Toast.LENGTH_SHORT).show();
                                     break;
                             }
 

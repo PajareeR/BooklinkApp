@@ -52,7 +52,7 @@
         <activity
             android:name=".CelebActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".BookCelebActivity"></activity>
+        <activity android:name=".BookCelebActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
