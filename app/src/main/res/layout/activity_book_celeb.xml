@@ -1,93 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".BookCelebActivity"
-    >
-    <!--<android.support.v4.view.ViewPager-->
-    <!--android:id="@+id/viewPager"-->
-    <!--android:layout_centerInParent="true"-->
-    <!--android:overScrollMode="never"-->
-    <!--android:clipToPadding="false"-->
-    <!--android:foregroundGravity="center"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-
-    <!--</android.support.v4.view.ViewPager>-->
+    tools:context=".BookCelebActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sukhumvitsetbold"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="30dp"
+        android:id="@+id/nameCeleb"/>
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/celebBookBoxLayout"
                 >
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="300dp"
-                    android:layout_height="500dp"
-                    app:cardCornerRadius="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="70dp"
-                    android:elevation="10dp"
-                    android:layout_marginBottom="20dp"
-                    >
+                <!--<android.support.v7.widget.CardView-->
+                    <!--android:layout_width="300dp"-->
+                    <!--android:layout_height="500dp"-->
+                    <!--app:cardCornerRadius="10dp"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginBottom="20dp"-->
+                    <!--android:layout_marginTop="20dp"-->
+                    <!--android:elevation="10dp">-->
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="600dp">
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent">-->
 
-                        <ImageView
-                            android:id="@+id/imageCelebBook"
-                            android:layout_width="match_parent"
-                            android:layout_height="400dp"
-                            android:src="@drawable/sambook"
-                            android:scaleType="fitXY"/>
-                        <TextView
-                            android:id="@+id/nameBook"
-                            android:layout_width="wrap_content"
-                            android:textColor="#000"
-                            android:layout_below="@id/imageCelebBook"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:text="ชื่อหนังสือ"
-                            android:maxLines="2"
-                            android:textSize="24sp"
-                            android:fontFamily="@font/sukhumvitsetbold"
-                            android:layout_centerHorizontal="true"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:id="@+id/authorBookCeleb"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16dp"
-                            android:textColor="#000"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_centerHorizontal="true"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/sukhumvitsettext"
-                            android:layout_below="@+id/nameBook"
-                            android:text="นักเขียน"/>
-                    </RelativeLayout>
+                        <!--<ImageView-->
+                            <!--android:id="@+id/imageCelebBook"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="400dp"-->
+                            <!--android:src="@drawable/sambook"-->
+                            <!--android:scaleType="fitXY"/>-->
+                        <!--<TextView-->
+                            <!--android:id="@+id/nameBook"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:textColor="#000"-->
+                            <!--android:layout_marginTop="10dp"-->
+                            <!--android:layout_marginLeft="20dp"-->
+                            <!--android:layout_marginRight="20dp"-->
+                            <!--android:text="ggggggggg"-->
+                            <!--android:maxLines="1"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textSize="24sp"-->
+                            <!--android:fontFamily="@font/sukhumvitsetbold"-->
+                            <!--android:layout_height="wrap_content" />-->
+                        <!--<TextView-->
+                            <!--android:id="@+id/authorBookCeleb"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:textSize="16dp"-->
+                            <!--android:textColor="#000"-->
+                            <!--android:layout_marginTop="5dp"-->
+                            <!--android:layout_marginLeft="20dp"-->
+                            <!--android:layout_marginRight="20dp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:fontFamily="@font/sukhumvitsettext"-->
+                            <!--android:layout_below="@+id/nameBook"-->
+                            <!--android:text="นักเขียน"/>-->
+                    <!--</LinearLayout>-->
 
-                </android.support.v7.widget.CardView>
+                <!--</android.support.v7.widget.CardView>-->
 
 
             </LinearLayout>
@@ -96,4 +93,4 @@
     //page01
 
 
-</RelativeLayout>
+</LinearLayout>

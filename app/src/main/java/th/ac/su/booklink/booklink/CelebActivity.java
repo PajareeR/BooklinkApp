@@ -121,8 +121,9 @@ public class CelebActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.item_Celebrity);
     }
+
     public void OnclickBookDetail(String bookName){
-        UserDetail.bookserect = bookName;
+        UserDetail.celebserect = bookName;
         startActivity(new Intent(CelebActivity.this,BookCelebActivity.class));
     }
     }

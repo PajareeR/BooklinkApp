@@ -2,12 +2,17 @@ package th.ac.su.booklink.booklink;
 
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -45,7 +50,8 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 public class BookCelebActivity extends AppCompatActivity {
     LinearLayout celebBookBoxLayout;
     ImageView imageCelebBook;
-    TextView nameBook, authorBookCeleb;
+    TextView nameBook, authorBookCeleb, nameCeleb;
+    int widthDevice , hieghDevice;
 
 
 
@@ -55,20 +61,31 @@ public class BookCelebActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//barTop
-
         setContentView(R.layout.activity_book_celeb);
+
+        widthDevice = getWindowManager().getDefaultDisplay().getWidth();
+        hieghDevice = getWindowManager().getDefaultDisplay().getHeight();
+
         celebBookBoxLayout = (LinearLayout) findViewById(R.id.celebBookBoxLayout);
         imageCelebBook = (ImageView) findViewById(R.id.imageCelebBook);
         nameBook = (TextView) findViewById(R.id.nameBook);
         authorBookCeleb = (TextView) findViewById(R.id.authorBookCeleb);
+        nameCeleb = (TextView) findViewById(R.id.nameCeleb);
 
 
-        String url = "https://booklink-94984.firebaseio.com/Celebs.json"; //หัวใหญ่
+        String url = "https://booklink-94984.firebaseio.com/.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject obj = new JSONObject(response);
+
+                    JSONObject objceleb = new JSONObject(response).getJSONObject("Celebs").getJSONObject(UserDetail.celebserect);
+                    nameCeleb.setText(objceleb.getString("name"));
+
+
+
+
+                    JSONObject obj = new JSONObject(response).getJSONObject("Celebs").getJSONObject(UserDetail.celebserect).getJSONObject("book");
 
                     Iterator i = obj.keys();
                     String key = "";
@@ -77,36 +94,7 @@ public class BookCelebActivity extends AppCompatActivity {
                     while (i.hasNext()) {
                         key = i.next().toString();
 
-                        ImageView imageView = new ImageView(BookCelebActivity.this);
-                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                270
-                        );
-
-                        layoutParams.setMargins(0,20,0,0);
-
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        imageView.setLayoutParams(layoutParams);
-
-
-
-
-                        celebBookBoxLayout.addView(imageView);
-
-
-
-                        final String finalKey = key;
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                OnclickBookDetail(finalKey);
-                            }
-
-                        });
-
-                        Picasso.get().load(obj.getJSONObject(key).getString("image")).into(imageCelebBook);
-
-
+                        createImage(new JSONObject(response).getJSONObject("Books").getJSONObject(key) , key);
 
                     }
 
@@ -126,6 +114,99 @@ public class BookCelebActivity extends AppCompatActivity {
         requestQueue.add(request);
 
 
+    }
+    public void createImage (final JSONObject obj , final String bookId) throws JSONException {
+
+
+
+        CardView cardView = new CardView(this);
+        int cardwidth = (int) (widthDevice * 0.8);
+        int cardhiegh = (int) (hieghDevice * 0.7);
+        CardView.LayoutParams params = new CardView.LayoutParams(
+                cardwidth,
+                cardhiegh
+        );
+
+        params.setMargins( (int) (widthDevice * 0.1), (int) (widthDevice * 0.1), 0,  (int) (widthDevice * 0.1));
+        cardView.setCardElevation((float) (widthDevice*0.02));
+        cardView.setRadius((float) (widthDevice * 0.02));
+        cardView.setLayoutParams(params);
+
+        LinearLayout linearLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        linearLayout.setLayoutParams(layoutParams);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        ImageView imageView = new ImageView(this);
+        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                (int) (hieghDevice * 0.6)
+        );
+        imageView.setLayoutParams(imgParams);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        Picasso.get().load( obj.getString("imgbook")).into(imageView);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               UserDetail.bookserect =  bookId;
+               startActivity(new Intent(BookCelebActivity.this , BookDetailActivity.class));
+            }
+
+        });
+
+        TextView textView = new TextView(this);
+        LinearLayout.LayoutParams layoutParamstxt = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParamstxt.setMargins((int) (widthDevice * 0.01),(int) (widthDevice * 0.01),(int) (widthDevice * 0.01),0);
+        textView.setLayoutParams(layoutParamstxt);
+        textView.setTextColor(Color.BLACK);
+        textView.setMaxLines(1);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextSize((float) (widthDevice * 0.04));
+        Typeface type = ResourcesCompat.getFont(this, R.font.sukhumvitsetbold);
+        textView.setTypeface(type);
+        textView.setText(obj.getString("bookname"));
+
+        TextView textViewAuthor = new TextView(this);
+        LinearLayout.LayoutParams layoutParamstextViewAuthor = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParamstxt.setMargins((int) (widthDevice * 0.01),(int) (widthDevice * 0.01),(int) (widthDevice * 0.01),0);
+        textViewAuthor.setLayoutParams(layoutParamstextViewAuthor);
+        textViewAuthor.setTextColor(Color.BLACK);
+        textViewAuthor.setMaxLines(1);
+        textViewAuthor.setGravity(Gravity.CENTER);
+        textViewAuthor.setTextSize((float) (widthDevice * 0.03));
+
+        textViewAuthor.setTypeface(type);
+        textViewAuthor.setText(obj.getString("authorname"));
+
+
+        celebBookBoxLayout.addView(cardView);
+        cardView.addView(linearLayout);
+        linearLayout.addView(imageView);
+        linearLayout.addView(textView);
+        linearLayout.addView(textViewAuthor);
+
+    }
+
+    public String  getBook(JSONObject obj){
+
+        try {
+            return obj.getString("imgbook");
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+        return "";
     }
     public void OnclickBookDetail(String bookName){
         UserDetail.bookserect = bookName;
