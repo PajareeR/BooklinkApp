@@ -1,8 +1,26 @@
 package th.ac.su.booklink.booklink;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,38 +36,54 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import th.ac.su.booklink.booklink.Details.UserDetail;
 
 public class BookDetailActivity extends AppCompatActivity {
     TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook;
-    ImageView ImageBook;
+    ImageView ImageBook, imageShow;
     ImageButton btnFav, btnRead, btnWant, btnBought, btnReading;
     EditText edtComment;
-    Button btnSendComment;
+    Button btnSendComment, btnImageUp ;
 
     LinearLayout commentBox;
 
     DatabaseReference commentReference;
+    Bitmap bitmapComment;
+    boolean checkImg;
+    Activity mcontext = BookDetailActivity.this;
+    int widthDevice , hieghDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_book_detail);
+
+        widthDevice = getWindowManager().getDefaultDisplay().getWidth();
+        hieghDevice = getWindowManager().getDefaultDisplay().getHeight();
 
         NameBook = (TextView) findViewById(R.id.NameBook);
         AuthorBook = (TextView) findViewById(R.id.AuthorBook);
@@ -60,8 +94,13 @@ public class BookDetailActivity extends AppCompatActivity {
         AdditionBook = (TextView) findViewById(R.id.AdditionBook);
         btnSendComment = (Button) findViewById(R.id.btnSendComment);
 
+        btnImageUp = (Button) findViewById(R.id.btnImageUp);
+
+
 
         ImageBook = (ImageView) findViewById(R.id.ImageBook) ;
+        imageShow = (ImageView) findViewById(R.id.imageShow) ;
+        imageShow.setVisibility(View.GONE);
 
         btnFav = (ImageButton) findViewById(R.id.btnFav);
         btnRead = (ImageButton) findViewById(R.id.btnRead);
@@ -73,12 +112,25 @@ public class BookDetailActivity extends AppCompatActivity {
 
         commentBox = (LinearLayout)findViewById(R.id.commentBox);
 
-        String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
+        if (ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED&&
+                ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(mcontext,
+                    new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            android.Manifest.permission.CAMERA},1);
+        }
+
+        String url = "https://booklink-94984.firebaseio.com/.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject obj = new JSONObject(response);
+                    JSONObject obj = new JSONObject(response).getJSONObject("books");
+                    final JSONObject objUsers = new JSONObject(response).getJSONObject("users");
 
                     NameBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("bookname"));
                     AuthorBook.setText("นักเขียน : "+obj.getJSONObject(UserDetail.bookserect).getString("authorname"));
@@ -90,6 +142,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     AdditionBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("additionbook"));
 
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
+
 
 
                 } catch (JSONException e) {
@@ -115,56 +168,213 @@ public class BookDetailActivity extends AppCompatActivity {
             }
         });
 
-        commentReference = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books/"+UserDetail.bookserect+"/comments");
-        commentReference.addChildEventListener(new ChildEventListener() {
+
+
+        btnImageUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Map<String, String> map = (Map)dataSnapshot.getValue();
-                String comment = map.get("comment").toString();
-                String user = map.get("user").toString();
-
-                TextView textComment = new TextView(BookDetailActivity.this);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-
-                textComment.setText(user + "\n"+comment);
-                textComment.setLayoutParams(layoutParams);
-
-
-                commentBox.addView(textComment);
-
+            public void onClick(View v) {
+                selectImgOrTakeImg();
             }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
         });
+    }
+
+    public void createComment(JSONObject obj , Map map){
+        LinearLayout linearLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        linearLayout.setLayoutParams(layoutParams);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        CircleImageView circleImageView = new CircleImageView(this);
+        LinearLayout.LayoutParams circleParams = new LinearLayout.LayoutParams(
+                (int) (hieghDevice * 0.1),
+                (int) (hieghDevice * 0.1)
+        );
+        circleImageView.setLayoutParams(circleParams);
+        circleImageView.setBorderWidth(50);
+        circleImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
+
+        LinearLayout linearLayout1 = new LinearLayout(this);
+        linearLayout1.setLayoutParams(layoutParams);
+        linearLayout1.setOrientation(LinearLayout.VERTICAL);
+        linearLayout1.setPadding(100,0,100,0);
+
+        TextView txtUsername = new TextView(this);
+        LinearLayout.LayoutParams layoutParamstxt = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        txtUsername.setLayoutParams(layoutParamstxt);
+        txtUsername.setTextColor(Color.BLACK);
+        txtUsername.setTextSize(50);
+        Typeface type = ResourcesCompat.getFont(this, R.font.sukhumvitsetbold);
+        txtUsername.setTypeface(type);
+
+        TextView txtTime = new TextView(this);
+        txtTime.setLayoutParams(layoutParamstxt);
+        txtTime.setTextSize(50);
+        txtTime.setTypeface(type);
+
+        TextView txtComment = new TextView(this);
+        txtComment.setLayoutParams(layoutParamstxt);
+        txtComment.setTextColor(Color.BLACK);
+        txtComment.setTextSize(50);
+        Typeface type1 = ResourcesCompat.getFont(this, R.font.csprajad);
+        txtComment.setTypeface(type1);
+
+        ImageView imageView = new ImageView(this);
+        LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(
+                (int) (widthDevice * 0.2),
+                (int) (hieghDevice * 0.2),
+                Gravity.CENTER
+        );
+        imageView.setLayoutParams(imgParams);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        LinearLayout linearLayoutLike = new LinearLayout(this);
+        linearLayoutLike.setLayoutParams(layoutParams);
+        linearLayoutLike.setOrientation(LinearLayout.HORIZONTAL);
+
+        ImageView imageViewLike = new ImageView(this);
+        LinearLayout.LayoutParams imgParamslike = new LinearLayout.LayoutParams(
+                (int) (widthDevice * 0.05),
+                (int) (hieghDevice * 0.05)
+        );
+        imageViewLike.setLayoutParams(imgParamslike);
+        imageViewLike.setImageResource(R.drawable.liket);
+
+        TextView txtPeople = new TextView(this);
+        txtPeople.setLayoutParams(layoutParamstxt);
+        txtPeople.setTextSize(50);
+        txtPeople.setTypeface(type);
+
+
+        linearLayoutLike.addView(imageViewLike);
+        linearLayoutLike.addView(txtPeople);
+
+        linearLayout1.addView(txtUsername);
+        linearLayout1.addView(txtTime);
+        linearLayout1.addView(txtComment);
+        linearLayout1.addView(imageView);
+        linearLayout1.addView(linearLayoutLike);
+
+        linearLayout.addView(circleImageView);
+        linearLayout.addView(linearLayout1);
+
+        commentBox.addView(linearLayout);
+
+    }
+
+    private void selectImgOrTakeImg() {
+        final int REQUEST_CAMERA = 0;
+        final int SELECT_FILE = 1;
+
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mcontext);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (items[item].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[item].equals("Choose from Library")) {
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent,SELECT_FILE);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && null != data){
+            switch(requestCode) {
+                case 0:
+                    Bundle extras = data.getExtras();
+                    bitmapComment = (Bitmap) extras.get("data");
+                    break;
+                case 1:
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+                    bitmapComment = BitmapFactory.decodeFile(picturePath);
+                    break;
+
+            }
+
+            checkImg = true;
+
+            imageShow.setVisibility(View.VISIBLE);
+
+            bitmapComment = Bitmap.createScaledBitmap(bitmapComment, 130,130,true);
+            imageShow.setImageBitmap(bitmapComment);
+
+
+        }
+
+
+    }
+
+    public String saveImg(){
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmapComment.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] dataPic = baos.toByteArray();
+
+        String id = UUID.randomUUID().toString();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com");
+        StorageReference storageRef = storage.getReference();
+        StorageReference imagesRef = storageRef.child("images/books/"+UserDetail.bookserect+"/comment/"+
+               "comment_"+id+".jpg");
+        UploadTask uploadTask = imagesRef.putBytes(dataPic);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            }
+        });
+
+        return imagesRef.getPath();
+
     }
 
     private void insertComment() {
         String comment = edtComment.getText().toString() ;
-        String id = UUID.randomUUID().toString();
+        Calendar calendar = Calendar.getInstance();
 
         if (!comment.equals("")){
             Map<String, String> map = new HashMap<String, String>();
             map.put("user", UserDetail.username);
             map.put("comment", comment);
+            map.put("time", String.valueOf(calendar.getTimeInMillis()));
+
+            String img = (checkImg? saveImg() : "");
+
+            map.put("pic", img);
+            map.put("status", "false");
+            map.put("like", "0");
             commentReference.push().setValue(map);
             edtComment.setText("");
         }

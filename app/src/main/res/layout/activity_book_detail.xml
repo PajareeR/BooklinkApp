@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -97,11 +97,89 @@
         android:layout_height="300dp"
         android:id="@+id/ImageBook"
         android:scaleType="centerCrop"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/sambook"
+                app:civ_border_width="3dp"
+                app:civ_border_color="@color/colorPrimary"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:layout_marginLeft="20dp">
+                <TextView
+                    android:id="@+id/nameProComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ชื่อ"
+                    android:fontFamily="@font/sukhumvitsetbold"
+                    android:textSize="20dp"
+                    android:textColor="#000"/>
+                <TextView
+                    android:id="@+id/timeComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="เวลา"
+                    android:fontFamily="@font/sukhumvitsetbold"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/Comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ชื่อ"
+                    android:fontFamily="@font/csprajad"
+                    android:textSize="20dp"
+                    android:textColor="#000"/>
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/sambook"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+                    <ImageView
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/liket" />
+                    <TextView
+                        android:id="@+id/countPeople"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:textSize="20dp"
+                        android:text="คน"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/sukhumvitsetbold"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/colorbg">
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -256,10 +334,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-        <EditText
-            android:layout_width="wrap_content"
+
+            <EditText
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/border_button"
             android:layout_marginTop="20dp"
@@ -273,15 +352,38 @@
             android:textSize="18dp"
             android:hint="รีวิวของคุณ "
             android:layout_marginBottom="20dp"/>
-        <Button
-            android:id="@+id/btnSendComment"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/btnsend"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            />
+            <ImageView
+                android:id="@+id/imageShow"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:src="@drawable/sambook" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <Button
+                    android:id="@+id/btnImageUp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btnsend"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    />
+                <Button
+                    android:id="@+id/btnSendComment"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btnsend"
+                    android:layout_marginTop="20dp"
+                    android:layout_alignParentRight="true"
+                    />
+
+            </RelativeLayout>
+
 
         </LinearLayout>
     </LinearLayout>
@@ -295,6 +397,9 @@
         android:paddingRight="20dp"
         android:paddingLeft="20dp">
     </LinearLayout>
+
+
+
 
 </LinearLayout>
 </ScrollView>
