@@ -180,19 +180,29 @@ public class BookDetailActivity extends AppCompatActivity {
                 break;
             case R.id.btnFav:
                 setStatusData("fav");
+                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือเล่มโปรด",Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.btnRead:
+
                 setStatusData("read");
+                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสืออ่านแล้ว",Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.btnWant:
                 setStatusData("want");
+                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสืออยากซื้อ",Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.btnBought:
                 setStatusData("bought");
+                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือซื้อแล้ว",Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.btnReading:
                 setStatusData("reading");
+                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือกำลังอ่าน",Toast.LENGTH_SHORT).show();
+
                 break;
         }
 
@@ -246,7 +256,6 @@ public class BookDetailActivity extends AppCompatActivity {
                                     break;
                                 case "false":
                                     btnFav.setImageResource(R.drawable.tfav);
-                                    Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือเล่มโปรด",Toast.LENGTH_SHORT).show();
                                     break;
                             }
                             switch (obj.getString("read")) {
@@ -255,7 +264,6 @@ public class BookDetailActivity extends AppCompatActivity {
                                     break;
                                 case "false":
                                     btnRead.setImageResource(R.drawable.tread);
-                                    Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสืออ่านแล้ว",Toast.LENGTH_SHORT).show();
                                     break;
                             }
                             switch (obj.getString("want")) {
@@ -264,7 +272,6 @@ public class BookDetailActivity extends AppCompatActivity {
                                     break;
                                 case "false":
                                     btnWant.setImageResource(R.drawable.twant);
-                                    Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสืออยากซื้อ",Toast.LENGTH_SHORT).show();
                                     break;
                             }
                             switch (obj.getString("bought")) {
@@ -273,7 +280,6 @@ public class BookDetailActivity extends AppCompatActivity {
                                     break;
                                 case "false":
                                     btnBought.setImageResource(R.drawable.tbought);
-                                    Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือซื้อแล้ว",Toast.LENGTH_SHORT).show();
                                     break;
                             }
                             switch (obj.getString("reading")) {
@@ -282,7 +288,6 @@ public class BookDetailActivity extends AppCompatActivity {
                                     break;
                                 case "false":
                                     btnReading.setImageResource(R.drawable.treading);
-                                    Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือกำลังอ่าน",Toast.LENGTH_SHORT).show();
                                     break;
                             }
 

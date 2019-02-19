@@ -187,7 +187,8 @@ public class BookCelebActivity extends AppCompatActivity {
         textViewAuthor.setTextSize((float) (widthDevice * 0.03));
 
         textViewAuthor.setTypeface(type);
-        textViewAuthor.setText(obj.getString("authorname"));
+
+        textViewAuthor.setText("นักเขียน : "+obj.getString("authorname"));
 
 
         celebBookBoxLayout.addView(cardView);

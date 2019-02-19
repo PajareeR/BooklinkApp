@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,6 +37,7 @@ public class BookselfActivity extends AppCompatActivity {
     TextView textFav, textRead, textWant, textBought, textReading;
     RelativeLayout imageBox;
     String nowStatus;
+    ImageButton imageProfile;
 
 
     @Override
@@ -44,6 +46,7 @@ public class BookselfActivity extends AppCompatActivity {
         getSupportActionBar().hide();//barTop
 
         setContentView(R.layout.activity_bookself);
+        imageProfile = (ImageButton) findViewById(R.id.imageProfile);
 
         imageBox = (RelativeLayout) findViewById(R.id.imageBox);
 
