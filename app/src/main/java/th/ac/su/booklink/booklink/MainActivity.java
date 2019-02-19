@@ -2,12 +2,15 @@ package th.ac.su.booklink.booklink;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,14 +44,16 @@ import java.util.regex.Pattern;
 import th.ac.su.booklink.booklink.Adapters.BookAwardAdapter;
 import th.ac.su.booklink.booklink.Adapters.BookSearchAdapter;
 import th.ac.su.booklink.booklink.Details.BookAwardDetail;
+import th.ac.su.booklink.booklink.Details.CommentDetail;
 import th.ac.su.booklink.booklink.Details.UserDetail;
+
+import static java.util.Comparator.comparing;
 
 public class MainActivity extends AppCompatActivity {
     LinearLayout quoteBoxLayout;
     ArrayList<BookAwardDetail> bookSearch = new ArrayList<>();
     public ListView listSearch;
-
-
+    ArrayList<CommentDetail> arrComment = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(String response) {
                 try {
@@ -69,35 +76,85 @@ public class MainActivity extends AppCompatActivity {
 
                     while (i.hasNext()) {
                         key = i.next().toString();
+                        if (obj.getJSONObject(key).has("quote")){
+                            if (obj.getJSONObject(key).getJSONObject("quote").getString("status").equals("true")){
+                                JSONObject objbook = obj.getJSONObject(key);
+                                JSONObject objQuote = obj.getJSONObject(key).getJSONObject("quote");
+                                String mode = objQuote.getString("selectQuote");
 
-                        if (!obj.getJSONObject(key).getString("quotebook").equals("nill")){
-                            ImageView imageView = new ImageView(MainActivity.this);
-                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    270
-                            );
+                                if (mode.equals("comment")){
+                                    JSONObject objComments = objbook.getJSONObject("comments");
+                                    Iterator j = objComments.keys();
+                                    String keycomment = "";
+                                    while (j.hasNext()) {
+                                        keycomment = j.next().toString();
+                                        JSONObject objComment = objComments.getJSONObject(keycomment);
+                                        JSONObject objLike = (objComment.has("userlike")?
+                                                objComment.getJSONObject("userlike"):new JSONObject());
+                                        arrComment.add(new CommentDetail(
+                                                objComment.getString("user"),
+                                                objComment.getString("comment"),
+                                                calLike(objLike)
 
-                            layoutParams.setMargins(0,20,0,0);
+                                        ));
+                                    }
 
-                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                            imageView.setLayoutParams(layoutParams);
-
-
-                            quoteBoxLayout.addView(imageView);
-
-
-                            final String finalKey = key;
-                            imageView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    OnclickBookDetail(finalKey);
+                                    CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
+                                    TextView textView = new TextView(MainActivity.this);
+                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.MATCH_PARENT,
+                                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                                    textView.setLayoutParams(layoutParams);
+                                    textView.setText("Comment : " + maxValue.getComment() + "\n"
+                                            + "Author : " + maxValue.getCommentUser()+"\n"+ "Book name : "
+                                            + objbook.getString("bookname") +"\n" + " Book Author : "
+                                            + objbook.getString("authorname"));
+                                    quoteBoxLayout.addView(textView);
+                                }else {
+                                    TextView textView = new TextView(MainActivity.this);
+                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.MATCH_PARENT,
+                                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                                    textView.setLayoutParams(layoutParams);
+                                    textView.setText("Other : " + objQuote.getJSONObject("other").getString("title") + "\n"
+                                            + "Author : " + objQuote.getJSONObject("other").getString("author")+"\n"+ "Book name : "
+                                            + objbook.getString("bookname") +"\n" + " Book Author : "
+                                            + objbook.getString("authorname"));
+                                    quoteBoxLayout.addView(textView);
                                 }
-                            });
 
-                            Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(imageView);
-
-
+                            }
                         }
+
+
+//                        if (!obj.getJSONObject(key).getString("quotebook").equals("nill")){
+//                            ImageView imageView = new ImageView(MainActivity.this);
+//                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+//                                    LinearLayout.LayoutParams.MATCH_PARENT,
+//                                    270
+//                            );
+//
+//                            layoutParams.setMargins(0,20,0,0);
+//
+//                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//                            imageView.setLayoutParams(layoutParams);
+//
+//
+//                            quoteBoxLayout.addView(imageView);
+//
+//
+//                            final String finalKey = key;
+//                            imageView.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    OnclickBookDetail(finalKey);
+//                                }
+//                            });
+//
+//                            Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(imageView);
+//
+//
+//                        }
                         bookSearch.add( new BookAwardDetail(
                                 key,
                                 obj.getJSONObject(key).getString("bookname"),
@@ -142,6 +199,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.item_Home);
+    }
+    public int calLike(JSONObject obj){
+        int count = 0;
+        try {
+            Iterator j = obj.keys();
+            String key = "";
+            while (j.hasNext()) {
+                key = j.next().toString();
+
+                if ( obj.getJSONObject(key).getString("status").equals("like")){
+                    count += 1;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return count;
     }
     public void OnclickBookDetail(String bookName){
         UserDetail.bookserect = bookName;

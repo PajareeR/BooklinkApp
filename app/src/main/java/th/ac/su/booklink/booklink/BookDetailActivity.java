@@ -11,8 +11,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -57,14 +59,20 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import th.ac.su.booklink.booklink.Details.CommentDetail;
 import th.ac.su.booklink.booklink.Details.UserDetail;
+
+import static java.util.Comparator.comparing;
 
 public class BookDetailActivity extends AppCompatActivity {
     TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook;
@@ -81,6 +89,7 @@ public class BookDetailActivity extends AppCompatActivity {
     Activity mcontext = BookDetailActivity.this;
     int widthDevice , hieghDevice;
 
+    ArrayList<CommentDetail> arrComment = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,12 +193,15 @@ public class BookDetailActivity extends AppCompatActivity {
     }
 
     public void getComment(final JSONObject objuser){
-        DatabaseReference  referenceComment = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/users/"+UserDetail.bookserect+"/comments");
+        commentReference = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books/"+UserDetail.bookserect+"/comments");
 
-        referenceComment.addValueEventListener(new ValueEventListener() {
+        commentReference.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                commentBox.removeAllViews();
+                arrComment.clear();
 
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     Map<String, String> map = (Map) ds.getValue();
@@ -197,13 +209,56 @@ public class BookDetailActivity extends AppCompatActivity {
                     try {
                         JSONObject obj =  objuser.getJSONObject(map.get("user")).getJSONObject("profile");
                         String img = (obj.has("pic")? obj.getString("pic"):"");
-                        createComment(img,map);
+                        String imgComment = map.get("pic").toString();
+
+                        int count = 0;
+                        boolean status = false;
+                        boolean checkUserlike = (ds.hasChild("userlike")? true: false);
+
+                        if (checkUserlike){
+                            for(DataSnapshot dslike : ds.child("userlike").getChildren()) {
+
+                                if (dslike.child("status").getValue().toString().equals("like")){
+                                    if (dslike.getKey().equals(UserDetail.username)){
+                                        status = true;
+                                    }
+                                    count += 1 ;
+                                }
+                            }
+                        }
+
+                        arrComment.add( new CommentDetail(
+                                ds.getKey(),
+                                map.get("user").toString(),
+                                new Date(Long.parseLong(map.get("time").toString())),
+                                img,
+                                map.get("comment").toString(),
+                                imgComment,
+                                status,
+                                count
+                        ));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
 
                 }
+                Collections.sort(arrComment, new Comparator<CommentDetail>() {
+                    public int compare(CommentDetail o1, CommentDetail o2) {
+                        return o1.getCommentTime().compareTo(o2.getCommentTime());
+                    }
+                });
+
+                if (arrComment.size() !=0 ){
+                    CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
+                    arrComment.remove(arrComment.indexOf(maxValue));
+                    arrComment.add(arrComment.size(), maxValue);
+
+                    for(int i = arrComment.size() - 1 ; i >=0 ; i--) {
+                        createComment(arrComment.get(i));
+                    }
+                }
+
             }
 
             @Override
@@ -213,7 +268,9 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void createComment( String img , Map map){
+
+
+    public void createComment(CommentDetail commentDetail){
         LinearLayout linearLayout = new LinearLayout(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -228,14 +285,15 @@ public class BookDetailActivity extends AppCompatActivity {
                 (int) (hieghDevice * 0.1)
         );
         circleImageView.setLayoutParams(circleParams);
-        circleImageView.setBorderWidth(50);
+        circleImageView.setBorderWidth(10);
         circleImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
 
+        String img = commentDetail.getUserImg();
         if (img.equals("")){
             circleImageView.setImageResource(R.drawable.sambook);
         }else {
             img = img.substring(1,img.length());
-            StorageReference storageReference = FirebaseStorage.getInstance("gs://pregnantmother-e8d1f.appspot.com").getReference()
+            StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
                     .child(img);
 
             Glide.with(mcontext)
@@ -257,23 +315,24 @@ public class BookDetailActivity extends AppCompatActivity {
         );
         txtUsername.setLayoutParams(layoutParamstxt);
         txtUsername.setTextColor(Color.BLACK);
-        txtUsername.setTextSize(50);
+        txtUsername.setTextSize(20);
         Typeface type = ResourcesCompat.getFont(this, R.font.sukhumvitsetbold);
         txtUsername.setTypeface(type);
-        txtUsername.setText(map.get("user").toString());
+        txtUsername.setText(commentDetail.getCommentUser());
 
         TextView txtTime = new TextView(this);
         txtTime.setLayoutParams(layoutParamstxt);
-        txtTime.setTextSize(50);
+        txtTime.setTextSize(20);
         txtTime.setTypeface(type);
+        txtTime.setText(commentDetail.getCommentTimeDring());
 
         TextView txtComment = new TextView(this);
         txtComment.setLayoutParams(layoutParamstxt);
         txtComment.setTextColor(Color.BLACK);
-        txtComment.setTextSize(50);
+        txtComment.setTextSize(20);
         Typeface type1 = ResourcesCompat.getFont(this, R.font.csprajad);
         txtComment.setTypeface(type1);
-        txtComment.setText(map.get("comment").toString());
+        txtComment.setText(commentDetail.getComment());
 
         ImageView imageView = new ImageView(this);
         LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(
@@ -284,23 +343,52 @@ public class BookDetailActivity extends AppCompatActivity {
         imageView.setLayoutParams(imgParams);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
+        String imgComment = commentDetail.getCommentImg();
+        if (imgComment.equals("")){
+            imageView.setVisibility(View.GONE);
+        }else {
+            imgComment = imgComment.substring(1,imgComment.length());
+            StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
+                    .child(imgComment);
+
+            Glide.with(mcontext)
+                    .using(new FirebaseImageLoader())
+                    .load(storageReference)
+                    .into(imageView);
+        }
+
         LinearLayout linearLayoutLike = new LinearLayout(this);
         linearLayoutLike.setLayoutParams(layoutParams);
         linearLayoutLike.setOrientation(LinearLayout.HORIZONTAL);
 
-        ImageView imageViewLike = new ImageView(this);
+        final ImageView imageViewLike = new ImageView(this);
         LinearLayout.LayoutParams imgParamslike = new LinearLayout.LayoutParams(
                 (int) (widthDevice * 0.05),
                 (int) (hieghDevice * 0.05)
         );
         imageViewLike.setLayoutParams(imgParamslike);
-        imageViewLike.setImageResource(R.drawable.liket);
+        if (commentDetail.isStatusLike()){
+            imageViewLike.setImageResource(R.drawable.likeb);
+        }else {
+            imageViewLike.setImageResource(R.drawable.liket);
+        }
 
         TextView txtPeople = new TextView(this);
         txtPeople.setLayoutParams(layoutParamstxt);
-        txtPeople.setTextSize(50);
+        txtPeople.setTextSize(20);
         txtPeople.setTypeface(type);
+        txtPeople.setText(" "+ commentDetail.getCountLike() + " คน");
 
+        imageViewLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (commentDetail.isStatusLike()){
+                    commentReference.child(commentDetail.getCommentKey()).child("userlike").child(UserDetail.username).child("status").setValue("unlike");
+                }else {
+                    commentReference.child(commentDetail.getCommentKey()).child("userlike").child(UserDetail.username).child("status").setValue("like");
+                }
+            }
+        });
 
         linearLayoutLike.addView(imageViewLike);
         linearLayoutLike.addView(txtPeople);
@@ -426,8 +514,8 @@ public class BookDetailActivity extends AppCompatActivity {
             String img = (checkImg? saveImg() : "");
 
             map.put("pic", img);
-            map.put("status", "false");
             map.put("like", "0");
+
             commentReference.push().setValue(map);
             edtComment.setText("");
         }
