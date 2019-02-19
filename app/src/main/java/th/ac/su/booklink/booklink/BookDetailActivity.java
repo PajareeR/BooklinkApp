@@ -36,6 +36,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -53,7 +55,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -129,8 +134,8 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject obj = new JSONObject(response).getJSONObject("books");
-                    final JSONObject objUsers = new JSONObject(response).getJSONObject("users");
+                    JSONObject obj = new JSONObject(response).getJSONObject("Books");
+                    final JSONObject objUsers = new JSONObject(response).getJSONObject("Users");
 
                     NameBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("bookname"));
                     AuthorBook.setText("นักเขียน : "+obj.getJSONObject(UserDetail.bookserect).getString("authorname"));
@@ -143,7 +148,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
 
-
+                    getComment(objUsers);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -178,7 +183,37 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void createComment(JSONObject obj , Map map){
+    public void getComment(final JSONObject objuser){
+        DatabaseReference  referenceComment = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/users/"+UserDetail.bookserect+"/comments");
+
+        referenceComment.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, String> map = (Map) ds.getValue();
+
+                    try {
+                        JSONObject obj =  objuser.getJSONObject(map.get("user")).getJSONObject("profile");
+                        String img = (obj.has("pic")? obj.getString("pic"):"");
+                        createComment(img,map);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    public void createComment( String img , Map map){
         LinearLayout linearLayout = new LinearLayout(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -196,6 +231,20 @@ public class BookDetailActivity extends AppCompatActivity {
         circleImageView.setBorderWidth(50);
         circleImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
 
+        if (img.equals("")){
+            circleImageView.setImageResource(R.drawable.sambook);
+        }else {
+            img = img.substring(1,img.length());
+            StorageReference storageReference = FirebaseStorage.getInstance("gs://pregnantmother-e8d1f.appspot.com").getReference()
+                    .child(img);
+
+            Glide.with(mcontext)
+                    .using(new FirebaseImageLoader())
+                    .load(storageReference)
+                    .into(circleImageView);
+        }
+
+
         LinearLayout linearLayout1 = new LinearLayout(this);
         linearLayout1.setLayoutParams(layoutParams);
         linearLayout1.setOrientation(LinearLayout.VERTICAL);
@@ -211,6 +260,7 @@ public class BookDetailActivity extends AppCompatActivity {
         txtUsername.setTextSize(50);
         Typeface type = ResourcesCompat.getFont(this, R.font.sukhumvitsetbold);
         txtUsername.setTypeface(type);
+        txtUsername.setText(map.get("user").toString());
 
         TextView txtTime = new TextView(this);
         txtTime.setLayoutParams(layoutParamstxt);
@@ -223,6 +273,7 @@ public class BookDetailActivity extends AppCompatActivity {
         txtComment.setTextSize(50);
         Typeface type1 = ResourcesCompat.getFont(this, R.font.csprajad);
         txtComment.setTypeface(type1);
+        txtComment.setText(map.get("comment").toString());
 
         ImageView imageView = new ImageView(this);
         LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(
@@ -264,6 +315,8 @@ public class BookDetailActivity extends AppCompatActivity {
         linearLayout.addView(linearLayout1);
 
         commentBox.addView(linearLayout);
+
+
 
     }
 
