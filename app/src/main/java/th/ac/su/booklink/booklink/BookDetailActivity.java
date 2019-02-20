@@ -306,7 +306,7 @@ public class BookDetailActivity extends AppCompatActivity {
         LinearLayout linearLayout1 = new LinearLayout(this);
         linearLayout1.setLayoutParams(layoutParams);
         linearLayout1.setOrientation(LinearLayout.VERTICAL);
-        linearLayout1.setPadding(100,0,100,0);
+        linearLayout1.setPadding(20,0,20,0);
 
         TextView txtUsername = new TextView(this);
         LinearLayout.LayoutParams layoutParamstxt = new LinearLayout.LayoutParams(
