@@ -294,7 +294,7 @@
                     android:id="@+id/btnImageUp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/btnsend"
+                    android:background="@drawable/chooseimg"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     />
