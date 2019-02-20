@@ -281,12 +281,12 @@ public class BookDetailActivity extends AppCompatActivity {
 
         CircleImageView circleImageView = new CircleImageView(this);
         LinearLayout.LayoutParams circleParams = new LinearLayout.LayoutParams(
-                (int) (hieghDevice * 0.1),
-                (int) (hieghDevice * 0.1)
+                (int) (hieghDevice * 0.08),
+                (int) (hieghDevice * 0.08)
         );
         circleImageView.setLayoutParams(circleParams);
-        circleImageView.setBorderWidth(10);
-        circleImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
+        circleImageView.setBorderWidth(3);
+        circleImageView.setBorderColor(getResources().getColor(R.color.colorbg));
 
         String img = commentDetail.getUserImg();
         if (img.equals("")){
@@ -322,7 +322,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         TextView txtTime = new TextView(this);
         txtTime.setLayoutParams(layoutParamstxt);
-        txtTime.setTextSize(20);
+        txtTime.setTextSize(16);
         txtTime.setTypeface(type);
         txtTime.setText(commentDetail.getCommentTimeDring());
 
@@ -359,12 +359,16 @@ public class BookDetailActivity extends AppCompatActivity {
 
         LinearLayout linearLayoutLike = new LinearLayout(this);
         linearLayoutLike.setLayoutParams(layoutParams);
+
         linearLayoutLike.setOrientation(LinearLayout.HORIZONTAL);
 
         final ImageView imageViewLike = new ImageView(this);
         LinearLayout.LayoutParams imgParamslike = new LinearLayout.LayoutParams(
+
                 (int) (widthDevice * 0.05),
                 (int) (hieghDevice * 0.05)
+
+
         );
         imageViewLike.setLayoutParams(imgParamslike);
         if (commentDetail.isStatusLike()){
@@ -375,6 +379,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         TextView txtPeople = new TextView(this);
         txtPeople.setLayoutParams(layoutParamstxt);
+        txtPeople.setPadding(0,6,0,0);
         txtPeople.setTextSize(20);
         txtPeople.setTypeface(type);
         txtPeople.setText(" "+ commentDetail.getCountLike() + " คน");

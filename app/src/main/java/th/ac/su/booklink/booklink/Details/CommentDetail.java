@@ -115,15 +115,15 @@ public class CommentDetail {
         hours = hours % 24;
 
         if (days > 0){
-            return " "+days+" วันที่ผ่านมา";
+            return ""+days+" วันที่ผ่านมา";
         }else if (hours > 0){
-            return " "+hours+" ชม.ที่ผ่านมา";
+            return ""+hours+" ชั่วโมงที่ผ่านมา";
         }else if (minutes > 0){
-            return " "+minutes+" น.ที่ผ่านมา";
+            return ""+minutes+" นาทีที่ผ่านมา";
         }else if (seconds > 0){
-            return " "+seconds+" วินาทีที่ผ่านมา";
+            return ""+seconds+" วินาทีที่ผ่านมา";
         }else {
-            return " เมื่อสักครู่";
+            return "เมื่อสักครู่";
         }
 
 

@@ -81,23 +81,14 @@ public class BookCelebActivity extends AppCompatActivity {
 
                     JSONObject objceleb = new JSONObject(response).getJSONObject("Celebs").getJSONObject(UserDetail.celebserect);
                     nameCeleb.setText(objceleb.getString("name"));
-
-
-
-
                     JSONObject obj = new JSONObject(response).getJSONObject("Celebs").getJSONObject(UserDetail.celebserect).getJSONObject("book");
-
                     Iterator i = obj.keys();
                     String key = "";
-
-
                     while (i.hasNext()) {
                         key = i.next().toString();
 
                         createImage(new JSONObject(response).getJSONObject("Books").getJSONObject(key) , key);
-
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -109,15 +100,10 @@ public class BookCelebActivity extends AppCompatActivity {
             }
         });
 
-
         RequestQueue requestQueue = Volley.newRequestQueue(BookCelebActivity.this);
         requestQueue.add(request);
-
-
     }
     public void createImage (final JSONObject obj , final String bookId) throws JSONException {
-
-
 
         CardView cardView = new CardView(this);
         int cardwidth = (int) (widthDevice * 0.8);

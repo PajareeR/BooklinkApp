@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout quoteBoxLayout;
     ArrayList<BookAwardDetail> bookSearch = new ArrayList<>();
     public ListView listSearch;
+
+    int widthDevice , hieghDevice;
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
 
     @Override
@@ -100,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                     CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
+
+
+
+
                                     TextView textView = new TextView(MainActivity.this);
                                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                             LinearLayout.LayoutParams.MATCH_PARENT,
