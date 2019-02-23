@@ -215,6 +215,37 @@
         android:textColor="#000"
         android:fontFamily="@font/csprajad"
         />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/colordivi"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/reviewCeleb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="รีวิวจากคุณ อะไร"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:textColor="#000"
+            android:textSize="16dp"
+            android:fontFamily="@font/sukhumvitsettext"
+            />
+        <TextView
+            android:id="@+id/contentReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:fontFamily="@font/csprajad"
+            />
+
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="8dp"

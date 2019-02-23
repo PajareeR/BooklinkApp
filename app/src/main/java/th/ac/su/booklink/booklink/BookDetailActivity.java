@@ -15,6 +15,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.transition.Visibility;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
@@ -75,7 +76,7 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 import static java.util.Comparator.comparing;
 
 public class BookDetailActivity extends AppCompatActivity {
-    TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook;
+    TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook, reviewCeleb, contentReview;
     ImageView ImageBook, imageShow;
     ImageButton btnFav, btnRead, btnWant, btnBought, btnReading;
     EditText edtComment;
@@ -88,6 +89,9 @@ public class BookDetailActivity extends AppCompatActivity {
     boolean checkImg;
     Activity mcontext = BookDetailActivity.this;
     int widthDevice , hieghDevice;
+    String celeb = "";
+    String celebReview = "";
+
 
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
     @Override
@@ -106,6 +110,11 @@ public class BookDetailActivity extends AppCompatActivity {
         CategoryBook = (TextView) findViewById(R.id.CatagoryBook);
         ISBNBook = (TextView) findViewById(R.id.ISBNBook); //xx
         AdditionBook = (TextView) findViewById(R.id.AdditionBook);
+
+        reviewCeleb = (TextView) findViewById(R.id.reviewCeleb);
+        contentReview = (TextView) findViewById(R.id.contentReview);
+
+
         btnSendComment = (Button) findViewById(R.id.btnSendComment);
 
         btnImageUp = (Button) findViewById(R.id.btnImageUp);
@@ -125,6 +134,17 @@ public class BookDetailActivity extends AppCompatActivity {
         edtComment = (EditText)findViewById(R.id.edtComment);
 
         commentBox = (LinearLayout)findViewById(R.id.commentBox);
+
+
+//        if (getIntent().hasExtra("Celeb")){
+//            celeb  = getIntent().getExtras().getString("Celeb");
+//            celebReview = getIntent().getExtras().getString("ReviewCeleb");
+//            reviewCeleb.setText("รีวิวจากคุณ"+celeb);
+//            contentReview.setText(celebReview);
+//        }else {
+//            reviewCeleb.setVisibility(View.GONE);
+//            contentReview.setVisibility(View.GONE);
+//        }
 
         if (ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED &&
@@ -258,7 +278,6 @@ public class BookDetailActivity extends AppCompatActivity {
                         createComment(arrComment.get(i));
                     }
                 }
-
             }
 
             @Override
@@ -290,7 +309,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         String img = commentDetail.getUserImg();
         if (img.equals("")){
-            circleImageView.setImageResource(R.drawable.sambook);
+            circleImageView.setImageResource(R.drawable.smile);
         }else {
             img = img.substring(1,img.length());
             StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
@@ -336,12 +355,13 @@ public class BookDetailActivity extends AppCompatActivity {
 
         ImageView imageView = new ImageView(this);
         LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(
-                (int) (widthDevice * 0.2),
-                (int) (hieghDevice * 0.2),
+                (int) (widthDevice * 0.7),
+                (int) (hieghDevice * 0.4),
                 Gravity.CENTER
         );
         imageView.setLayoutParams(imgParams);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
 
         String imgComment = commentDetail.getCommentImg();
         if (imgComment.equals("")){
@@ -356,6 +376,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     .load(storageReference)
                     .into(imageView);
         }
+        
 
         LinearLayout linearLayoutLike = new LinearLayout(this);
         linearLayoutLike.setLayoutParams(layoutParams);

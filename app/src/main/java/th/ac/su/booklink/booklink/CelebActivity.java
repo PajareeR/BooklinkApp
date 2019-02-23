@@ -30,6 +30,8 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 
 public class CelebActivity extends AppCompatActivity {
     LinearLayout celebBoxLayout;
+    int widthDevice , hieghDevice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,8 @@ public class CelebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_celeb);
 
         celebBoxLayout  = (LinearLayout) findViewById(R.id.celebBox);
+        widthDevice = getWindowManager().getDefaultDisplay().getWidth();
+        hieghDevice = getWindowManager().getDefaultDisplay().getHeight();
 
         String url = "https://booklink-94984.firebaseio.com/Celebs.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -57,7 +61,7 @@ public class CelebActivity extends AppCompatActivity {
                         ImageView imageView = new ImageView(CelebActivity.this);
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
-                                270
+                                (int) (hieghDevice * 0.35)
                         );
 
                         layoutParams.setMargins(0,20,0,0);

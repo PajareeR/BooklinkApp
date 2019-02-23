@@ -36,7 +36,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".BookselfActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label=""/>
         <activity
             android:name=".AwardActivity"
             android:screenOrientation="portrait" />

@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,7 +88,7 @@ public class BookCelebActivity extends AppCompatActivity {
                     while (i.hasNext()) {
                         key = i.next().toString();
 
-                        createImage(new JSONObject(response).getJSONObject("Books").getJSONObject(key) , key);
+                        createImage(new JSONObject(response).getJSONObject("Books").getJSONObject(key),objceleb, key);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -103,15 +104,15 @@ public class BookCelebActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(BookCelebActivity.this);
         requestQueue.add(request);
     }
-    public void createImage (final JSONObject obj , final String bookId) throws JSONException {
+    public void createImage (final JSONObject obj ,final JSONObject objCeleb , final String bookId) throws JSONException {
 
-        CardView cardView = new CardView(this);
-        int cardwidth = (int) (widthDevice * 0.8);
-        int cardhiegh = (int) (hieghDevice * 0.7);
-        CardView.LayoutParams params = new CardView.LayoutParams(
-                cardwidth,
-                cardhiegh
-        );
+            CardView cardView = new CardView(this);
+            int cardwidth = (int) (widthDevice * 0.8);
+            int cardhiegh = (int) (hieghDevice * 0.7);
+            CardView.LayoutParams params = new CardView.LayoutParams(
+                    cardwidth,
+                    cardhiegh
+            );
 
         params.setMargins( (int) (widthDevice * 0.1), (int) (widthDevice * 0.1), 0,  (int) (widthDevice * 0.1));
         cardView.setCardElevation((float) (widthDevice*0.02));
@@ -140,7 +141,19 @@ public class BookCelebActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                UserDetail.bookserect =  bookId;
-               startActivity(new Intent(BookCelebActivity.this , BookDetailActivity.class));
+
+//                try {
+                    Log.d("log show bunble" , "ddddddddddddddddddddddddddddd");
+                    Intent mIntent = new Intent(BookCelebActivity.this, BookDetailActivity.class);
+//                    Bundle mBundle = new Bundle();
+//                    mBundle.putString("Celeb", objCeleb.getString("name"));
+//                    mBundle.putString("ReviewCeleb",  objCeleb.getJSONObject(bookId).getString("review"));
+//                    mIntent.putExtras(mBundle);
+                    startActivity(mIntent);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
             }
 
         });

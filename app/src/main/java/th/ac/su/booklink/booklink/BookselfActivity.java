@@ -1,11 +1,19 @@
 package th.ac.su.booklink.booklink;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.BottomNavigationView;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,33 +29,48 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import th.ac.su.booklink.booklink.Details.ImageDetail;
 import th.ac.su.booklink.booklink.Details.UserDetail;
 
 public class BookselfActivity extends AppCompatActivity {
 
     ArrayList<ImageDetail> imageAL = new ArrayList<>();
-    TextView textFav, textRead, textWant, textBought, textReading;
+    TextView textFav, textRead, textWant, textBought, textReading, textUserName;
     RelativeLayout imageBox;
     String nowStatus;
-    ImageButton imageProfile;
-
-
+    ImageView imageProfile;
+    Bitmap bitmapProfile;
+    Activity mcontextt = BookselfActivity.this;
+    boolean checkImg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();//barTop
-
+//      getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_bookself);
-        imageProfile = (ImageButton) findViewById(R.id.imageProfile);
+        imageProfile = (ImageView) findViewById(R.id.imageProfile);
 
         imageBox = (RelativeLayout) findViewById(R.id.imageBox);
 
@@ -56,10 +80,156 @@ public class BookselfActivity extends AppCompatActivity {
         textBought = (TextView) findViewById(R.id.textBought);
         textReading = (TextView) findViewById(R.id.textReading);
 
+        textUserName = (TextView) findViewById(R.id.textUserName);
+
+
         textFav.performClick();
+
+        textUserName.setText(UserDetail.username);
+
+        DatabaseReference reference1 = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Users/"+UserDetail.username+"");
+
+        reference1.child ("profile").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                String img = snapshot.child ("pic").getValue ().toString ();
+
+                img = img.substring(1,img.length());
+                StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
+                        .child(img);
+
+                Glide.with(BookselfActivity.this)
+                        .using(new FirebaseImageLoader())
+                        .load(storageReference)
+                        .into(imageProfile);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        });
+
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.outsystem, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.logout:
+                startActivity(new Intent(BookselfActivity.this, LoginActivity.class));
+                Toast.makeText(BookselfActivity.this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    private void selectImgOrTakeImg() {
+        final int REQUEST_CAMERA = 0;
+        final int SELECT_FILE = 1;
+
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mcontextt);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (items[item].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[item].equals("Choose from Library")) {
+                    Intent intent = new Intent(
+                            Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent,SELECT_FILE);
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && null != data){
+            switch(requestCode) {
+                case 0:
+                    Bundle extras = data.getExtras();
+                    bitmapProfile = (Bitmap) extras.get("data");
+                    break;
+                case 1:
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                    Cursor cursor = getContentResolver().query(selectedImage,
+                            filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String picturePath = cursor.getString(columnIndex);
+                    cursor.close();
+                    bitmapProfile = BitmapFactory.decodeFile(picturePath);
+                    break;
+
+            }
+
+            checkImg = true;
+
+            imageProfile.setVisibility(View.VISIBLE);
+
+
+            imageProfile.setImageBitmap(bitmapProfile);
+
+
+        }
+
+
+    }
+
+    public String saveImg(){
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmapProfile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] dataPic = baos.toByteArray();
+
+        String id = UUID.randomUUID().toString();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com");
+        StorageReference storageRef = storage.getReference();
+        StorageReference imagesRef = storageRef.child("images/users/"+UserDetail.username+"/user/"+
+                "profile_"+id+".jpg");
+        UploadTask uploadTask = imagesRef.putBytes(dataPic);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            }
+        });
+
+        return imagesRef.getPath();
+
+    }
+
+
+
+
 
     public void OnclickMybookself(View view) {
         TextView btnSerect = (TextView) view;
