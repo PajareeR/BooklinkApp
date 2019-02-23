@@ -142,17 +142,17 @@ public class BookCelebActivity extends AppCompatActivity {
             public void onClick(View v) {
                UserDetail.bookserect =  bookId;
 
-//                try {
-                    Log.d("log show bunble" , "ddddddddddddddddddddddddddddd");
+                try {
+                    Log.d("log show bunble" , objCeleb.getString("name"));
                     Intent mIntent = new Intent(BookCelebActivity.this, BookDetailActivity.class);
-//                    Bundle mBundle = new Bundle();
-//                    mBundle.putString("Celeb", objCeleb.getString("name"));
-//                    mBundle.putString("ReviewCeleb",  objCeleb.getJSONObject(bookId).getString("review"));
-//                    mIntent.putExtras(mBundle);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("Celeb", objCeleb.getString("name"));
+                    mBundle.putString("ReviewCeleb",  objCeleb.getJSONObject("book").getJSONObject(bookId).getString("review"));
+                    mIntent.putExtras(mBundle);
                     startActivity(mIntent);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
 

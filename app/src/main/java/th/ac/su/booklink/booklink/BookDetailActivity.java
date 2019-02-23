@@ -86,7 +86,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     DatabaseReference commentReference;
     Bitmap bitmapComment;
-    boolean checkImg;
+    boolean checkImg = false;
     Activity mcontext = BookDetailActivity.this;
     int widthDevice , hieghDevice;
     String celeb = "";
@@ -136,15 +136,15 @@ public class BookDetailActivity extends AppCompatActivity {
         commentBox = (LinearLayout)findViewById(R.id.commentBox);
 
 
-//        if (getIntent().hasExtra("Celeb")){
-//            celeb  = getIntent().getExtras().getString("Celeb");
-//            celebReview = getIntent().getExtras().getString("ReviewCeleb");
-//            reviewCeleb.setText("รีวิวจากคุณ"+celeb);
-//            contentReview.setText(celebReview);
-//        }else {
-//            reviewCeleb.setVisibility(View.GONE);
-//            contentReview.setVisibility(View.GONE);
-//        }
+        if (getIntent().hasExtra("Celeb")){
+            celeb  = getIntent().getExtras().getString("Celeb");
+            celebReview = getIntent().getExtras().getString("ReviewCeleb");
+            reviewCeleb.setText("รีวิวจากคุณ"+celeb);
+            contentReview.setText(celebReview);
+        }else {
+            reviewCeleb.setVisibility(View.GONE);
+            contentReview.setVisibility(View.GONE);
+        }
 
         if (ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED &&
@@ -223,6 +223,7 @@ public class BookDetailActivity extends AppCompatActivity {
                 commentBox.removeAllViews();
                 arrComment.clear();
 
+                boolean haveLike = false;
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     Map<String, String> map = (Map) ds.getValue();
 
@@ -243,6 +244,7 @@ public class BookDetailActivity extends AppCompatActivity {
                                         status = true;
                                     }
                                     count += 1 ;
+                                    haveLike =true;
                                 }
                             }
                         }
@@ -270,9 +272,12 @@ public class BookDetailActivity extends AppCompatActivity {
                 });
 
                 if (arrComment.size() !=0 ){
-                    CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
-                    arrComment.remove(arrComment.indexOf(maxValue));
-                    arrComment.add(arrComment.size(), maxValue);
+                    if (haveLike){
+                        CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
+                        arrComment.remove(arrComment.indexOf(maxValue));
+                        arrComment.add(arrComment.size(), maxValue);
+                    }
+
 
                     for(int i = arrComment.size() - 1 ; i >=0 ; i--) {
                         createComment(arrComment.get(i));
@@ -315,7 +320,7 @@ public class BookDetailActivity extends AppCompatActivity {
             StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
                     .child(img);
 
-            Glide.with(mcontext)
+            Glide.with(getApplicationContext())
                     .using(new FirebaseImageLoader())
                     .load(storageReference)
                     .into(circleImageView);
@@ -371,7 +376,7 @@ public class BookDetailActivity extends AppCompatActivity {
             StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
                     .child(imgComment);
 
-            Glide.with(mcontext)
+            Glide.with(getApplicationContext())
                     .using(new FirebaseImageLoader())
                     .load(storageReference)
                     .into(imageView);
@@ -500,7 +505,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     }
 
-    public String saveImg(){
+    public void saveImg(Map<String, String> map){
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmapComment.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -516,35 +521,43 @@ public class BookDetailActivity extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                map.put("pic", "");
+                commentReference.push().setValue(map);
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                map.put("pic", imagesRef.getPath());
+                commentReference.push().setValue(map);
             }
         });
 
-        return imagesRef.getPath();
 
     }
 
     private void insertComment() {
         String comment = edtComment.getText().toString() ;
         Calendar calendar = Calendar.getInstance();
-
-        if (!comment.equals("")){
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("user", UserDetail.username);
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("user", UserDetail.username);
+        if (!comment.equals("")) {
             map.put("comment", comment);
-            map.put("time", String.valueOf(calendar.getTimeInMillis()));
-
-            String img = (checkImg? saveImg() : "");
-
-            map.put("pic", img);
-            map.put("like", "0");
-
-            commentReference.push().setValue(map);
-            edtComment.setText("");
+        }else {
+            map.put("comment", "");
         }
+        map.put("time", String.valueOf(calendar.getTimeInMillis()));
+        map.put("like", "0");
+        if (checkImg){
+            saveImg(map);
+        }else {
+            map.put("pic", "");
+            commentReference.push().setValue(map);
+        }
+
+        edtComment.setText("");
+        imageShow.setVisibility(View.GONE);
+        checkImg = false;
+
     }
 
     public void Onclicktobookself(View view) {
