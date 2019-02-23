@@ -56,20 +56,30 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/sukhumvitsetbold"
             android:text="ประโยคเด็ด"/>
-
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
-
+            android:layout_height="match_parent">
             <LinearLayout
-                android:id="@+id/quoteBox"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                />
+                android:orientation="vertical">
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/quoteBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        />
+                </HorizontalScrollView>
+            </LinearLayout>
+
+
         </ScrollView>
 
     </LinearLayout>
