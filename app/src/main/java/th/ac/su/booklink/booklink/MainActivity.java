@@ -1,17 +1,15 @@
 package th.ac.su.booklink.booklink;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -22,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -32,7 +29,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,28 +38,45 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import th.ac.su.booklink.booklink.Adapters.BookAwardAdapter;
+import th.ac.su.booklink.booklink.Adapters.BookQuoteAdapter;
 import th.ac.su.booklink.booklink.Adapters.BookSearchAdapter;
 import th.ac.su.booklink.booklink.Details.BookAwardDetail;
 import th.ac.su.booklink.booklink.Details.CommentDetail;
+import th.ac.su.booklink.booklink.Details.QuoteDetail;
 import th.ac.su.booklink.booklink.Details.UserDetail;
 
 import static java.util.Comparator.comparing;
 
 public class MainActivity extends AppCompatActivity {
-    LinearLayout quoteBoxLayout;
+    ListView listQuote;
     ArrayList<BookAwardDetail> bookSearch = new ArrayList<>();
+    TextView messageQuote, subjectMess, nameBookQuote, authorBookQuote;
+    ImageView imageBook;
     public ListView listSearch;
 
-    int widthDevice , hieghDevice;
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
+    ArrayList<QuoteDetail> arrQuote = new ArrayList<>();
+
+    Context mcontext = MainActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_main);
-        quoteBoxLayout  = (LinearLayout) findViewById(R.id.quoteBox);
+        listQuote  = (ListView) findViewById(R.id.listQuote);
+
+        messageQuote = (TextView) findViewById(R.id.messageQuote);
+        subjectMess = (TextView) findViewById(R.id.subjectMess);
+        nameBookQuote = (TextView) findViewById(R.id.nameBookQuote);
+        authorBookQuote = (TextView) findViewById(R.id.authorBookQuote);
+
+        imageBook = (ImageView) findViewById(R.id.imageBook);
+
+
+
+
+
 
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -104,64 +117,26 @@ public class MainActivity extends AppCompatActivity {
 
                                     CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
 
-
-
-
-                                    TextView textView = new TextView(MainActivity.this);
-                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                                            LinearLayout.LayoutParams.MATCH_PARENT,
-                                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                                    textView.setLayoutParams(layoutParams);
-                                    textView.setText("Comment : " + maxValue.getComment() + "\n"
-                                            + "Author : " + maxValue.getCommentUser()+"\n"+ "Book name : "
-                                            + objbook.getString("bookname") +"\n" + " Book Author : "
-                                            + objbook.getString("authorname"));
-                                    quoteBoxLayout.addView(textView);
+                                    arrQuote.add(new QuoteDetail(
+                                            key,maxValue.getComment(),
+                                            maxValue.getCommentUser(),
+                                            objbook.getString("imgbook"),
+                                            objbook.getString("bookname"),
+                                            objbook.getString("authorname")));
                                 }else {
-                                    TextView textView = new TextView(MainActivity.this);
-                                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                                            LinearLayout.LayoutParams.MATCH_PARENT,
-                                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                                    textView.setLayoutParams(layoutParams);
-                                    textView.setText("Other : " + objQuote.getJSONObject("other").getString("title") + "\n"
-                                            + "Author : " + objQuote.getJSONObject("other").getString("author")+"\n"+ "Book name : "
-                                            + objbook.getString("bookname") +"\n" + " Book Author : "
-                                            + objbook.getString("authorname"));
-                                    quoteBoxLayout.addView(textView);
+
+                                    arrQuote.add(new QuoteDetail(
+                                            key,objQuote.getJSONObject("other").getString("title"),
+                                            objQuote.getJSONObject("other").getString("author"),
+                                            objbook.getString("imgbook"),
+                                            objbook.getString("bookname"),
+                                            objbook.getString("authorname")));
                                 }
 
                             }
                         }
 
 
-//                        if (!obj.getJSONObject(key).getString("quotebook").equals("nill")){
-//                            ImageView imageView = new ImageView(MainActivity.this);
-//                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-//                                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                                    270
-//                            );
-//
-//                            layoutParams.setMargins(0,20,0,0);
-//
-//                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//                            imageView.setLayoutParams(layoutParams);
-//
-//
-//                            quoteBoxLayout.addView(imageView);
-//
-//
-//                            final String finalKey = key;
-//                            imageView.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    OnclickBookDetail(finalKey);
-//                                }
-//                            });
-//
-//                            Picasso.get().load(obj.getJSONObject(key).getString("quotebook")).into(imageView);
-//
-//
-//                        }
                         bookSearch.add( new BookAwardDetail(
                                 key,
                                 obj.getJSONObject(key).getString("bookname"),
@@ -170,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
                         ));
 
                     }
+
+                    BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote,mcontext);
+                    listQuote.setAdapter(bookQuoteAdapter);
+                    bookQuoteAdapter.notifyDataSetChanged();
+
 
                 } catch (JSONException e) {
                 e.printStackTrace();
@@ -207,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.item_Home);
     }
+
+
     public int calLike(JSONObject obj){
         int count = 0;
         try {
