@@ -23,6 +23,7 @@ public class AwardAdapter extends BaseAdapter {
     View view;
 
 
+
     public AwardAdapter(Context context, String[] Item, int[] flags) {
         this.context = context;
         this.Item = Item;

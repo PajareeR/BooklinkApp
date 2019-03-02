@@ -5,6 +5,7 @@
         android:id="@+id/item_Home"
         android:icon="@drawable/thome"
         android:title="หน้าหลัก"
+
        />
 
     <item

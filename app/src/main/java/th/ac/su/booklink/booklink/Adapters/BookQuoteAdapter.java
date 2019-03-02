@@ -69,9 +69,10 @@ public class BookQuoteAdapter extends BaseAdapter {
 
         h.messageQuote.setText('"'+list.get(position).getMessageQuote()+'"');
 
-        h.subjectMess.setText(list.get(position).getSubjectMess());
-        h.nameBookQuote.setText(list.get(position).getNameBookQuote());
-        h.authorBookQuote.setText(list.get(position).getAuthorBookQuote());
+
+        h.subjectMess.setText("ประโยคเด็ดโดย : "+list.get(position).getSubjectMess());
+        h.nameBookQuote.setText("หนังสือ : "+list.get(position).getNameBookQuote());
+        h.authorBookQuote.setText("นักเขียน : "+list.get(position).getAuthorBookQuote());
 
 
         Picasso.get().load(list.get(position).getImageBook()).into(h.imageBook);

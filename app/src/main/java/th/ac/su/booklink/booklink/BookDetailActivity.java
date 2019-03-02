@@ -82,6 +82,8 @@ public class BookDetailActivity extends AppCompatActivity {
     EditText edtComment;
     Button btnSendComment, btnImageUp ;
 
+
+
     LinearLayout commentBox;
 
     DatabaseReference commentReference;
@@ -570,31 +572,48 @@ public class BookDetailActivity extends AppCompatActivity {
                 break;
             case R.id.btnFav:
                 setStatusData("fav");
-                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือเล่มโปรด",Toast.LENGTH_SHORT).show();
+                Toast toast= Toast.makeText(getApplicationContext(),
+                        "บันทึกลงรายการหนังสือเล่มโปรด", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
 
                 break;
             case R.id.btnRead:
 
                 setStatusData("read");
-                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสืออ่านแล้ว",Toast.LENGTH_SHORT).show();
+                Toast toast2= Toast.makeText(getApplicationContext(),
+                        "บันทึกลงรายการหนังสืออ่านแล้ว", Toast.LENGTH_SHORT);
+                toast2.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast2.show();
 
                 break;
             case R.id.btnWant:
                 setStatusData("want");
-                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสืออยากซื้อ",Toast.LENGTH_SHORT).show();
+                Toast toast3= Toast.makeText(getApplicationContext(),
+                        "บันทึกลงรายการหนังสืออยากซื้อ", Toast.LENGTH_SHORT);
+                toast3.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast3.show();
 
                 break;
             case R.id.btnBought:
                 setStatusData("bought");
-                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือซื้อแล้ว",Toast.LENGTH_SHORT).show();
+                Toast toast4= Toast.makeText(getApplicationContext(),
+                        "บันทึกลงรายการหนังสือซื้อแล้ว", Toast.LENGTH_SHORT);
+                toast4.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast4.show();
 
                 break;
             case R.id.btnReading:
                 setStatusData("reading");
-                Toast.makeText(getApplicationContext(),"บันทึกลงรายการหนังสือกำลังอ่าน",Toast.LENGTH_SHORT).show();
+                Toast toast5= Toast.makeText(getApplicationContext(),
+                        "บันทึกลงรายการหนังสือกำลังอ่าน", Toast.LENGTH_SHORT);
+                toast5.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast5.show();
 
                 break;
         }
+
+
 
     }
 
@@ -643,6 +662,7 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch (obj.getString("fav")) {
                                 case "true":
                                     btnFav.setImageResource(R.drawable.bfav);
+
                                     break;
                                 case "false":
                                     btnFav.setImageResource(R.drawable.tfav);
@@ -651,6 +671,7 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch (obj.getString("read")) {
                                 case "true":
                                     btnRead.setImageResource(R.drawable.bread);
+
                                     break;
                                 case "false":
                                     btnRead.setImageResource(R.drawable.tread);
@@ -659,6 +680,7 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch (obj.getString("want")) {
                                 case "true":
                                     btnWant.setImageResource(R.drawable.bwant);
+
                                     break;
                                 case "false":
                                     btnWant.setImageResource(R.drawable.twant);
@@ -667,6 +689,7 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch (obj.getString("bought")) {
                                 case "true":
                                     btnBought.setImageResource(R.drawable.bbought);
+
                                     break;
                                 case "false":
                                     btnBought.setImageResource(R.drawable.tbought);
@@ -675,6 +698,7 @@ public class BookDetailActivity extends AppCompatActivity {
                             switch (obj.getString("reading")) {
                                 case "true":
                                     btnReading.setImageResource(R.drawable.breading);
+
                                     break;
                                 case "false":
                                     btnReading.setImageResource(R.drawable.treading);

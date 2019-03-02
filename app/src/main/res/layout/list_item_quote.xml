@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:elevation="5dp"
     app:cardCornerRadius="10dp"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
@@ -13,16 +14,19 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             android:gravity="center">
             <TextView
                 android:id="@+id/messageQuote"
+                android:gravity="center_vertical|center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sukhumvitsetsemibold"
-                android:textSize="30dp"
+                android:textSize="24dp"
                 android:textColor="#000"
                 android:text="ข้อความยาวๆ"/>
             <TextView
@@ -30,9 +34,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/messageQuote"
-                android:fontFamily="@font/sukhumvitsettext"
-                android:textSize="18dp"
-                android:textColor="#000"
+                android:fontFamily="@font/sukhumvitsetbold"
+                android:textSize="16dp"
+                android:textColor="#b7b7b7"
+
                 android:text="ชื่อเจ้าของข้อความ"/>
 
         </LinearLayout>
@@ -42,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="10dp">
             <ImageView
                 android:id="@+id/imageBook"
                 android:layout_width="80dp"
@@ -63,17 +69,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/messageQuote"
-                    android:fontFamily="@font/sukhumvitsettext"
-                    android:textSize="18dp"
+                    android:fontFamily="@font/csprajad"
+                    android:textSize="14dp"
                     android:textColor="#000"
+                    android:layout_marginRight="10dp"
                     android:text="ชื่อหนังสือ"/>
                 <TextView
                     android:id="@+id/authorBookQuote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/nameBookQuote"
-                    android:fontFamily="@font/sukhumvitsettext"
-                    android:textSize="18dp"
+                    android:layout_marginRight="10dp"
+
+                    android:fontFamily="@font/csprajad"
+                    android:textSize="14dp"
                     android:textColor="#000"
                     android:text="ชื่อนักเขียน"/>
             </LinearLayout>

@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -278,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, 1000, true);
+        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT, 1000, true);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override
