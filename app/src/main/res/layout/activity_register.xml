@@ -4,77 +4,234 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bgapp"
->
+    android:background="@drawable/bbgr"
 
-    <ImageView
-        android:layout_marginTop="30dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:background="@drawable/logo"
-       />
-    <EditText
+    >
+    <!--<ImageView-->
+        <!--android:id="@+id/imageProfile"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:src="@drawable/camera"-->
+        <!--android:background="@drawable/stock_borderblue"-->
+
+        <!--/>-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile"
+            android:layout_width="130dp"
+            android:scaleType="centerCrop"
+            android:layout_height="130dp"
+            android:src="@drawable/camera"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/stock_borderblue"/>
+        <!--<ImageButton-->
+            <!--android:id="@+id/profile"-->
+            <!--android:layout_width="130dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:layout_height="130dp"-->
+            <!--android:src="@drawable/camera"-->
+            <!--android:layout_marginTop="50dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:background="@drawable/stock_borderblue"/>-->
+    </LinearLayout>
 
-        android:background="@drawable/stock_border"
 
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:id="@+id/usernameId"
-        android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
-        android:hint="ชื่อผู้ใช้"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="สมัครสมาชิก"
+                android:fontFamily="@font/sukhumvitsetbold"
+                android:textColor="#000"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="20dp"
+                android:textSize="24dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/stock_border"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="#666"
+                android:fontFamily="@font/sukhumvitsetbold"
+                android:textSize="16dp"
+                android:drawablePadding="@dimen/com_facebook_likeview_text_size"
+                android:drawableStart="@drawable/user"
+                android:id="@+id/usernameId"
+                android:hint="ชื่อผู้ใช้"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/stock_border"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="#666"
+                android:fontFamily="@font/sukhumvitsetbold"
+                android:textSize="16dp"
+                android:drawablePadding="@dimen/com_facebook_likeview_text_size"
+                android:drawableStart="@drawable/envelope"
+                android:id="@+id/emailId"
+                android:hint="อีเมล"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/stock_border"
+                android:paddingLeft="20dp"
+                android:textColor="#666"
+
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/sukhumvitsetbold"
+                android:drawablePadding="@dimen/com_facebook_likeview_text_size"
+                android:drawableStart="@drawable/key"
+                android:textSize="16dp"
+                android:id="@+id/passwordId"
+                android:hint="รหัสผ่าน"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:background="@drawable/border_button"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/colorWhite"
+                android:backgroundTint="@color/colorPrimary"
+                android:fontFamily="@font/sukhumvitsetsemibold"
+                android:textSize="16dp"
+                android:layout_marginBottom="30dp"
+                android:text="สมัครสมาชิก"
+                android:id="@+id/btnRegis"/>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:id="@+id/btnLLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sukhumvitsetsemibold"
+            android:textSize="16dp"
+            android:paddingTop="10dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#666"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="ลงชื่อเข้าใช้"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+
+        <!--android:background="@drawable/stock_border"-->
+
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:id="@+id/usernameId"-->
+        <!--android:hint="ชื่อผู้ใช้"-->
+
+        <!--android:fontFamily="@font/sukhumvitsettext"-->
+        <!--android:textSize="16dp"-->
+
         />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
 
-        android:background="@drawable/stock_border"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="16dp"
+        <!--android:background="@drawable/stock_border"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:fontFamily="@font/sukhumvitsettext"-->
+        <!--android:textSize="16dp"-->
+        <!--android:id="@+id/emailId"-->
+        <!--android:hint="อีเมล"/>-->
 
-        android:id="@+id/emailId"
-        android:hint="อีเมล"/>
+    <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        <!--android:background="@drawable/stock_border"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:fontFamily="@font/sukhumvitsettext"-->
+        <!--android:textSize="16dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:id="@+id/passwordId"-->
+        <!--android:hint="รหัสผ่าน"/>-->
 
-        android:background="@drawable/stock_border"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:layout_marginLeft="20dp"
-        android:fontFamily="@font/sukhumvitsettext"
-        android:textSize="16dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/passwordId"
-        android:hint="รหัสผ่าน"/>
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        <!--android:background="@drawable/border_button"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:textColor="@color/colorWhite"-->
+        <!--android:backgroundTint="@color/colorPrimary"-->
+        <!--android:fontFamily="@font/sukhumvitsetsemibold"-->
+        <!--android:textSize="16dp"-->
 
-        android:background="@drawable/border_button"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="สมัครสมาชิก"
-        android:fontFamily="@font/sukhumvitsetsemibold"
-        android:textSize="16dp"
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
 
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/btnRegis"/>
+        <!--android:text="สมัครสมาชิก"-->
+        <!--android:id="@+id/btnRegis"-->
+        <!--/>-->
 
 
 

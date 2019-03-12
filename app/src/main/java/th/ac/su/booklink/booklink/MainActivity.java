@@ -40,24 +40,28 @@ import java.util.regex.Pattern;
 
 import th.ac.su.booklink.booklink.Adapters.BookQuoteAdapter;
 import th.ac.su.booklink.booklink.Adapters.BookSearchAdapter;
+import th.ac.su.booklink.booklink.Adapters.ProAdapter;
 import th.ac.su.booklink.booklink.Details.BookAwardDetail;
 import th.ac.su.booklink.booklink.Details.CommentDetail;
+import th.ac.su.booklink.booklink.Details.ProDetail;
 import th.ac.su.booklink.booklink.Details.QuoteDetail;
 import th.ac.su.booklink.booklink.Details.UserDetail;
 
 import static java.util.Comparator.comparing;
 
 public class MainActivity extends AppCompatActivity {
-    ListView listQuote;
+    ListView listQuote, listPromotion;
     ArrayList<BookAwardDetail> bookSearch = new ArrayList<>();
-    TextView messageQuote, subjectMess, nameBookQuote, authorBookQuote;
-    ImageView imageBook;
+    TextView messageQuote, subjectMess, nameBookQuote, authorBookQuote, nameBookPro, authorBookPro, lobPro, datePro;
+    ImageView imageBook, imageBookPro;
     public ListView listSearch;
 
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
     ArrayList<QuoteDetail> arrQuote = new ArrayList<>();
-
+    ArrayList<ProDetail> arrPro = new ArrayList<>();
     Context mcontext = MainActivity.this;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +69,22 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_main);
         listQuote  = (ListView) findViewById(R.id.listQuote);
+        listPromotion  = (ListView) findViewById(R.id.listPromotion);
 
         messageQuote = (TextView) findViewById(R.id.messageQuote);
         subjectMess = (TextView) findViewById(R.id.subjectMess);
         nameBookQuote = (TextView) findViewById(R.id.nameBookQuote);
         authorBookQuote = (TextView) findViewById(R.id.authorBookQuote);
 
+        nameBookPro = (TextView) findViewById(R.id.nameBookPro);
+        authorBookPro = (TextView) findViewById(R.id.authorBookPro);
+        lobPro = (TextView) findViewById(R.id.lobPro);
+        datePro = (TextView) findViewById(R.id.datePro);
+
+
         imageBook = (ImageView) findViewById(R.id.imageBook);
+        imageBookPro = (ImageView) findViewById(R.id.imageBookPro);
+
 
 
 
@@ -82,11 +95,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject obj = new JSONObject(response);
-
                     Iterator i = obj.keys();
                     String key = "";
-
-
                     while (i.hasNext()) {
                         key = i.next().toString();
                         if (obj.getJSONObject(key).has("quote")){
@@ -94,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject objbook = obj.getJSONObject(key);
                                 JSONObject objQuote = obj.getJSONObject(key).getJSONObject("quote");
                                 String mode = objQuote.getString("selectQuote");
-
                                 if (mode.equals("comment")){
                                     JSONObject objComments = objbook.getJSONObject("comments");
                                     Iterator j = objComments.keys();
@@ -111,9 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         ));
                                     }
-
                                     CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
-
                                     arrQuote.add(new QuoteDetail(
                                             key,maxValue.getComment(),
                                             maxValue.getCommentUser(),
@@ -121,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                                             objbook.getString("bookname"),
                                             objbook.getString("authorname")));
                                 }else {
-
                                     arrQuote.add(new QuoteDetail(
                                             key,objQuote.getJSONObject("other").getString("title"),
                                             objQuote.getJSONObject("other").getString("author"),
@@ -129,10 +135,10 @@ public class MainActivity extends AppCompatActivity {
                                             objbook.getString("bookname"),
                                             objbook.getString("authorname")));
                                 }
-
                             }
-                        }
 
+
+                        }
 
                         bookSearch.add( new BookAwardDetail(
                                 key,
@@ -141,16 +147,20 @@ public class MainActivity extends AppCompatActivity {
                                 obj.getJSONObject(key).getString("imgbook")
                         ));
 
+
+
                     }
+//                    ProAdapter proAdapter = new ProAdapter(arrPro,mcontext);
+
+
 
                     BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote,mcontext);
                     listQuote.setAdapter(bookQuoteAdapter);
                     bookQuoteAdapter.notifyDataSetChanged();
-
-
                 } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }
     }, new Response.ErrorListener() {
         @Override
@@ -213,27 +223,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void onButtonShowPopupWindowClick(View view) {
-
-
 
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_search, null);
 
-
         EditText edtSearch = popupView.findViewById(R.id.edtSearch);
         final ListView listSearch = popupView.findViewById(R.id.listSearch);
-
-
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 

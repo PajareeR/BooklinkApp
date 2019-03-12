@@ -21,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.telecom.Call;
 import android.util.Log;
 import android.view.Gravity;
@@ -793,5 +794,10 @@ public class BookDetailActivity extends AppCompatActivity {
                             }
                     }
     }
+
+
+
+
+
 
 }

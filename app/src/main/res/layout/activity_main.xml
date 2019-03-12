@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,10 +9,23 @@
     tools:context=".MainActivity"
     android:background="#eee">
 
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:background="#eee">-->
+
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#eee"
         android:layout_marginBottom="45dp">
 
         <TextView
@@ -36,17 +50,7 @@
             android:layout_marginTop="-40dp"
             android:onClick="onButtonShowPopupWindowClick"/>
 
-        <!--<EditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="@drawable/border_button"-->
-            <!--android:paddingLeft="20dp"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:hint="ค้นหาฟนังสือ"-->
-            <!--android:elevation="6dp"-->
-            <!--android:fontFamily="@font/sukhumvitsettext"-->
-            <!--android:textSize="18dp"/>-->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +64,26 @@
         <ListView
             android:id="@+id/listQuote"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:divider="@null"
+            android:dividerHeight="10.0sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:scrollbars="none"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sukhumvitsetbold"
+            android:text='โปรโมชันหนังสือ'/>
+        <ListView
+            android:id="@+id/listPromotion"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="20dp"
             android:divider="@null"
@@ -69,9 +93,11 @@
             android:scrollbars="none"
             />
 
+    <!--</LinearLayout>-->
+
+
     </LinearLayout>
-
-
+<!--</ScrollView>-->
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"

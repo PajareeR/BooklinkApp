@@ -91,7 +91,7 @@ public class BookQuoteAdapter extends BaseAdapter {
     }
 
 
-    private class Holder
+    class Holder
     {
         CardView clickDetail;
         TextView messageQuote;
