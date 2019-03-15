@@ -274,10 +274,12 @@ public class RegisterActivity extends AppCompatActivity {
         byte[] dataPic = baos.toByteArray();
 
         String id = UUID.randomUUID().toString();// ชื่อรูปไม่ซ้ำกัน Random
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com/");
+        //FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         StorageReference imagesRef = storageRef.child("images/users/"+usernameStr+"/profile_" + id + ".jpg"); //พาทรูป
+
+
 
         UploadTask uploadTask = imagesRef.putBytes(dataPic);
         uploadTask.addOnFailureListener(new OnFailureListener() {
