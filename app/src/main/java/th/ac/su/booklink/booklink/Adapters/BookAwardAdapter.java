@@ -35,7 +35,7 @@ public class BookAwardAdapter extends BaseAdapter {
     public BookAwardAdapter(ArrayList<BookAwardDetail> list, Context c) {
         this.list = list;
         this.mContext = c;
-        mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -57,37 +57,37 @@ public class BookAwardAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        View view = mLayoutInflater.inflate(R.layout.list_item_book_award,parent,false);
+        View view = mLayoutInflater.inflate(R.layout.list_item_book_award, parent, false);
         Holder h = new Holder();
 
         // set id's
-        h.bookName = (TextView)(view.findViewById(R.id.bookName));
+        h.bookName = (TextView) (view.findViewById(R.id.bookName));
 
         h.bookName.setText(list.get(position).getTitle());
 
-        h.authorName = (TextView)(view.findViewById(R.id.authorName));
+        h.authorName = (TextView) (view.findViewById(R.id.authorName));
         h.authorName.setText(list.get(position).getAuthoor());
 
-        h.awardName = (TextView)(view.findViewById(R.id.awardName));
+        h.awardName = (TextView) (view.findViewById(R.id.awardName));
 
         JSONObject obj = list.get(position).getAward();
 
         Iterator i = obj.keys();
         String key = "";
 
-        String award ="";
+        String award = "";
 
         while (i.hasNext()) {
             key = i.next().toString();
             try {
-                award += (obj.getString(key) +" \n");
+                award += (obj.getString(key) + " \n");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         h.awardName.setText(award);
 
-        h.imgBook = (ImageView)(view.findViewById(R.id.imgBook));
+        h.imgBook = (ImageView) (view.findViewById(R.id.imgBook));
 
         Picasso.get().load(list.get(position).getImgPath()).into(h.imgBook);
 
@@ -96,8 +96,7 @@ public class BookAwardAdapter extends BaseAdapter {
     }
 
 
-    private class Holder
-    {
+    private class Holder {
         TextView bookName;
         TextView authorName;
         TextView awardName;

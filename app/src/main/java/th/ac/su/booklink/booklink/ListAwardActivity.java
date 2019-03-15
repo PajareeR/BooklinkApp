@@ -39,7 +39,6 @@ public class ListAwardActivity extends AppCompatActivity {
     ArrayList<BookAwardDetail> bookAward = new ArrayList<>();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +66,10 @@ public class ListAwardActivity extends AppCompatActivity {
                         key = i.next().toString();
 
 
-
                         if (obj.getJSONObject(key).getJSONObject("award")
-                                .has(AwardDetail.ItemId[UserDetail.awardserect])){
+                                .has(AwardDetail.ItemId[UserDetail.awardserect])) {
 
-                            bookAward.add( new BookAwardDetail(
+                            bookAward.add(new BookAwardDetail(
                                     key,
                                     obj.getJSONObject(key).getString("bookname"),
                                     obj.getJSONObject(key).getString("authorname"),
@@ -83,7 +81,7 @@ public class ListAwardActivity extends AppCompatActivity {
 
                     }
 
-                    BookAwardAdapter customAdapter = new BookAwardAdapter(bookAward,ListAwardActivity.this);
+                    BookAwardAdapter customAdapter = new BookAwardAdapter(bookAward, ListAwardActivity.this);
                     ListAward.setAdapter(customAdapter);
 
                 } catch (JSONException e) {
@@ -93,7 +91,7 @@ public class ListAwardActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(""+error);
+                System.out.println("" + error);
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(ListAwardActivity.this);

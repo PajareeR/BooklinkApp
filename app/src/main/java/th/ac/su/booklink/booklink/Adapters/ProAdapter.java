@@ -24,10 +24,11 @@ public class ProAdapter extends BaseAdapter {
     private ArrayList<ProDetail> list;
     private LayoutInflater mLayoutInflater;
     private Context mContext;
+
     public ProAdapter(ArrayList<ProDetail> list, Context c) {
         this.list = list;
         this.mContext = c;
-        mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -49,21 +50,21 @@ public class ProAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        View view = mLayoutInflater.inflate(R.layout.list_item_promotion,parent,false);
+        View view = mLayoutInflater.inflate(R.layout.list_item_promotion, parent, false);
         Holder h = new Holder();
 
         // set id's
-        h.clickDetaill = (CardView)(view.findViewById(R.id.clickDetaill));
-        h.nameBookPro = (TextView)(view.findViewById(R.id.nameBookPro));
-        h.authorBookPro = (TextView)(view.findViewById(R.id.authorBookPro));
-        h.lobPro = (TextView)(view.findViewById(R.id.lobPro));
-        h.datePro = (TextView)(view.findViewById(R.id.datePro));
-        h.imageBookPro = (ImageView)(view.findViewById(R.id.imageBookPro));
+        h.clickDetaill = (CardView) (view.findViewById(R.id.clickDetaill));
+        h.nameBookPro = (TextView) (view.findViewById(R.id.nameBookPro));
+        h.authorBookPro = (TextView) (view.findViewById(R.id.authorBookPro));
+        h.lobPro = (TextView) (view.findViewById(R.id.lobPro));
+        h.datePro = (TextView) (view.findViewById(R.id.datePro));
+        h.imageBookPro = (ImageView) (view.findViewById(R.id.imageBookPro));
 
         h.nameBookPro.setText(list.get(position).getNameBookPro());
-        h.authorBookPro.setText("นักเขียน : "+list.get(position).getAuthorBookPro());
+        h.authorBookPro.setText("นักเขียน : " + list.get(position).getAuthorBookPro());
         h.lobPro.setText(list.get(position).getLobPro());
-        h.datePro.setText("รหัสหมดอายุวันที่ : "+list.get(position).getDatePro());
+        h.datePro.setText("รหัสหมดอายุวันที่ : " + list.get(position).getDatePro());
 
 
         Picasso.get().load(list.get(position).getImageBookPro()).into(h.imageBookPro);
@@ -72,7 +73,7 @@ public class ProAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 UserDetail.bookserect = list.get(position).getProId();
-                mContext.startActivity(new Intent(mContext,BookDetailActivity.class));
+                mContext.startActivity(new Intent(mContext, BookDetailActivity.class));
 
             }
         });
@@ -82,8 +83,7 @@ public class ProAdapter extends BaseAdapter {
     }
 
 
-    class Holder
-    {
+    class Holder {
         CardView clickDetaill;
         TextView nameBookPro;
         TextView authorBookPro;

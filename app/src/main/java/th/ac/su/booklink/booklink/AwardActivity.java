@@ -24,7 +24,6 @@ public class AwardActivity extends AppCompatActivity {
     ListView simpleList;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +39,7 @@ public class AwardActivity extends AppCompatActivity {
                         startActivity(new Intent(AwardActivity.this, MainActivity.class));
                         return true;
                     case R.id.item_Award:
-                       // startActivity(new Intent(AwardActivity.this, AwardActivity.class));
+                        // startActivity(new Intent(AwardActivity.this, AwardActivity.class));
 
                         return true;
                     case R.id.item_Celebrity:
@@ -56,8 +55,8 @@ public class AwardActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.item_Award);
 
 
-        simpleList = (ListView)findViewById(R.id.ListAward);
-        AwardAdapter customAdapter = new AwardAdapter(getApplicationContext(),AwardDetail.Item, AwardDetail.logo);
+        simpleList = (ListView) findViewById(R.id.ListAward);
+        AwardAdapter customAdapter = new AwardAdapter(getApplicationContext(), AwardDetail.Item, AwardDetail.logo);
         simpleList.setAdapter(customAdapter);
         simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

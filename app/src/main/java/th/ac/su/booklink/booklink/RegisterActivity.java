@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnLLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
@@ -178,8 +178,6 @@ public class RegisterActivity extends AppCompatActivity {
     }//เลือกรูป
 
 
-
-
     public final static boolean isValidEmail(CharSequence target) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
@@ -190,52 +188,51 @@ public class RegisterActivity extends AppCompatActivity {
         emailStr = emailId.getText().toString();
         passwordStr = passwordId.getText().toString();
 
-        if(usernameStr.equals("")){
+        if (usernameStr.equals("")) {
             usernameId.setError("can't be blank");
             status = false;
-        } else if(!usernameStr.matches("[A-Za-z0-9]+")){
+        } else if (!usernameStr.matches("[A-Za-z0-9]+")) {
             usernameId.setError("only alphabet or number allowed");
             status = false;
         }
 
-        if(emailStr.equals("")){
+        if (emailStr.equals("")) {
             emailId.setError("can't be blank");
             status = false;
-        }else if (!isValidEmail(emailStr)){
+        } else if (!isValidEmail(emailStr)) {
             emailId.setError("only email pattern");
             status = false;
         }
 
-        if(passwordStr.equals("")){
+        if (passwordStr.equals("")) {
             passwordId.setError("can't be blank");
             status = false;
-        } else if(passwordStr.length()<5){
+        } else if (passwordStr.length() < 5) {
             passwordId.setError("at least 5 characters long");
             status = false;
         }
 
-        if (status){
+        if (status) {
             final ProgressDialog pd = new ProgressDialog(RegisterActivity.this);
             pd.setMessage("Loading...");
             pd.show();
 
             String url = "https://booklink-94984.firebaseio.com/Users.json";
 
-            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
 
                     DatabaseReference reference = FirebaseDatabase.getInstance()
                             .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Users");
 
-                    if(s.equals("null")) {
+                    if (s.equals("null")) {
                         InsertData();
                         reference.child(usernameStr).child("profile").child("password").setValue(passwordStr);
                         reference.child(usernameStr).child("profile").child("email").setValue(emailStr);
                         UserDetail.username = usernameStr;
                         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                    }
-                    else {
+                    } else {
                         try {
                             JSONObject obj = new JSONObject(s);
 
@@ -256,10 +253,10 @@ public class RegisterActivity extends AppCompatActivity {
                     pd.dismiss();
                 }
 
-            },new Response.ErrorListener(){
+            }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    System.out.println("" + volleyError );
+                    System.out.println("" + volleyError);
                     pd.dismiss();
                 }
             });
@@ -270,33 +267,34 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
     public void InsertData() {
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream ();
-        imageSelect.compress (Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] dataPic = baos.toByteArray ();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imageSelect.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] dataPic = baos.toByteArray();
 
-        String id = UUID.randomUUID ().toString ();// ชื่อรูปไม่ซ้ำกัน Random
+        String id = UUID.randomUUID().toString();// ชื่อรูปไม่ซ้ำกัน Random
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference imagesRef = storageRef.child("images/users/"+usernameStr+"/porfile"+id+".jpg"); //พาทรูป
+        StorageReference imagesRef = storageRef.child("images/users/" + usernameStr + "/porfile" + id + ".jpg"); //พาทรูป
         UploadTask uploadTask = imagesRef.putBytes(dataPic);
-        uploadTask.addOnFailureListener (new OnFailureListener() {
+        uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText (RegisterActivity.this, "incorrect ", Toast.LENGTH_LONG).show ();
+                Toast.makeText(RegisterActivity.this, "incorrect ", Toast.LENGTH_LONG).show();
             }
-        }).addOnSuccessListener (new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText (RegisterActivity.this, "correct ", Toast.LENGTH_LONG).show (); //บันทึกเข้าแล้ว
+                Toast.makeText(RegisterActivity.this, "correct ", Toast.LENGTH_LONG).show(); //บันทึกเข้าแล้ว
             }
         });
 
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Users");
 
-        reference.child(usernameStr).child ("profile").child ("Pic").setValue(imagesRef.getPath ());
+        reference.child(usernameStr).child("profile").child("Pic").setValue(imagesRef.getPath());
     }
 }

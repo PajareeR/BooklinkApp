@@ -30,7 +30,7 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 
 public class CelebActivity extends AppCompatActivity {
     LinearLayout celebBoxLayout;
-    int widthDevice , hieghDevice;
+    int widthDevice, hieghDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class CelebActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_celeb);
 
-        celebBoxLayout  = (LinearLayout) findViewById(R.id.celebBox);
+        celebBoxLayout = (LinearLayout) findViewById(R.id.celebBox);
         widthDevice = getWindowManager().getDefaultDisplay().getWidth();
         hieghDevice = getWindowManager().getDefaultDisplay().getHeight();
 
@@ -64,7 +64,7 @@ public class CelebActivity extends AppCompatActivity {
                                 (int) (hieghDevice * 0.35)
                         );
 
-                        layoutParams.setMargins(0,20,0,0);
+                        layoutParams.setMargins(0, 20, 0, 0);
 
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         imageView.setLayoutParams(layoutParams);
@@ -84,7 +84,6 @@ public class CelebActivity extends AppCompatActivity {
                         Picasso.get().load(obj.getJSONObject(key).getString("image")).into(imageView);
 
 
-
                     }
 
                 } catch (JSONException e) {
@@ -94,7 +93,7 @@ public class CelebActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(""+error);
+                System.out.println("" + error);
             }
         });
 
@@ -114,7 +113,7 @@ public class CelebActivity extends AppCompatActivity {
                         startActivity(new Intent(CelebActivity.this, AwardActivity.class));
                         return true;
                     case R.id.item_Celebrity:
-                      //  startActivity(new Intent(CelebActivity.this, RegisterActivity.class));
+                        //  startActivity(new Intent(CelebActivity.this, RegisterActivity.class));
                         return true;
                     case R.id.item_Bookself:
                         startActivity(new Intent(CelebActivity.this, BookselfActivity.class));
@@ -126,9 +125,9 @@ public class CelebActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.item_Celebrity);
     }
 
-    public void OnclickBookDetail(String bookName){
+    public void OnclickBookDetail(String bookName) {
         UserDetail.celebserect = bookName;
-        startActivity(new Intent(CelebActivity.this,BookCelebActivity.class));
+        startActivity(new Intent(CelebActivity.this, BookCelebActivity.class));
     }
-    }
+}
 

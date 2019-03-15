@@ -23,12 +23,11 @@ public class AwardAdapter extends BaseAdapter {
     View view;
 
 
-
     public AwardAdapter(Context context, String[] Item, int[] flags) {
         this.context = context;
         this.Item = Item;
         this.flags = flags;
-        inflter = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflter = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public AwardAdapter(List<Model> models, BookCelebActivity bookCelebActivity) {
@@ -53,7 +52,7 @@ public class AwardAdapter extends BaseAdapter {
     @Override
     public View getView(final int i, View convertView, ViewGroup parent) {
 
-        view = inflter.inflate(R.layout.list_item_award,parent,false);
+        view = inflter.inflate(R.layout.list_item_award, parent, false);
         TextView item = (TextView) view.findViewById(R.id.item);
         ImageView image = (ImageView) view.findViewById(R.id.image);
         item.setText(Item[i]);

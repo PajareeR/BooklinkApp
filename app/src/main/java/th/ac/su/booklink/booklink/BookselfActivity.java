@@ -65,6 +65,7 @@ public class BookselfActivity extends AppCompatActivity {
     Bitmap bitmapProfile;
     Activity mcontextt = BookselfActivity.this;
     boolean checkImg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,15 +89,15 @@ public class BookselfActivity extends AppCompatActivity {
         textUserName.setText(UserDetail.username);
 
         DatabaseReference reference1 = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Users/"+UserDetail.username+"");
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Users/" + UserDetail.username + "");
 
-        reference1.child ("profile").addValueEventListener(new ValueEventListener() {
+        reference1.child("profile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
-                String img = snapshot.child ("pic").getValue ().toString ();
+                String img = snapshot.child("pic").getValue().toString();
 
-                img = img.substring(1,img.length());
+                img = img.substring(1, img.length());
                 StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
                         .child(img);
 
@@ -105,12 +106,12 @@ public class BookselfActivity extends AppCompatActivity {
                         .load(storageReference)
                         .into(imageProfile);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getMessage());
             }
         });
-
 
 
     }
@@ -124,7 +125,7 @@ public class BookselfActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.logout:
                 startActivity(new Intent(BookselfActivity.this, LoginActivity.class));
                 Toast.makeText(BookselfActivity.this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
@@ -152,7 +153,7 @@ public class BookselfActivity extends AppCompatActivity {
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent,SELECT_FILE);
+                    startActivityForResult(intent, SELECT_FILE);
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -165,15 +166,15 @@ public class BookselfActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && null != data){
-            switch(requestCode) {
+        if (resultCode == RESULT_OK && null != data) {
+            switch (requestCode) {
                 case 0:
                     Bundle extras = data.getExtras();
                     bitmapProfile = (Bitmap) extras.get("data");
                     break;
                 case 1:
                     Uri selectedImage = data.getData();
-                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                     Cursor cursor = getContentResolver().query(selectedImage,
                             filePathColumn, null, null, null);
@@ -200,7 +201,7 @@ public class BookselfActivity extends AppCompatActivity {
 
     }
 
-    public String saveImg(){
+    public String saveImg() {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmapProfile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -210,8 +211,8 @@ public class BookselfActivity extends AppCompatActivity {
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com");
         StorageReference storageRef = storage.getReference();
-        StorageReference imagesRef = storageRef.child("images/users/"+UserDetail.username+"/user/"+
-                "profile_"+id+".jpg");
+        StorageReference imagesRef = storageRef.child("images/users/" + UserDetail.username + "/user/" +
+                "profile_" + id + ".jpg");
         UploadTask uploadTask = imagesRef.putBytes(dataPic);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -228,17 +229,13 @@ public class BookselfActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void OnclickMybookself(View view) {
         TextView btnSerect = (TextView) view;
         imageBox.removeAllViews();
 
         imageAL.clear();
 
-        switch(btnSerect.getId())
-        {
+        switch (btnSerect.getId()) {
 
             case R.id.textFav:
                 nowStatus = "fav";
@@ -285,7 +282,6 @@ public class BookselfActivity extends AppCompatActivity {
     public void getImage() {
 
 
-
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -297,52 +293,51 @@ public class BookselfActivity extends AppCompatActivity {
                     String key = "";
 
                     int countImage;
-                    countImage=0;
+                    countImage = 0;
                     RelativeLayout imageBox = (RelativeLayout) findViewById(R.id.imageBox);//o
 
                     while (i.hasNext()) {
                         key = i.next().toString();
-                        for (int j = 0 ; j < imageAL.size() ;  j++){
-                            if (imageAL.get(j).getImagePath().contains(key) && imageAL.get(j).getImageStatus().equals(nowStatus)){
-                                countImage+=1; //4
+                        for (int j = 0; j < imageAL.size(); j++) {
+                            if (imageAL.get(j).getImagePath().contains(key) && imageAL.get(j).getImageStatus().equals(nowStatus)) {
+                                countImage += 1; //4
 
 
-                                    LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(130 , 220);//o
+                                LinearLayout.LayoutParams layparam = new LinearLayout.LayoutParams(130, 220);//o
 
-                                switch (countImage % 3){
-                                    case  1:
-                                        layparam.setMargins(20,210* (countImage/3),0,0);//o
+                                switch (countImage % 3) {
+                                    case 1:
+                                        layparam.setMargins(20, 210 * (countImage / 3), 0, 0);//o
                                         break;
                                     case 2:
-                                        layparam.setMargins(170,210* (countImage/3),0,0);//o
+                                        layparam.setMargins(170, 210 * (countImage / 3), 0, 0);//o
                                         break;
-                                    default :
-                                        layparam.setMargins(320,210* ((countImage/3)-1),0,0);//o
+                                    default:
+                                        layparam.setMargins(320, 210 * ((countImage / 3) - 1), 0, 0);//o
                                         break;
                                 }
 
 
+                                ImageView image = new ImageView(BookselfActivity.this);//o
+                                image.setLayoutParams(layparam);//o
 
-                                    ImageView image = new ImageView(BookselfActivity.this);//o
-                                    image.setLayoutParams(layparam);//o
-
-                                    Picasso.get().load(obj.getJSONObject(key).getString("imgbook")).into(image);
+                                Picasso.get().load(obj.getJSONObject(key).getString("imgbook")).into(image);
 
                                 final int index = j;
                                 image.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            UserDetail.bookserect = imageAL.get(index).getImagePath();
-                                            startActivity(new Intent(BookselfActivity.this,BookDetailActivity.class));
-                                        }
-                                    });
+                                    @Override
+                                    public void onClick(View v) {
+                                        UserDetail.bookserect = imageAL.get(index).getImagePath();
+                                        startActivity(new Intent(BookselfActivity.this, BookDetailActivity.class));
+                                    }
+                                });
 
-                                    imageBox.addView(image);//o
+                                imageBox.addView(image);//o
 
 
                             }
                         }
-                }
+                    }
 
 //                    while (i.hasNext()) {
 //                        key = i.next().toString();
@@ -388,14 +383,14 @@ public class BookselfActivity extends AppCompatActivity {
 //                    }
 
 
-            } catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(""+error);
+                System.out.println("" + error);
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(BookselfActivity.this);
@@ -404,7 +399,7 @@ public class BookselfActivity extends AppCompatActivity {
     }
 
     public void loadBook(final String type) {
-        String url = "https://booklink-94984.firebaseio.com/Users/"+UserDetail.username+"/bookselfs.json"; //หัวใหญ่
+        String url = "https://booklink-94984.firebaseio.com/Users/" + UserDetail.username + "/bookselfs.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -437,7 +432,7 @@ public class BookselfActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(""+error);
+                System.out.println("" + error);
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(BookselfActivity.this);
@@ -445,7 +440,7 @@ public class BookselfActivity extends AppCompatActivity {
 
         getImage();
 
-            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -463,7 +458,7 @@ public class BookselfActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.item_Bookself:
-                       // startActivity(new Intent(BookselfActivity.this, BookselfActivity.class));
+                        // startActivity(new Intent(BookselfActivity.this, BookselfActivity.class));
 
                         return true;
                 }

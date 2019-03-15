@@ -58,20 +58,20 @@ public class BookCelebAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.item, container,false);
+        View view = layoutInflater.inflate(R.layout.item, container, false);
 
         ImageView imageCelebBook;
         TextView nameBook, authorBookCeleb;
 
-        imageCelebBook =view.findViewById(R.id.imageCelebBook);
-        nameBook =view.findViewById(R.id.nameBook);
-        authorBookCeleb =view.findViewById(R.id.authorBookCeleb);
+        imageCelebBook = view.findViewById(R.id.imageCelebBook);
+        nameBook = view.findViewById(R.id.nameBook);
+        authorBookCeleb = view.findViewById(R.id.authorBookCeleb);
 
         imageCelebBook.setImageResource(models.get(position).getImageCelebBook());
         nameBook.setText(models.get(position).getNameBook());
         authorBookCeleb.setText(models.get(position).getAuthorBookCeleb());
 
-        container.addView(view,0);
+        container.addView(view, 0);
 
 
         return view;
@@ -79,6 +79,6 @@ public class BookCelebAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 }

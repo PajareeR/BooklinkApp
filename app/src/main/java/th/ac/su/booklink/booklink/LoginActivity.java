@@ -37,14 +37,14 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
 
-    EditText edtUser , edtPass;
-    String userStr,passStr;
-    Button btnLogin ;
+    EditText edtUser, edtPass;
+    String userStr, passStr;
+    Button btnLogin;
     LoginButton btnFBLogin;
     TextView btnRegis;
 
 
-    String userF,nameF, genderF,birthdayF,emailF;
+    String userF, nameF, genderF, birthdayF, emailF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        edtUser =(EditText) findViewById(R.id.edtUser);
+        edtUser = (EditText) findViewById(R.id.edtUser);
         edtPass = (EditText) findViewById(R.id.edtPass);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -79,13 +79,13 @@ public class LoginActivity extends AppCompatActivity {
         btnRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }
 
     private void loginWithFB() {
-        btnFBLogin.setReadPermissions(Arrays.asList("public_profile","user_birthday","email"));
+        btnFBLogin.setReadPermissions(Arrays.asList("public_profile", "user_birthday", "email"));
         btnFBLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -173,24 +173,24 @@ public class LoginActivity extends AppCompatActivity {
         userStr = edtUser.getText().toString();
         passStr = edtPass.getText().toString();
 
-        if(userStr.equals("")){
+        if (userStr.equals("")) {
             edtUser.setError("can't be blank");
             status = false;
         }
 
-        if(passStr.equals("")){
+        if (passStr.equals("")) {
             edtPass.setError("can't be blank");
             status = false;
         }
 
-        if (status){
+        if (status) {
             final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
             pd.setMessage("Loading...");
             pd.show();
 
             String url = "https://booklink-94984.firebaseio.com/Users.json";
 
-            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
 
@@ -198,12 +198,12 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         JSONObject obj = new JSONObject(s);
 
-                        if (obj.has(userStr) ) {
+                        if (obj.has(userStr)) {
 
-                            if (obj.getJSONObject(userStr).getJSONObject("profile").getString("password").equals(passStr)){
+                            if (obj.getJSONObject(userStr).getJSONObject("profile").getString("password").equals(passStr)) {
                                 UserDetail.username = userStr;
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            }else {
+                            } else {
                                 edtPass.setError("Password not correct");
                             }
 
@@ -220,10 +220,10 @@ public class LoginActivity extends AppCompatActivity {
                     pd.dismiss();
                 }
 
-            },new Response.ErrorListener(){
+            }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    System.out.println("" + volleyError );
+                    System.out.println("" + volleyError);
                     pd.dismiss();
                 }
             });

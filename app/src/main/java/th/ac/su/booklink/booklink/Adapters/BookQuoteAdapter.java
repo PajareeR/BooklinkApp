@@ -34,7 +34,7 @@ public class BookQuoteAdapter extends BaseAdapter {
     public BookQuoteAdapter(ArrayList<QuoteDetail> list, Context c) {
         this.list = list;
         this.mContext = c;
-        mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -56,23 +56,23 @@ public class BookQuoteAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        View view = mLayoutInflater.inflate(R.layout.list_item_quote,parent,false);
+        View view = mLayoutInflater.inflate(R.layout.list_item_quote, parent, false);
         Holder h = new Holder();
 
         // set id's
-        h.clickDetail = (CardView)(view.findViewById(R.id.clickDetail));
-        h.messageQuote = (TextView)(view.findViewById(R.id.messageQuote));
-        h.subjectMess = (TextView)(view.findViewById(R.id.subjectMess));
-        h.nameBookQuote = (TextView)(view.findViewById(R.id.nameBookQuote));
-        h.authorBookQuote = (TextView)(view.findViewById(R.id.authorBookQuote));
-        h.imageBook = (ImageView)(view.findViewById(R.id.imageBook));
+        h.clickDetail = (CardView) (view.findViewById(R.id.clickDetail));
+        h.messageQuote = (TextView) (view.findViewById(R.id.messageQuote));
+        h.subjectMess = (TextView) (view.findViewById(R.id.subjectMess));
+        h.nameBookQuote = (TextView) (view.findViewById(R.id.nameBookQuote));
+        h.authorBookQuote = (TextView) (view.findViewById(R.id.authorBookQuote));
+        h.imageBook = (ImageView) (view.findViewById(R.id.imageBook));
 
-        h.messageQuote.setText('"'+list.get(position).getMessageQuote()+'"');
+        h.messageQuote.setText('"' + list.get(position).getMessageQuote() + '"');
 
 
-        h.subjectMess.setText("ประโยคเด็ดโดย : "+list.get(position).getSubjectMess());
-        h.nameBookQuote.setText("หนังสือ : "+list.get(position).getNameBookQuote());
-        h.authorBookQuote.setText("นักเขียน : "+list.get(position).getAuthorBookQuote());
+        h.subjectMess.setText("ประโยคเด็ดโดย : " + list.get(position).getSubjectMess());
+        h.nameBookQuote.setText("หนังสือ : " + list.get(position).getNameBookQuote());
+        h.authorBookQuote.setText("นักเขียน : " + list.get(position).getAuthorBookQuote());
 
 
         Picasso.get().load(list.get(position).getImageBook()).into(h.imageBook);
@@ -81,7 +81,7 @@ public class BookQuoteAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 UserDetail.bookserect = list.get(position).getBookQuoteId();
-                mContext.startActivity(new Intent(mContext,BookDetailActivity.class));
+                mContext.startActivity(new Intent(mContext, BookDetailActivity.class));
 
             }
         });
@@ -91,8 +91,7 @@ public class BookQuoteAdapter extends BaseAdapter {
     }
 
 
-    class Holder
-    {
+    class Holder {
         CardView clickDetail;
         TextView messageQuote;
         TextView subjectMess;

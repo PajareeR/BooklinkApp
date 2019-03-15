@@ -29,7 +29,7 @@ public class BookSearchAdapter extends BaseAdapter {
     public BookSearchAdapter(ArrayList<BookAwardDetail> list, Context c) {
         this.list = list;
         this.mContext = c;
-        mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -51,18 +51,18 @@ public class BookSearchAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        View view = mLayoutInflater.inflate(R.layout.list_item_book_award,parent,false);
+        View view = mLayoutInflater.inflate(R.layout.list_item_book_award, parent, false);
         Holder h = new Holder();
 
         // set id's
-        h.bookName = (TextView)(view.findViewById(R.id.bookName));
+        h.bookName = (TextView) (view.findViewById(R.id.bookName));
 
         h.bookName.setText(list.get(position).getTitle());
 
-        h.authorName = (TextView)(view.findViewById(R.id.authorName));
+        h.authorName = (TextView) (view.findViewById(R.id.authorName));
         h.authorName.setText(list.get(position).getAuthoor());
 
-        h.imgBook = (ImageView)(view.findViewById(R.id.imgBook));
+        h.imgBook = (ImageView) (view.findViewById(R.id.imgBook));
 
         Picasso.get().load(list.get(position).getImgPath()).into(h.imgBook);
 
@@ -71,8 +71,7 @@ public class BookSearchAdapter extends BaseAdapter {
     }
 
 
-    private class Holder
-    {
+    private class Holder {
         TextView bookName;
         TextView authorName;
         ImageView imgBook;

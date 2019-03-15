@@ -4,10 +4,10 @@ import org.json.JSONObject;
 
 public class BookAwardDetail {
 
-    private  String id;
+    private String id;
     private String title;
-    private  String authoor;
-    private  String imgPath;
+    private String authoor;
+    private String imgPath;
     private JSONObject award;
 
     public BookAwardDetail(String id, String title, String authoor, String imgPath, JSONObject award) {

@@ -81,8 +81,7 @@ public class BookDetailActivity extends AppCompatActivity {
     ImageView ImageBook, imageShow;
     ImageButton btnFav, btnRead, btnWant, btnBought, btnReading;
     EditText edtComment;
-    Button btnSendComment, btnImageUp ;
-
+    Button btnSendComment, btnImageUp;
 
 
     LinearLayout commentBox;
@@ -91,12 +90,13 @@ public class BookDetailActivity extends AppCompatActivity {
     Bitmap bitmapComment;
     boolean checkImg = false;
     Activity mcontext = BookDetailActivity.this;
-    int widthDevice , hieghDevice;
+    int widthDevice, hieghDevice;
     String celeb = "";
     String celebReview = "";
 
 
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,9 +123,8 @@ public class BookDetailActivity extends AppCompatActivity {
         btnImageUp = (Button) findViewById(R.id.btnImageUp);
 
 
-
-        ImageBook = (ImageView) findViewById(R.id.ImageBook) ;
-        imageShow = (ImageView) findViewById(R.id.imageShow) ;
+        ImageBook = (ImageView) findViewById(R.id.ImageBook);
+        imageShow = (ImageView) findViewById(R.id.imageShow);
         imageShow.setVisibility(View.GONE);
 
         btnFav = (ImageButton) findViewById(R.id.btnFav);
@@ -134,17 +133,17 @@ public class BookDetailActivity extends AppCompatActivity {
         btnBought = (ImageButton) findViewById(R.id.btnBought);
         btnReading = (ImageButton) findViewById(R.id.btnReading);
 
-        edtComment = (EditText)findViewById(R.id.edtComment);
+        edtComment = (EditText) findViewById(R.id.edtComment);
 
-        commentBox = (LinearLayout)findViewById(R.id.commentBox);
+        commentBox = (LinearLayout) findViewById(R.id.commentBox);
 
 
-        if (getIntent().hasExtra("Celeb")){
-            celeb  = getIntent().getExtras().getString("Celeb");
+        if (getIntent().hasExtra("Celeb")) {
+            celeb = getIntent().getExtras().getString("Celeb");
             celebReview = getIntent().getExtras().getString("ReviewCeleb");
-            reviewCeleb.setText("รีวิวจากคุณ"+celeb);
+            reviewCeleb.setText("รีวิวจากคุณ" + celeb);
             contentReview.setText(celebReview);
-        }else {
+        } else {
             reviewCeleb.setVisibility(View.GONE);
             contentReview.setVisibility(View.GONE);
         }
@@ -152,13 +151,13 @@ public class BookDetailActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED&&
+                        != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(mcontext, android.Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(mcontext,
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
                             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            android.Manifest.permission.CAMERA},1);
+                            android.Manifest.permission.CAMERA}, 1);
         }
 
         String url = "https://booklink-94984.firebaseio.com/.json"; //หัวใหญ่
@@ -170,12 +169,12 @@ public class BookDetailActivity extends AppCompatActivity {
                     final JSONObject objUsers = new JSONObject(response).getJSONObject("Users");
 
                     NameBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("bookname"));
-                    AuthorBook.setText("นักเขียน : "+obj.getJSONObject(UserDetail.bookserect).getString("authorname"));
+                    AuthorBook.setText("นักเขียน : " + obj.getJSONObject(UserDetail.bookserect).getString("authorname"));
                     TitleBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("titlebook"));
 
-                    PublisherBook.setText("สำนักพิมพ์ : "+obj.getJSONObject(UserDetail.bookserect).getString("publisherbook"));
-                    CategoryBook.setText("หมวดหมู่ : "+obj.getJSONObject(UserDetail.bookserect).getString("catagorybook"));
-                    ISBNBook.setText("รหัส ISBN : "+UserDetail.bookserect); //XX
+                    PublisherBook.setText("สำนักพิมพ์ : " + obj.getJSONObject(UserDetail.bookserect).getString("publisherbook"));
+                    CategoryBook.setText("หมวดหมู่ : " + obj.getJSONObject(UserDetail.bookserect).getString("catagorybook"));
+                    ISBNBook.setText("รหัส ISBN : " + UserDetail.bookserect); //XX
                     AdditionBook.setText(obj.getJSONObject(UserDetail.bookserect).getString("additionbook"));
 
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
@@ -189,7 +188,7 @@ public class BookDetailActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(""+error);
+                System.out.println("" + error);
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(BookDetailActivity.this);
@@ -206,7 +205,6 @@ public class BookDetailActivity extends AppCompatActivity {
         });
 
 
-
         btnImageUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,9 +213,9 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void getComment(final JSONObject objuser){
+    public void getComment(final JSONObject objuser) {
         commentReference = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books/"+UserDetail.bookserect+"/comments");
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books/" + UserDetail.bookserect + "/comments");
 
         commentReference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -227,32 +225,32 @@ public class BookDetailActivity extends AppCompatActivity {
                 arrComment.clear();
 
                 boolean haveLike = false;
-                for(DataSnapshot ds : snapshot.getChildren()) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     Map<String, String> map = (Map) ds.getValue();
 
                     try {
-                        JSONObject obj =  objuser.getJSONObject(map.get("user")).getJSONObject("profile");
-                        String img = (obj.has("pic")? obj.getString("pic"):"");
+                        JSONObject obj = objuser.getJSONObject(map.get("user")).getJSONObject("profile");
+                        String img = (obj.has("pic") ? obj.getString("pic") : "");
                         String imgComment = map.get("pic").toString();
 
                         int count = 0;
                         boolean status = false;
-                        boolean checkUserlike = (ds.hasChild("userlike")? true: false);
+                        boolean checkUserlike = (ds.hasChild("userlike") ? true : false);
 
-                        if (checkUserlike){
-                            for(DataSnapshot dslike : ds.child("userlike").getChildren()) {
+                        if (checkUserlike) {
+                            for (DataSnapshot dslike : ds.child("userlike").getChildren()) {
 
-                                if (dslike.child("status").getValue().toString().equals("like")){
-                                    if (dslike.getKey().equals(UserDetail.username)){
+                                if (dslike.child("status").getValue().toString().equals("like")) {
+                                    if (dslike.getKey().equals(UserDetail.username)) {
                                         status = true;
                                     }
-                                    count += 1 ;
-                                    haveLike =true;
+                                    count += 1;
+                                    haveLike = true;
                                 }
                             }
                         }
 
-                        arrComment.add( new CommentDetail(
+                        arrComment.add(new CommentDetail(
                                 ds.getKey(),
                                 map.get("user").toString(),
                                 new Date(Long.parseLong(map.get("time").toString())),
@@ -274,15 +272,13 @@ public class BookDetailActivity extends AppCompatActivity {
                     }
                 });
 
-                if (arrComment.size() !=0 ){
-                    if (haveLike){
+                if (arrComment.size() != 0) {
+                    if (haveLike) {
                         CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
                         arrComment.remove(arrComment.indexOf(maxValue));
                         arrComment.add(arrComment.size(), maxValue);
                     }
-
-
-                    for(int i = arrComment.size() - 1 ; i >=0 ; i--) {
+                    for (int i = arrComment.size() - 1; i >= 0; i--) {
                         createComment(arrComment.get(i));
                     }
                 }
@@ -295,9 +291,7 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-
-
-    public void createComment(CommentDetail commentDetail){
+    public void createComment(CommentDetail commentDetail) {
         LinearLayout linearLayout = new LinearLayout(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -316,10 +310,10 @@ public class BookDetailActivity extends AppCompatActivity {
         circleImageView.setBorderColor(getResources().getColor(R.color.colorbg));
 
         String img = commentDetail.getUserImg();
-        if (img.equals("")){
+        if (img.equals("")) {
             circleImageView.setImageResource(R.drawable.smile);
-        }else {
-            img = img.substring(1,img.length());
+        } else {
+            img = img.substring(1, img.length());
             StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
                     .child(img);
 
@@ -333,7 +327,7 @@ public class BookDetailActivity extends AppCompatActivity {
         LinearLayout linearLayout1 = new LinearLayout(this);
         linearLayout1.setLayoutParams(layoutParams);
         linearLayout1.setOrientation(LinearLayout.VERTICAL);
-        linearLayout1.setPadding(20,0,20,0);
+        linearLayout1.setPadding(20, 0, 20, 0);
 
         TextView txtUsername = new TextView(this);
         LinearLayout.LayoutParams layoutParamstxt = new LinearLayout.LayoutParams(
@@ -372,10 +366,10 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
         String imgComment = commentDetail.getCommentImg();
-        if (imgComment.equals("")){
+        if (imgComment.equals("")) {
             imageView.setVisibility(View.GONE);
-        }else {
-            imgComment = imgComment.substring(1,imgComment.length());
+        } else {
+            imgComment = imgComment.substring(1, imgComment.length());
             StorageReference storageReference = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com").getReference()
                     .child(imgComment);
 
@@ -384,7 +378,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     .load(storageReference)
                     .into(imageView);
         }
-        
+
 
         LinearLayout linearLayoutLike = new LinearLayout(this);
         linearLayoutLike.setLayoutParams(layoutParams);
@@ -400,25 +394,25 @@ public class BookDetailActivity extends AppCompatActivity {
 
         );
         imageViewLike.setLayoutParams(imgParamslike);
-        if (commentDetail.isStatusLike()){
+        if (commentDetail.isStatusLike()) {
             imageViewLike.setImageResource(R.drawable.likeb);
-        }else {
+        } else {
             imageViewLike.setImageResource(R.drawable.liket);
         }
 
         TextView txtPeople = new TextView(this);
         txtPeople.setLayoutParams(layoutParamstxt);
-        txtPeople.setPadding(0,6,0,0);
+        txtPeople.setPadding(0, 6, 0, 0);
         txtPeople.setTextSize(20);
         txtPeople.setTypeface(type);
-        txtPeople.setText(" "+ commentDetail.getCountLike() + " คน");
+        txtPeople.setText(" " + commentDetail.getCountLike() + " คน");
 
         imageViewLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (commentDetail.isStatusLike()){
+                if (commentDetail.isStatusLike()) {
                     commentReference.child(commentDetail.getCommentKey()).child("userlike").child(UserDetail.username).child("status").setValue("unlike");
-                }else {
+                } else {
                     commentReference.child(commentDetail.getCommentKey()).child("userlike").child(UserDetail.username).child("status").setValue("like");
                 }
             }
@@ -437,7 +431,6 @@ public class BookDetailActivity extends AppCompatActivity {
         linearLayout.addView(linearLayout1);
 
         commentBox.addView(linearLayout);
-
 
 
     }
@@ -460,7 +453,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent,SELECT_FILE);
+                    startActivityForResult(intent, SELECT_FILE);
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -473,15 +466,15 @@ public class BookDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && null != data){
-            switch(requestCode) {
+        if (resultCode == RESULT_OK && null != data) {
+            switch (requestCode) {
                 case 0:
                     Bundle extras = data.getExtras();
                     bitmapComment = (Bitmap) extras.get("data");
                     break;
                 case 1:
                     Uri selectedImage = data.getData();
-                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                     Cursor cursor = getContentResolver().query(selectedImage,
                             filePathColumn, null, null, null);
@@ -499,7 +492,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
             imageShow.setVisibility(View.VISIBLE);
 
-            bitmapComment = Bitmap.createScaledBitmap(bitmapComment, 130,130,true);
+            bitmapComment = Bitmap.createScaledBitmap(bitmapComment, 130, 130, true);
             imageShow.setImageBitmap(bitmapComment);
 
 
@@ -508,7 +501,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     }
 
-    public void saveImg(Map<String, String> map){
+    public void saveImg(Map<String, String> map) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmapComment.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -518,8 +511,8 @@ public class BookDetailActivity extends AppCompatActivity {
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://booklink-94984.appspot.com");
         StorageReference storageRef = storage.getReference();
-        StorageReference imagesRef = storageRef.child("images/books/"+UserDetail.bookserect+"/comment/"+
-               "comment_"+id+".jpg");
+        StorageReference imagesRef = storageRef.child("images/books/" + UserDetail.bookserect + "/comment/" +
+                "comment_" + id + ".jpg");
         UploadTask uploadTask = imagesRef.putBytes(dataPic);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -534,25 +527,23 @@ public class BookDetailActivity extends AppCompatActivity {
                 commentReference.push().setValue(map);
             }
         });
-
-
     }
 
     private void insertComment() {
-        String comment = edtComment.getText().toString() ;
+        String comment = edtComment.getText().toString();
         Calendar calendar = Calendar.getInstance();
         Map<String, String> map = new HashMap<String, String>();
         map.put("user", UserDetail.username);
         if (!comment.equals("")) {
             map.put("comment", comment);
-        }else {
+        } else {
             map.put("comment", "");
         }
         map.put("time", String.valueOf(calendar.getTimeInMillis()));
         map.put("like", "0");
-        if (checkImg){
+        if (checkImg) {
             saveImg(map);
-        }else {
+        } else {
             map.put("pic", "");
             commentReference.push().setValue(map);
         }
@@ -560,75 +551,70 @@ public class BookDetailActivity extends AppCompatActivity {
         edtComment.setText("");
         imageShow.setVisibility(View.GONE);
         checkImg = false;
-
     }
 
     public void Onclicktobookself(View view) {
         ImageButton btnSerect = (ImageButton) view;
-        switch(btnSerect.getId())
-        {
+        switch (btnSerect.getId()) {
             case R.id.btnBack:
                 super.onBackPressed();
 
                 break;
             case R.id.btnFav:
                 setStatusData("fav");
-                Toast toast= Toast.makeText(getApplicationContext(),
+                Toast toast = Toast.makeText(getApplicationContext(),
                         "บันทึกลงรายการหนังสือเล่มโปรด", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast.show();
 
                 break;
             case R.id.btnRead:
 
                 setStatusData("read");
-                Toast toast2= Toast.makeText(getApplicationContext(),
+                Toast toast2 = Toast.makeText(getApplicationContext(),
                         "บันทึกลงรายการหนังสืออ่านแล้ว", Toast.LENGTH_SHORT);
-                toast2.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast2.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast2.show();
 
                 break;
             case R.id.btnWant:
                 setStatusData("want");
-                Toast toast3= Toast.makeText(getApplicationContext(),
+                Toast toast3 = Toast.makeText(getApplicationContext(),
                         "บันทึกลงรายการหนังสืออยากซื้อ", Toast.LENGTH_SHORT);
-                toast3.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast3.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast3.show();
 
                 break;
             case R.id.btnBought:
                 setStatusData("bought");
-                Toast toast4= Toast.makeText(getApplicationContext(),
+                Toast toast4 = Toast.makeText(getApplicationContext(),
                         "บันทึกลงรายการหนังสือซื้อแล้ว", Toast.LENGTH_SHORT);
-                toast4.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast4.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast4.show();
 
                 break;
             case R.id.btnReading:
                 setStatusData("reading");
-                Toast toast5= Toast.makeText(getApplicationContext(),
+                Toast toast5 = Toast.makeText(getApplicationContext(),
                         "บันทึกลงรายการหนังสือกำลังอ่าน", Toast.LENGTH_SHORT);
-                toast5.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast5.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
                 toast5.show();
 
                 break;
         }
-
-
-
     }
 
-    public void setStatusData (final String type) {
+    public void setStatusData(final String type) {
 
-        String url = "https://booklink-94984.firebaseio.com/Users/"+UserDetail.username+"/bookselfs.json"; //หัวใหญ่
-        Log.d("sss",url);
+        String url = "https://booklink-94984.firebaseio.com/Users/" + UserDetail.username + "/bookselfs.json"; //หัวใหญ่
+        Log.d("sss", url);
         final StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 DatabaseReference statusReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://booklink-94984.firebaseio.com");
 
-                if(response.equals("null")){
+                if (response.equals("null")) {
                     statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child("fav")
                             .setValue("false");
                     statusReference.child("Users").child(UserDetail.username).child("bookselfs").child(UserDetail.bookserect).child("read")
@@ -641,7 +627,7 @@ public class BookDetailActivity extends AppCompatActivity {
                             .setValue("false");
 
                     setStatusData(type);
-                }else {
+                } else {
                     try {
                         JSONObject objBookSelfs = new JSONObject(response);
                         if (!objBookSelfs.has(UserDetail.bookserect)) {
@@ -722,82 +708,68 @@ public class BookDetailActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(""+error);
+                System.out.println("" + error);
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(BookDetailActivity.this);
         requestQueue.add(request);
-
-
-
     }
 
     private void setChangeStatus(String type, String status) {
-                    switch (type) {
-                        case  "fav":
-                            switch(status)
-                            {
-                                case "true":
-                                    btnFav.setImageResource(R.drawable.tfav);
-                                    break;
-                                case "false":
-                                    btnFav.setImageResource(R.drawable.bfav);
-                                    break;
-                            }
-                            break;
+        switch (type) {
+            case "fav":
+                switch (status) {
+                    case "true":
+                        btnFav.setImageResource(R.drawable.tfav);
+                        break;
+                    case "false":
+                        btnFav.setImageResource(R.drawable.bfav);
+                        break;
+                }
+                break;
 
-                        case  "read":
-                            switch(status)
-                            {
-                                case "true":
-                                    btnRead.setImageResource(R.drawable.tread);
-                                    break;
-                                case "false":
-                                    btnRead.setImageResource(R.drawable.bread);
-                                    break;
-                            }
-                            break;
+            case "read":
+                switch (status) {
+                    case "true":
+                        btnRead.setImageResource(R.drawable.tread);
+                        break;
+                    case "false":
+                        btnRead.setImageResource(R.drawable.bread);
+                        break;
+                }
+                break;
 
-                        case  "want":
-                            switch(status)
-                            {
-                                case "true":
-                                    btnWant.setImageResource(R.drawable.twant);
-                                    break;
-                                case "false":
-                                    btnWant.setImageResource(R.drawable.bwant);
-                                    break;
-                            }
-                            break;
+            case "want":
+                switch (status) {
+                    case "true":
+                        btnWant.setImageResource(R.drawable.twant);
+                        break;
+                    case "false":
+                        btnWant.setImageResource(R.drawable.bwant);
+                        break;
+                }
+                break;
 
-                        case  "bought":
-                            switch(status)
-                            {
-                                case "true":
-                                    btnBought.setImageResource(R.drawable.tbought);
-                                    break;
-                                case "false":
-                                    btnBought.setImageResource(R.drawable.bbought);
-                                    break;
-                            }
-                            break;
+            case "bought":
+                switch (status) {
+                    case "true":
+                        btnBought.setImageResource(R.drawable.tbought);
+                        break;
+                    case "false":
+                        btnBought.setImageResource(R.drawable.bbought);
+                        break;
+                }
+                break;
 
-                        case  "reading":
-                            switch(status)
-                            {
-                                case "true":
-                                    btnReading.setImageResource(R.drawable.treading);
-                                    break;
-                                case "false":
-                                    btnReading.setImageResource(R.drawable.breading);
-                                    break;
-                            }
-                    }
+            case "reading":
+                switch (status) {
+                    case "true":
+                        btnReading.setImageResource(R.drawable.treading);
+                        break;
+                    case "false":
+                        btnReading.setImageResource(R.drawable.breading);
+                        break;
+                }
+        }
     }
-
-
-
-
-
-
 }

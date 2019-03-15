@@ -102,7 +102,7 @@ public class CommentDetail {
         return calTime(commentTime);
     }
 
-    public String calTime(Date commentTime){
+    public String calTime(Date commentTime) {
         Calendar now = Calendar.getInstance();
 
         long diff = commentTime.getTime() - now.getTimeInMillis();
@@ -114,15 +114,15 @@ public class CommentDetail {
         long days = hours / 24;
         hours = hours % 24;
 
-        if (days > 0){
-            return ""+days+" วันที่ผ่านมา";
-        }else if (hours > 0){
-            return ""+hours+" ชั่วโมงที่ผ่านมา";
-        }else if (minutes > 0){
-            return ""+minutes+" นาทีที่ผ่านมา";
-        }else if (seconds > 0){
-            return ""+seconds+" วินาทีที่ผ่านมา";
-        }else {
+        if (days > 0) {
+            return "" + days + " วันที่ผ่านมา";
+        } else if (hours > 0) {
+            return "" + hours + " ชั่วโมงที่ผ่านมา";
+        } else if (minutes > 0) {
+            return "" + minutes + " นาทีที่ผ่านมา";
+        } else if (seconds > 0) {
+            return "" + seconds + " วินาทีที่ผ่านมา";
+        } else {
             return "เมื่อสักครู่";
         }
 

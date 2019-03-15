@@ -1,12 +1,12 @@
 package th.ac.su.booklink.booklink.Details;
 
 public class QuoteDetail {
-    private  String bookQuoteId;
-    private  String messageQuote;
-    private  String subjectMess;
-    private  String imageBook;
-    private  String nameBookQuote;
-    private  String authorBookQuote;
+    private String bookQuoteId;
+    private String messageQuote;
+    private String subjectMess;
+    private String imageBook;
+    private String nameBookQuote;
+    private String authorBookQuote;
 
     public QuoteDetail(String bookQuoteId, String messageQuote, String subjectMess, String imageBook, String nameBookQuote, String authorBookQuote) {
         this.bookQuoteId = bookQuoteId;

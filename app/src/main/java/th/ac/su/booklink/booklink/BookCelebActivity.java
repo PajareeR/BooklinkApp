@@ -20,6 +20,7 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.android.volley.RequestQueue;
 
 
@@ -52,8 +53,7 @@ public class BookCelebActivity extends AppCompatActivity {
     LinearLayout celebBookBoxLayout;
     ImageView imageCelebBook;
     TextView nameBook, authorBookCeleb, nameCeleb;
-    int widthDevice , hieghDevice;
-
+    int widthDevice, hieghDevice;
 
 
     ArrayList<BookAwardDetail> bookAward = new ArrayList<>();
@@ -88,7 +88,7 @@ public class BookCelebActivity extends AppCompatActivity {
                     while (i.hasNext()) {
                         key = i.next().toString();
 
-                        createImage(new JSONObject(response).getJSONObject("Books").getJSONObject(key),objceleb, key);
+                        createImage(new JSONObject(response).getJSONObject("Books").getJSONObject(key), objceleb, key);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -97,25 +97,26 @@ public class BookCelebActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(""+error);
+                System.out.println("" + error);
             }
         });
 
         RequestQueue requestQueue = Volley.newRequestQueue(BookCelebActivity.this);
         requestQueue.add(request);
     }
-    public void createImage (final JSONObject obj ,final JSONObject objCeleb , final String bookId) throws JSONException {
 
-            CardView cardView = new CardView(this);
-            int cardwidth = (int) (widthDevice * 0.8);
-            int cardhiegh = (int) (hieghDevice * 0.7);
-            CardView.LayoutParams params = new CardView.LayoutParams(
-                    cardwidth,
-                    cardhiegh
-            );
+    public void createImage(final JSONObject obj, final JSONObject objCeleb, final String bookId) throws JSONException {
 
-        params.setMargins( (int) (widthDevice * 0.1), (int) (widthDevice * 0.1), 0,  (int) (widthDevice * 0.1));
-        cardView.setCardElevation((float) (widthDevice*0.02));
+        CardView cardView = new CardView(this);
+        int cardwidth = (int) (widthDevice * 0.8);
+        int cardhiegh = (int) (hieghDevice * 0.7);
+        CardView.LayoutParams params = new CardView.LayoutParams(
+                cardwidth,
+                cardhiegh
+        );
+
+        params.setMargins((int) (widthDevice * 0.1), (int) (widthDevice * 0.1), 0, (int) (widthDevice * 0.1));
+        cardView.setCardElevation((float) (widthDevice * 0.02));
         cardView.setRadius((float) (widthDevice * 0.02));
         cardView.setLayoutParams(params);
 
@@ -135,19 +136,19 @@ public class BookCelebActivity extends AppCompatActivity {
         imageView.setLayoutParams(imgParams);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        Picasso.get().load( obj.getString("imgbook")).into(imageView);
+        Picasso.get().load(obj.getString("imgbook")).into(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               UserDetail.bookserect =  bookId;
+                UserDetail.bookserect = bookId;
 
                 try {
-                    Log.d("log show bunble" , objCeleb.getString("name"));
+                    Log.d("log show bunble", objCeleb.getString("name"));
                     Intent mIntent = new Intent(BookCelebActivity.this, BookDetailActivity.class);
                     Bundle mBundle = new Bundle();
                     mBundle.putString("Celeb", objCeleb.getString("name"));
-                    mBundle.putString("ReviewCeleb",  objCeleb.getJSONObject("book").getJSONObject(bookId).getString("review"));
+                    mBundle.putString("ReviewCeleb", objCeleb.getJSONObject("book").getJSONObject(bookId).getString("review"));
                     mIntent.putExtras(mBundle);
                     startActivity(mIntent);
                 } catch (JSONException e) {
@@ -163,7 +164,7 @@ public class BookCelebActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParamstxt.setMargins((int) (widthDevice * 0.01),(int) (widthDevice * 0.01),(int) (widthDevice * 0.01),0);
+        layoutParamstxt.setMargins((int) (widthDevice * 0.01), (int) (widthDevice * 0.01), (int) (widthDevice * 0.01), 0);
         textView.setLayoutParams(layoutParamstxt);
         textView.setTextColor(Color.BLACK);
         textView.setMaxLines(1);
@@ -178,7 +179,7 @@ public class BookCelebActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        layoutParamstxt.setMargins((int) (widthDevice * 0.01),(int) (widthDevice * 0.01),(int) (widthDevice * 0.01),0);
+        layoutParamstxt.setMargins((int) (widthDevice * 0.01), (int) (widthDevice * 0.01), (int) (widthDevice * 0.01), 0);
         textViewAuthor.setLayoutParams(layoutParamstextViewAuthor);
         textViewAuthor.setTextColor(Color.BLACK);
         textViewAuthor.setMaxLines(1);
@@ -187,7 +188,7 @@ public class BookCelebActivity extends AppCompatActivity {
 
         textViewAuthor.setTypeface(type);
 
-        textViewAuthor.setText("นักเขียน : "+obj.getString("authorname"));
+        textViewAuthor.setText("นักเขียน : " + obj.getString("authorname"));
 
 
         celebBookBoxLayout.addView(cardView);
@@ -198,7 +199,7 @@ public class BookCelebActivity extends AppCompatActivity {
 
     }
 
-    public String  getBook(JSONObject obj){
+    public String getBook(JSONObject obj) {
 
         try {
             return obj.getString("imgbook");
@@ -208,29 +209,12 @@ public class BookCelebActivity extends AppCompatActivity {
         }
         return "";
     }
-    public void OnclickBookDetail(String bookName){
+
+    public void OnclickBookDetail(String bookName) {
         UserDetail.bookserect = bookName;
-        startActivity(new Intent(BookCelebActivity.this,BookDetailActivity.class));
+        startActivity(new Intent(BookCelebActivity.this, BookDetailActivity.class));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //public class BookCelebActivity extends AppCompatActivity {

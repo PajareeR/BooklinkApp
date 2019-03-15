@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 import th.ac.su.booklink.booklink.Adapters.BookQuoteAdapter;
 import th.ac.su.booklink.booklink.Adapters.BookSearchAdapter;
 import th.ac.su.booklink.booklink.Adapters.ProAdapter;
+import th.ac.su.booklink.booklink.Details.AwardDetail;
 import th.ac.su.booklink.booklink.Details.BookAwardDetail;
 import th.ac.su.booklink.booklink.Details.CommentDetail;
 import th.ac.su.booklink.booklink.Details.ProDetail;
@@ -51,16 +52,15 @@ import static java.util.Comparator.comparing;
 
 public class MainActivity extends AppCompatActivity {
     ListView listQuote, listPromotion;
-    ArrayList<BookAwardDetail> bookSearch = new ArrayList<>();
     TextView messageQuote, subjectMess, nameBookQuote, authorBookQuote, nameBookPro, authorBookPro, lobPro, datePro;
     ImageView imageBook, imageBookPro;
     public ListView listSearch;
 
+    ArrayList<BookAwardDetail> bookSearch = new ArrayList<>();
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
     ArrayList<QuoteDetail> arrQuote = new ArrayList<>();
     ArrayList<ProDetail> arrPro = new ArrayList<>();
     Context mcontext = MainActivity.this;
-
 
 
     @Override
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_main);
-        listQuote  = (ListView) findViewById(R.id.listQuote);
-        listPromotion  = (ListView) findViewById(R.id.listPromotion);
+        listQuote = (ListView) findViewById(R.id.listQuote);
+        listPromotion = (ListView) findViewById(R.id.listPromotion);
 
         messageQuote = (TextView) findViewById(R.id.messageQuote);
         subjectMess = (TextView) findViewById(R.id.subjectMess);
@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
         imageBookPro = (ImageView) findViewById(R.id.imageBookPro);
 
 
-
-
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -99,20 +97,20 @@ public class MainActivity extends AppCompatActivity {
                     String key = "";
                     while (i.hasNext()) {
                         key = i.next().toString();
-                        if (obj.getJSONObject(key).has("quote")){
-                            if (obj.getJSONObject(key).getJSONObject("quote").getString("status").equals("true")){
+                        if (obj.getJSONObject(key).has("quote")) {
+                            if (obj.getJSONObject(key).getJSONObject("quote").getString("status").equals("true")) {
                                 JSONObject objbook = obj.getJSONObject(key);
                                 JSONObject objQuote = obj.getJSONObject(key).getJSONObject("quote");
                                 String mode = objQuote.getString("selectQuote");
-                                if (mode.equals("comment")){
+                                if (mode.equals("comment")) {
                                     JSONObject objComments = objbook.getJSONObject("comments");
                                     Iterator j = objComments.keys();
                                     String keycomment = "";
                                     while (j.hasNext()) {
                                         keycomment = j.next().toString();
                                         JSONObject objComment = objComments.getJSONObject(keycomment);
-                                        JSONObject objLike = (objComment.has("userlike")?
-                                                objComment.getJSONObject("userlike"):new JSONObject());
+                                        JSONObject objLike = (objComment.has("userlike") ?
+                                                objComment.getJSONObject("userlike") : new JSONObject());
                                         arrComment.add(new CommentDetail(
                                                 objComment.getString("user"),
                                                 objComment.getString("comment"),
@@ -122,14 +120,14 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     CommentDetail maxValue = arrComment.stream().max(comparing(CommentDetail::getCountLike)).get();
                                     arrQuote.add(new QuoteDetail(
-                                            key,maxValue.getComment(),
+                                            key, maxValue.getComment(),
                                             maxValue.getCommentUser(),
                                             objbook.getString("imgbook"),
                                             objbook.getString("bookname"),
                                             objbook.getString("authorname")));
-                                }else {
+                                } else {
                                     arrQuote.add(new QuoteDetail(
-                                            key,objQuote.getJSONObject("other").getString("title"),
+                                            key, objQuote.getJSONObject("other").getString("title"),
                                             objQuote.getJSONObject("other").getString("author"),
                                             objbook.getString("imgbook"),
                                             objbook.getString("bookname"),
@@ -140,38 +138,49 @@ public class MainActivity extends AppCompatActivity {
 
                         }
 
-                        bookSearch.add( new BookAwardDetail(
+                        bookSearch.add(new BookAwardDetail(
                                 key,
                                 obj.getJSONObject(key).getString("bookname"),
                                 obj.getJSONObject(key).getString("authorname"),
                                 obj.getJSONObject(key).getString("imgbook")
                         ));
-
+//                        arrPro.add(new ProDetail(
+//                                key,
+//                                obj.getJSONObject(key).getString("bookname"),
+//                                obj.getJSONObject(key).getString("authorname"),
+//                                obj.getJSONObject(key).getString("imgbook"),
+//                                obj.getJSONObject(key).getJSONObject("award")
+//                        ));
+//
+//                        private  String proId;
+//                        private  String nameBookPro;
+//                        private  String authorBookPro;
+//                        private  String lobPro;
+//                        private  String imageBookPro;
+//                        private  String datePro;
 
 
                     }
-//                    ProAdapter proAdapter = new ProAdapter(arrPro,mcontext);
 
 
-
-                    BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote,mcontext);
+                    BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote, mcontext);
                     listQuote.setAdapter(bookQuoteAdapter);
                     bookQuoteAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                    e.printStackTrace();
+                }
 
-        }
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            System.out.println(""+error);
-        }
-    });
-    RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("" + error);
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         requestQueue.add(request);
 
-                BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -191,12 +200,14 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
+
+
         });
         bottomNavigationView.setSelectedItemId(R.id.item_Home);
     }
 
 
-    public int calLike(JSONObject obj){
+    public int calLike(JSONObject obj) {
         int count = 0;
         try {
             Iterator j = obj.keys();
@@ -204,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
             while (j.hasNext()) {
                 key = j.next().toString();
 
-                if ( obj.getJSONObject(key).getString("status").equals("like")){
+                if (obj.getJSONObject(key).getString("status").equals("like")) {
                     count += 1;
                 }
             }
@@ -214,12 +225,14 @@ public class MainActivity extends AppCompatActivity {
 
         return count;
     }
-    public void OnclickBookDetail(String bookName){
+
+    public void OnclickBookDetail(String bookName) {
         UserDetail.bookserect = bookName;
-        startActivity(new Intent(MainActivity.this,BookDetailActivity.class));
+        startActivity(new Intent(MainActivity.this, BookDetailActivity.class));
     }
-    public void OnTest(View view){
-        startActivity(new Intent(MainActivity.this,BookselfActivity.class));
+
+    public void OnTest(View view) {
+        startActivity(new Intent(MainActivity.this, BookselfActivity.class));
     }
 
 
@@ -236,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -248,21 +262,29 @@ public class MainActivity extends AppCompatActivity {
                 if (matcherword.find()) {
                     String word = searchStr.substring(matcherword.start(), matcherword.end());
 
-                    for (int i = 0 ; i < bookSearch.size(); i++){
+                    for (int i = 0; i < bookSearch.size(); i++) {
                         Pattern patternsearch = Pattern.compile(word);
                         Matcher matchertitlesearch = patternsearch.matcher(bookSearch.get(i).getTitle());
                         Matcher matcherauthorsearch = patternsearch.matcher(bookSearch.get(i).getAuthoor());
-                        if (matchertitlesearch.find() || matcherauthorsearch.find() ) {
+                        if (matchertitlesearch.find() || matcherauthorsearch.find()) {
                             search.add(bookSearch.get(i));
                         }
                     }
 
-                    BookSearchAdapter customAdapter = new BookSearchAdapter(search,MainActivity.this);
+                    BookSearchAdapter customAdapter = new BookSearchAdapter(search, MainActivity.this);
                     listSearch.setAdapter(customAdapter);
                     listSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             UserDetail.bookserect = search.get(position).getId();
+                            startActivity(new Intent(MainActivity.this, BookDetailActivity.class));
+
+                        }
+                    });
+                    listPromotion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            UserDetail.bookserect = arrPro.get(position).getProId();
                             startActivity(new Intent(MainActivity.this, BookDetailActivity.class));
 
                         }
@@ -276,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
         final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT, 1000, true);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
