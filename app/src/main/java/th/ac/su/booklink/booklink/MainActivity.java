@@ -228,8 +228,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnclickBookDetail(String bookName) {
         UserDetail.bookserect = bookName;
+        UserDetail.proserect = bookName;
         startActivity(new Intent(MainActivity.this, BookDetailActivity.class));
     }
+
 
     public void OnTest(View view) {
         startActivity(new Intent(MainActivity.this, BookselfActivity.class));

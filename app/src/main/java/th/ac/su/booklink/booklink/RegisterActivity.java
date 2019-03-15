@@ -55,6 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 1;
     Uri imageUri;
     Bitmap imageSelect;
+    DatabaseReference proReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +121,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void imgClick() {
-
-
         final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(RegisterActivity.this);
         builder.setTitle("Add Photo!");
@@ -239,7 +239,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (!obj.has(usernameStr)) {
                                 reference.child(usernameStr).child("profile").child("password").setValue(passwordStr);
                                 reference.child(usernameStr).child("profile").child("email").setValue(emailStr);
-
+                                UserDetail.username = usernameStr;
                                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                             } else {
                                 usernameId.setError("username already exists");
@@ -265,7 +265,6 @@ public class RegisterActivity extends AppCompatActivity {
             rQueue.add(request);
         }
 
-
     }
 
     public void InsertData() {
@@ -278,11 +277,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference imagesRef = storageRef.child("images/users/" + usernameStr + "/porfile" + id + ".jpg"); //พาทรูป
+        StorageReference imagesRef = storageRef.child("images/users/"+usernameStr+"/profile_" + id + ".jpg"); //พาทรูป
+
         UploadTask uploadTask = imagesRef.putBytes(dataPic);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+
                 Toast.makeText(RegisterActivity.this, "incorrect ", Toast.LENGTH_LONG).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -295,6 +296,6 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Users");
 
-        reference.child(usernameStr).child("profile").child("Pic").setValue(imagesRef.getPath());
+        reference.child(usernameStr).child("profile").child("pic").setValue(imagesRef.getPath());
     }
 }
