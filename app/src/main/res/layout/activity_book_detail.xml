@@ -270,14 +270,12 @@
                 <!--<LinearLayout-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="vertical">-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:padding="10dp">-->
                     <!--<ImageView-->
                         <!--android:layout_width="100dp"-->
                         <!--android:layout_height="150dp"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:layout_marginTop="10dp"-->
-                        <!--android:layout_marginRight="5dp"-->
-                        <!--android:layout_marginBottom="5dp"-->
+
                         <!--android:background="@drawable/ooo"-->
                         <!--android:padding="5dp"-->
                         <!--android:scaleType="fitXY" />-->
@@ -285,11 +283,11 @@
                     <!--<TextView-->
                         <!--android:layout_width="wrap_content"-->
                         <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="20dp"-->
                         <!--android:fontFamily="@font/sukhumvitsetmedium"-->
-                        <!--android:text="ชื่อหนังสือ"-->
+                        <!--android:maxWidth="100dp"-->
+                        <!--android:text="dsshfsjfhskjfsgkjfgsjkfgskjfgs"-->
                         <!--android:textSize="16dp" />-->
-                    <!---->
+
                 <!--</LinearLayout>-->
 
 

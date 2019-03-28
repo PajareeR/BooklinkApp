@@ -238,15 +238,16 @@ public class BookDetailActivity extends AppCompatActivity {
                                 LinearLayout.LayoutParams.WRAP_CONTENT
                         );
                         boder.setLayoutParams(boderparams);
+                        boder.setPadding(20,20,20,20);
                         boder.setOrientation(LinearLayout.VERTICAL);
 
                         ImageView imageView = new ImageView(mcontext);
                         LinearLayout.LayoutParams roundparams = new LinearLayout.LayoutParams(
-                                (int) (widthDevice * 0.20),
-                                (int) (hieghDevice * 0.20)
+                                (int) (widthDevice * 0.30),
+                                (int) (hieghDevice * 0.25)
                         );
-                        int roundMargin = (int) (widthDevice * 0.01);
-                        roundparams.setMargins( roundMargin, 0, roundMargin, 0);
+//                        int roundMargin = (int) (widthDevice * 0.03);
+//                        roundparams.setMargins( roundMargin, 0, roundMargin, 0);
                         imageView.setLayoutParams(roundparams);
                         imageView.setPadding(5,5,5,5);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -271,7 +272,8 @@ public class BookDetailActivity extends AppCompatActivity {
                         );
                         txtTitle.setLayoutParams(layoutParamstxt);
                         txtTitle.setTextColor(Color.BLACK);
-                        txtTitle.setTextSize(20);
+                        txtTitle.setTextSize(16);
+                        txtTitle.setMaxWidth(100);
                         Typeface type = ResourcesCompat.getFont(mcontext, R.font.sukhumvitsetbold);
                         txtTitle.setTypeface(type);
                         txtTitle.setText(map.get("bookname").toString());

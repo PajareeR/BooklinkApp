@@ -2,18 +2,12 @@ package th.ac.su.booklink.booklink;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -39,7 +33,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -76,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_main);
         listQuote = (ListView) findViewById(R.id.listQuote);
-        listPromotion = (ListView) findViewById(R.id.listPromotion);
+        listQuote.setScrollContainer(false);
+//        listPromotion = (ListView) findViewById(R.id.listPromotion);
 
         messageQuote = (TextView) findViewById(R.id.messageQuote);
         subjectMess = (TextView) findViewById(R.id.subjectMess);
