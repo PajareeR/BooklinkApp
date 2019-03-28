@@ -2,7 +2,13 @@ package th.ac.su.booklink.booklink;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
@@ -33,6 +39,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -40,8 +47,6 @@ import java.util.regex.Pattern;
 
 import th.ac.su.booklink.booklink.Adapters.BookQuoteAdapter;
 import th.ac.su.booklink.booklink.Adapters.BookSearchAdapter;
-import th.ac.su.booklink.booklink.Adapters.ProAdapter;
-import th.ac.su.booklink.booklink.Details.AwardDetail;
 import th.ac.su.booklink.booklink.Details.BookAwardDetail;
 import th.ac.su.booklink.booklink.Details.CommentDetail;
 import th.ac.su.booklink.booklink.Details.ProDetail;
@@ -61,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<QuoteDetail> arrQuote = new ArrayList<>();
     ArrayList<ProDetail> arrPro = new ArrayList<>();
     Context mcontext = MainActivity.this;
+//    View rootView;
+
 
 
     @Override
@@ -84,6 +91,53 @@ public class MainActivity extends AppCompatActivity {
 
         imageBook = (ImageView) findViewById(R.id.imageBook);
         imageBookPro = (ImageView) findViewById(R.id.imageBookPro);
+
+       
+
+//        // Get intent, action and MIME type
+//        Intent intent = getIntent();
+//        String action = intent.getAction();
+//        String type = intent.getType();
+//
+//        if (Intent.ACTION_SEND.equals(action) && type != null) {
+//            if ("text/plain".equals(type)) {
+//                handleSendText(intent); // Handle text being sent
+//            } else if (type.startsWith("image/")) {
+//                handleSendImage(intent); // Handle single image being sent
+//            }
+//        } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
+//            if (type.startsWith("image/")) {
+//                handleSendMultipleImages(intent); // Handle multiple images being sent
+//            }
+//        } else {
+//            // Handle other intents, such as being started from the home screen
+//        }
+////    ...
+//    }
+//
+//    void handleSendText(Intent intent) {
+//        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+//        if (sharedText != null) {
+//            // Update UI to reflect text being shared
+//        }
+//    }
+//
+//    void handleSendImage(Intent intent) {
+//        Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+//        if (imageUri != null) {
+//            // Update UI to reflect image being shared
+//        }
+//    }
+//
+//    void handleSendMultipleImages(Intent intent) {
+//        ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+//        if (imageUris != null) {
+//            // Update UI to reflect multiple images being shared
+//        }
+
+
+
+
 
 
         String url = "https://booklink-94984.firebaseio.com/Books.json"; //หัวใหญ่
@@ -163,6 +217,41 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
+
+//                  View rootView = null;
+//                    Bitmap capture;
+//
+//                    capture = getBitmatFromView(rootView);
+//                    File file = null;
+//                    Uri uri = null;
+//
+//                    try {
+//                        String filePath = storeImage(capture,"color.jpg");
+//                        file = new File(filePath);
+//                        uri = Uri.fromFile(file);
+//                    }catch (Exception e) {
+//                        String path = MediaStore.Images.Media.insertImage(rootView.getContext().getContentResolver(), capture, "color.jpg", null);
+//
+//                    }
+                    
+//                    ArrayList<Uri> imageUris = new ArrayList<Uri>();
+//                    imageUris.add(imageUri1); // Add your image URIs here
+//                    imageUris.add(imageUri2);
+
+//                    Intent shareIntent = new Intent();
+//                    shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+//                    shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+//                    shareIntent.setType("image/jpeg");
+//                    shareIntent.putExtra(Intent.EXTRA_SUBJECT,"xxx");
+//                    shareIntent.putExtra(Intent.EXTRA_TEXT,"xxx \n+message");
+//                    startActivity(Intent.createChooser(shareIntent, "Share images to.."));
+
+
+
+
+
+
+
                     BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote, mcontext);
                     listQuote.setAdapter(bookQuoteAdapter);
                     bookQuoteAdapter.notifyDataSetChanged();
@@ -171,6 +260,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+
+
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -205,6 +297,52 @@ public class MainActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.item_Home);
     }
+
+
+
+//    public String storeImage(Bitmap capture, String s) {
+//        return s;
+//    }
+ 
+
+
+//    private String storeImage(Bitmap capture, String s) {
+//
+//    }
+
+
+//    int PERMISSION_REQUEST_CODE;
+//    public void Share(View view, View rootView, String message) {
+//        if (!readyToShare && Build.VERSION.SDK_INT>=23) {
+//            ensurePermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//            return;
+//        }
+//    }
+//
+//    private void ensurePermissions(String writeExternalStorage) {
+//        boolean request = false;
+//
+//
+//    }
+
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
 
 
     public int calLike(JSONObject obj) {

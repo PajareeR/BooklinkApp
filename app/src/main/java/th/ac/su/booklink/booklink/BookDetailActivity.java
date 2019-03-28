@@ -1,7 +1,6 @@
 package th.ac.su.booklink.booklink;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,17 +11,14 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.transition.Visibility;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -44,7 +40,6 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,8 +54,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -72,6 +65,7 @@ import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import th.ac.su.booklink.booklink.Details.CommentDetail;
+import th.ac.su.booklink.booklink.Details.RecommendDetail;
 import th.ac.su.booklink.booklink.Details.UserDetail;
 
 import static java.util.Comparator.comparing;
@@ -84,7 +78,7 @@ public class BookDetailActivity extends AppCompatActivity {
     Button btnSendComment, btnImageUp;
 
 
-    LinearLayout commentBox;
+    LinearLayout commentBox, layRec;
 
     DatabaseReference commentReference;
     Bitmap bitmapComment;
@@ -95,7 +89,9 @@ public class BookDetailActivity extends AppCompatActivity {
     String celebReview = "";
 
 
+
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
+    ArrayList<RecommendDetail> arrRecommend = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +131,10 @@ public class BookDetailActivity extends AppCompatActivity {
 
         edtComment = (EditText) findViewById(R.id.edtComment);
 
+
         commentBox = (LinearLayout) findViewById(R.id.commentBox);
+        layRec = (LinearLayout) findViewById(R.id.layRec);
+
 
 
         if (getIntent().hasExtra("Celeb")) {
@@ -179,6 +178,8 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
 
+                    getRecomemnd(AuthorBook.getText().toString(), CategoryBook.getText().toString());
+
                     getComment(objUsers);
 
                 } catch (JSONException e) {
@@ -211,6 +212,83 @@ public class BookDetailActivity extends AppCompatActivity {
                 selectImgOrTakeImg();
             }
         });
+    }
+
+    private void getRecomemnd(String author, String category) {
+        commentReference = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books");
+
+        commentReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, String> map = (Map) ds.getValue();
+                    boolean sameAuthor = (author == map.get("authorname").toString());
+                    boolean sameCategory = (category == map.get("catagorybook").toString());
+
+                    Log.d("error rec ", String.valueOf(sameAuthor));
+
+                    if (sameAuthor || sameCategory) {
+
+                        LinearLayout boder = new LinearLayout(mcontext);
+                        LinearLayout.LayoutParams boderparams = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        boder.setLayoutParams(boderparams);
+                        boder.setOrientation(LinearLayout.VERTICAL);
+
+                        ImageView imageView = new ImageView(mcontext);
+                        LinearLayout.LayoutParams roundparams = new LinearLayout.LayoutParams(
+                                (int) (widthDevice * 0.10),
+                                (int) (hieghDevice * 0.20)
+                        );
+                        int roundMargin = (int) (widthDevice * 0.01);
+                        roundparams.setMargins( roundMargin, 0, roundMargin, 0);
+                        imageView.setLayoutParams(roundparams);
+                        imageView.setPadding(5,5,5,5);
+                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        Picasso.get()
+                                .load(map.get("imgbook").toString())
+                                .into(imageView);
+
+
+                        TextView txtTitle = new TextView(mcontext);
+                        LinearLayout.LayoutParams layoutParamstxt = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        txtTitle.setLayoutParams(layoutParamstxt);
+                        txtTitle.setTextColor(Color.BLACK);
+                        txtTitle.setTextSize(20);
+                        Typeface type = ResourcesCompat.getFont(mcontext, R.font.sukhumvitsetbold);
+                        txtTitle.setTypeface(type);
+                        txtTitle.setText(map.get("bookname").toString());
+
+                        boder.addView(imageView);
+                        boder.addView(txtTitle);
+
+                        layRec.addView(boder);
+
+
+//                        arrRecommend.add(
+//                                new RecommendDetail(
+//                                ds.getKey(),
+//                                map.get("bookname").toString(),
+//                                map.get("imgbook").toString()));
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        });
+
     }
 
     public void getComment(final JSONObject objuser) {

@@ -53,9 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
     TextView btnLLog;
     private CircleImageView ProfileImage;
     private static final int PICK_IMAGE = 1;
-    Uri imageUri;
+    Uri selectedImage;
     Bitmap imageSelect;
-    DatabaseReference proReference;
+    DatabaseReference profileReference;
 
 
     @Override
@@ -237,6 +237,7 @@ public class RegisterActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(s);
 
                             if (!obj.has(usernameStr)) {
+                                InsertData();
                                 reference.child(usernameStr).child("profile").child("password").setValue(passwordStr);
                                 reference.child(usernameStr).child("profile").child("email").setValue(emailStr);
                                 UserDetail.username = usernameStr;

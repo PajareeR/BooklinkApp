@@ -50,7 +50,7 @@
     <android.support.v7.widget.CardView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                 android:background="@drawable/stock_border"
                 android:paddingLeft="20dp"
                 android:textColor="#666"
-
+                android:inputType="textPassword"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -146,27 +146,34 @@
 
 
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:id="@+id/btnLLog"
+        android:layout_height="fill_parent"
+        android:gravity="bottom">
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sukhumvitsetsemibold"
-            android:textSize="16dp"
-            android:paddingTop="10dp"
-            android:layout_marginTop="20dp"
-            android:textColor="#666"
-            android:paddingBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="ลงชื่อเข้าใช้"
-            android:gravity="center"
-            android:layout_gravity="center"/>
-    </LinearLayout>
+            >
+            <TextView
+                android:id="@+id/btnLLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sukhumvitsetsemibold"
+                android:textSize="16dp"
+                android:textColor="#666"
+                android:paddingBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="ลงชื่อเข้าใช้"
+                android:gravity="center"
+
+                android:layout_gravity="center"/>
+        </FrameLayout>
+    </RelativeLayout>
+
+
 
 
     <!--<EditText-->
