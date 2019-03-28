@@ -65,7 +65,6 @@ import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import th.ac.su.booklink.booklink.Details.CommentDetail;
-import th.ac.su.booklink.booklink.Details.RecommendDetail;
 import th.ac.su.booklink.booklink.Details.UserDetail;
 
 import static java.util.Comparator.comparing;
@@ -91,7 +90,6 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
-    ArrayList<RecommendDetail> arrRecommend = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +176,9 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
 
-                    getRecomemnd(AuthorBook.getText().toString(), CategoryBook.getText().toString());
+                    getRecomemnd(obj.getJSONObject(UserDetail.bookserect).getString("authorname"),
+                            obj.getJSONObject(UserDetail.bookserect).getString("catagorybook"),
+                            obj.getJSONObject(UserDetail.bookserect).getString("bookname"));
 
                     getComment(objUsers);
 
@@ -214,22 +214,23 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void getRecomemnd(String author, String category) {
-        commentReference = FirebaseDatabase.getInstance()
+    private void getRecomemnd(String author, String category , String title) {
+        DatabaseReference recomemndReference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books");
 
-        commentReference.addValueEventListener(new ValueEventListener() {
+        recomemndReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Map<String, String> map = (Map) ds.getValue();
-                    boolean sameAuthor = (author == map.get("authorname").toString());
-                    boolean sameCategory = (category == map.get("catagorybook").toString());
+                    boolean sameAuthor = (author.equals(map.get("authorname").toString()));
+                    boolean sameCategory = (category.equals(map.get("catagorybook").toString()));
+                    boolean sameBook = (title.equals(map.get("bookname").toString()));
 
-                    Log.d("error rec ", String.valueOf(sameAuthor));
 
-                    if (sameAuthor || sameCategory) {
+
+                    if (!sameBook && (sameAuthor || sameCategory) ) {
 
                         LinearLayout boder = new LinearLayout(mcontext);
                         LinearLayout.LayoutParams boderparams = new LinearLayout.LayoutParams(
@@ -241,7 +242,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
                         ImageView imageView = new ImageView(mcontext);
                         LinearLayout.LayoutParams roundparams = new LinearLayout.LayoutParams(
-                                (int) (widthDevice * 0.10),
+                                (int) (widthDevice * 0.20),
                                 (int) (hieghDevice * 0.20)
                         );
                         int roundMargin = (int) (widthDevice * 0.01);
@@ -252,6 +253,15 @@ public class BookDetailActivity extends AppCompatActivity {
                         Picasso.get()
                                 .load(map.get("imgbook").toString())
                                 .into(imageView);
+
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                UserDetail.bookserect = ds.getKey();
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        });
 
 
                         TextView txtTitle = new TextView(mcontext);
@@ -271,12 +281,6 @@ public class BookDetailActivity extends AppCompatActivity {
 
                         layRec.addView(boder);
 
-
-//                        arrRecommend.add(
-//                                new RecommendDetail(
-//                                ds.getKey(),
-//                                map.get("bookname").toString(),
-//                                map.get("imgbook").toString()));
                     }
                 }
 
