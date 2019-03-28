@@ -1,6 +1,5 @@
 package th.ac.su.booklink.booklink.Adapters;
 
-import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +19,6 @@ import th.ac.su.booklink.booklink.R;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<QuoteDetail> list;
-    private Context mContext;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         CardView clickDetail;
@@ -38,13 +36,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             nameBookQuote = (TextView) (view.findViewById(R.id.nameBookQuote));
             authorBookQuote = (TextView) (view.findViewById(R.id.authorBookQuote));
             imageBook = (ImageView) (view.findViewById(R.id.imageBook));
+
         }
     }
 
 
-    public MyAdapter(ArrayList<QuoteDetail> list, Context c) {
+    public MyAdapter(ArrayList<QuoteDetail> list) {
         this.list = list;
-        this.mContext = c;
     }
 
     @Override
@@ -69,14 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         Picasso.get().load(list.get(position).getImageBook()).into(h.imageBook);
 
-//        h.clickDetail.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UserDetail.bookserect = list.get(position).getBookQuoteId();
-//                mContext.startActivity(new Intent(mContext, BookDetailActivity.class));
-//
-//            }
-//        });
+
     }
 
     @Override

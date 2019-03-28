@@ -1,6 +1,5 @@
 package th.ac.su.booklink.booklink;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -9,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -58,7 +59,7 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 import static java.util.Comparator.comparing;
 
 public class MainActivity extends AppCompatActivity {
-    ListView listQuote, listPromotion;
+    ListView listPromotion;
     TextView messageQuote, subjectMess, nameBookQuote, authorBookQuote, nameBookPro, authorBookPro, lobPro, datePro;
     ImageView imageBook, imageBookPro;
     public ListView listSearch;
@@ -69,27 +70,39 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ProDetail> arrPro = new ArrayList<>();
     Context mcontext = MainActivity.this;
     MyAdapter adapter ;
+
+    RecyclerView recyclerViewQuote;
 //    View rootView;
 
-
-
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_main);
-        listQuote = (ListView) findViewById(R.id.listQuote);
-        listQuote.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
         listPromotion = (ListView) findViewById(R.id.listPromotion);
+
+        recyclerViewQuote = (RecyclerView) findViewById(R.id.my_recycler_view);
+
+        adapter = new MyAdapter(arrQuote);
+        RecyclerView.LayoutManager mLayoutManager =
+                new LinearLayoutManager(getApplicationContext());
+        recyclerViewQuote.setLayoutManager(mLayoutManager);
+        recyclerViewQuote.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewQuote.setAdapter(adapter);
+
+        recyclerViewQuote.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerViewQuote, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                UserDetail.bookserect = arrQuote.get(position).getBookQuoteId();
+                startActivity(new Intent(mcontext, BookDetailActivity.class));
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
 
         messageQuote = (TextView) findViewById(R.id.messageQuote);
         subjectMess = (TextView) findViewById(R.id.subjectMess);
@@ -104,14 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
         imageBook = (ImageView) findViewById(R.id.imageBook);
         imageBookPro = (ImageView) findViewById(R.id.imageBookPro);
-//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-////
-////        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-////        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-////        recyclerView.setLayoutManager(layoutManager);
-//
-//         adapter = new MyAdapter(arrQuote,mcontext);
-//        recyclerView.setAdapter(adapter);
 
         DatabaseReference promotionReference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Promotion");
@@ -247,53 +252,9 @@ public class MainActivity extends AppCompatActivity {
                                 obj.getJSONObject(key).getString("authorname"),
                                 obj.getJSONObject(key).getString("imgbook")
                         ));
-//                        arrPro.add(new ProDetail(
-//                                key,
-//                                obj.getJSONObject(key).getString("bookname"),
-//                                obj.getJSONObject(key).getString("authorname"),
-//                                obj.getJSONObject(key).getString("imgbook"),
-//                                obj.getJSONObject(key).getJSONObject("award")
-//                        ));
-//
-//                        private  String proId;
-//                        private  String nameBookPro;
-//                        private  String authorBookPro;
-//                        private  String lobPro;
-//                        private  String imageBookPro;
-//                        private  String datePro;
 
 
                     }
-
-
-
-//                  View rootView = null;
-//                    Bitmap capture;
-//
-//                    capture = getBitmatFromView(rootView);
-//                    File file = null;
-//                    Uri uri = null;
-//
-//                    try {
-//                        String filePath = storeImage(capture,"color.jpg");
-//                        file = new File(filePath);
-//                        uri = Uri.fromFile(file);
-//                    }catch (Exception e) {
-//                        String path = MediaStore.Images.Media.insertImage(rootView.getContext().getContentResolver(), capture, "color.jpg", null);
-//
-//                    }
-                    
-//                    ArrayList<Uri> imageUris = new ArrayList<Uri>();
-//                    imageUris.add(imageUri1); // Add your image URIs here
-//                    imageUris.add(imageUri2);
-
-//                    Intent shareIntent = new Intent();
-//                    shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
-//                    shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
-//                    shareIntent.setType("image/jpeg");
-//                    shareIntent.putExtra(Intent.EXTRA_SUBJECT,"xxx");
-//                    shareIntent.putExtra(Intent.EXTRA_TEXT,"xxx \n+message");
-//                    startActivity(Intent.createChooser(shareIntent, "Share images to.."));
 
 
 
@@ -304,9 +265,13 @@ public class MainActivity extends AppCompatActivity {
 //                    BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote, mcontext);
 //                    listQuote.setAdapter(bookQuoteAdapter);
 //                    bookQuoteAdapter.notifyDataSetChanged();
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-                    adapter = new MyAdapter(arrQuote,mcontext);
-                    recyclerView.setAdapter(adapter);
+
+//                    adapter = new MyAdapter(arrQuote,mcontext);
+//
+//                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+//                    recyclerView.setLayoutManager(mLayoutManager);
+//                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+//                    recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -356,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 //    public String storeImage(Bitmap capture, String s) {
 //        return s;
 //    }
- 
+
 
 
 //    private String storeImage(Bitmap capture, String s) {
@@ -393,8 +358,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    
-    
+
+
 
 
 
