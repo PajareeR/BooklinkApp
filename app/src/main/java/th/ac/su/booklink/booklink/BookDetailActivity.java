@@ -19,6 +19,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -117,6 +119,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
 
         btnSendComment = (Button) findViewById(R.id.btnSendComment);
+        btnSendComment.setVisibility(View.GONE);
 
         btnImageUp = (Button) findViewById(R.id.btnImageUp);
 
@@ -217,32 +220,56 @@ public class BookDetailActivity extends AppCompatActivity {
                 selectImgOrTakeImg();
             }
         });
+
+        edtComment.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(s.length() != 0){
+                    btnSendComment.setVisibility(View.VISIBLE);
+                }else {
+                    btnSendComment.setVisibility(View.GONE);
+                }
+
+            }
+        });
     }
 
     private void getRecomemndandPro(String author, String category , String title) {
         DatabaseReference recomemndReference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://booklink-94984.firebaseio.com/");
 
-        recomemndReference.child("Promotion").child(UserDetail.bookserect).addValueEventListener(new ValueEventListener() {
+
+        recomemndReference.child("Promotion").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                Picasso.get()
-                        .load(snapshot.child("codelod").getValue().toString())
-                        .into(ProImg);
 
-                String txtDetail = "";
+                if (snapshot.hasChild(UserDetail.bookserect)) {
+                    DataSnapshot dsbook = snapshot.child(UserDetail.bookserect);
+                    Picasso.get()
+                            .load(dsbook.child("codelod").getValue().toString())
+                            .into(ProImg);
 
-                for (DataSnapshot ds : snapshot.child("detail").getChildren()) {
-                    txtDetail += ds.getValue().toString() + "\n";
+                    String txtDetail = "";
 
+                    for (DataSnapshot ds : dsbook.child("detail").getChildren()) {
+                        txtDetail += ds.getValue().toString() + "\n";
+
+                    }
+
+                    ProDetaill.setText(txtDetail);
+
+                    gonn.setVisibility(View.VISIBLE);
                 }
-
-                ProDetaill.setText(txtDetail);
-
-                gonn.setVisibility(View.VISIBLE);
-
-
-
             }
 
             @Override
@@ -339,6 +366,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 commentBox.removeAllViews();
+                layRec.removeAllViews();
                 arrComment.clear();
 
                 boolean haveLike = false;
@@ -608,6 +636,7 @@ public class BookDetailActivity extends AppCompatActivity {
             checkImg = true;
 
             imageShow.setVisibility(View.VISIBLE);
+            btnSendComment.setVisibility(View.VISIBLE);
 
             bitmapComment = Bitmap.createScaledBitmap(bitmapComment, 130, 130, true);
             imageShow.setImageBitmap(bitmapComment);
@@ -668,6 +697,7 @@ public class BookDetailActivity extends AppCompatActivity {
         edtComment.setText("");
         imageShow.setVisibility(View.GONE);
         checkImg = false;
+        btnSendComment.setVisibility(View.GONE);
     }
 
     public void Onclicktobookself(View view) {
