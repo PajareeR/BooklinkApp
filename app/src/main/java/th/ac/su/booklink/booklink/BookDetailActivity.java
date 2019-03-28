@@ -70,14 +70,14 @@ import th.ac.su.booklink.booklink.Details.UserDetail;
 import static java.util.Comparator.comparing;
 
 public class BookDetailActivity extends AppCompatActivity {
-    TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook, reviewCeleb, contentReview;
-    ImageView ImageBook, imageShow;
+    TextView NameBook, AuthorBook, TitleBook, PublisherBook, CategoryBook, ISBNBook, AdditionBook, reviewCeleb, contentReview, ProDetaill;
+    ImageView ImageBook, imageShow, ProImg;
     ImageButton btnFav, btnRead, btnWant, btnBought, btnReading;
     EditText edtComment;
     Button btnSendComment, btnImageUp;
 
 
-    LinearLayout commentBox, layRec;
+    LinearLayout commentBox, layRec, gonn;
 
     DatabaseReference commentReference;
     Bitmap bitmapComment;
@@ -108,6 +108,10 @@ public class BookDetailActivity extends AppCompatActivity {
         ISBNBook = (TextView) findViewById(R.id.ISBNBook); //xx
         AdditionBook = (TextView) findViewById(R.id.AdditionBook);
 
+        ProDetaill = (TextView) findViewById(R.id.ProDetaill);
+        ProImg = (ImageView) findViewById(R.id.ProImg);
+
+
         reviewCeleb = (TextView) findViewById(R.id.reviewCeleb);
         contentReview = (TextView) findViewById(R.id.contentReview);
 
@@ -132,7 +136,8 @@ public class BookDetailActivity extends AppCompatActivity {
 
         commentBox = (LinearLayout) findViewById(R.id.commentBox);
         layRec = (LinearLayout) findViewById(R.id.layRec);
-
+        gonn= (LinearLayout) findViewById(R.id.gonn);
+        gonn.setVisibility(View.GONE);
 
 
         if (getIntent().hasExtra("Celeb")) {
@@ -176,7 +181,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
                     Picasso.get().load(obj.getJSONObject(UserDetail.bookserect).getString("imgbook")).into(ImageBook);
 
-                    getRecomemnd(obj.getJSONObject(UserDetail.bookserect).getString("authorname"),
+                    getRecomemndandPro(obj.getJSONObject(UserDetail.bookserect).getString("authorname"),
                             obj.getJSONObject(UserDetail.bookserect).getString("catagorybook"),
                             obj.getJSONObject(UserDetail.bookserect).getString("bookname"));
 
@@ -214,11 +219,39 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void getRecomemnd(String author, String category , String title) {
+    private void getRecomemndandPro(String author, String category , String title) {
         DatabaseReference recomemndReference = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Books");
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/");
 
-        recomemndReference.addValueEventListener(new ValueEventListener() {
+        recomemndReference.child("Promotion").child(UserDetail.bookserect).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Picasso.get()
+                        .load(snapshot.child("codelod").getValue().toString())
+                        .into(ProImg);
+
+                String txtDetail = "";
+
+                for (DataSnapshot ds : snapshot.child("detail").getChildren()) {
+                    txtDetail += ds.getValue().toString() + "\n";
+
+                }
+
+                ProDetaill.setText(txtDetail);
+
+                gonn.setVisibility(View.VISIBLE);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        });
+
+        recomemndReference.child("Books").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 

@@ -1,7 +1,5 @@
 package th.ac.su.booklink.booklink.Details;
 
-import org.json.JSONObject;
-
 public class ProDetail {
 
 
@@ -13,7 +11,8 @@ public class ProDetail {
     private String imageBookPro;
     private String datePro;
 
-    public ProDetail(String key, String nameBookPro, String authorBookPro, String lobPro, JSONObject award) {
+    public ProDetail(String proId, String nameBookPro, String authorBookPro, String lobPro, String imageBookPro, String datePro) {
+        this.proId = proId;
         this.nameBookPro = nameBookPro;
         this.authorBookPro = authorBookPro;
         this.lobPro = lobPro;

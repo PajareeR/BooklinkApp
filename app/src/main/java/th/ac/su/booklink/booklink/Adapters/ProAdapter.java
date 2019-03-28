@@ -72,7 +72,7 @@ public class ProAdapter extends BaseAdapter {
         h.clickDetaill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserDetail.proserect = list.get(position).getProId();
+                UserDetail.bookserect = list.get(position).getProId();
                 mContext.startActivity(new Intent(mContext, BookDetailActivity.class));
 
             }

@@ -1,5 +1,6 @@
 package th.ac.su.booklink.booklink;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -8,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -29,17 +31,24 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import th.ac.su.booklink.booklink.Adapters.BookQuoteAdapter;
 import th.ac.su.booklink.booklink.Adapters.BookSearchAdapter;
+import th.ac.su.booklink.booklink.Adapters.MyAdapter;
+import th.ac.su.booklink.booklink.Adapters.ProAdapter;
 import th.ac.su.booklink.booklink.Details.BookAwardDetail;
 import th.ac.su.booklink.booklink.Details.CommentDetail;
 import th.ac.su.booklink.booklink.Details.ProDetail;
@@ -59,18 +68,28 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<QuoteDetail> arrQuote = new ArrayList<>();
     ArrayList<ProDetail> arrPro = new ArrayList<>();
     Context mcontext = MainActivity.this;
+    MyAdapter adapter ;
 //    View rootView;
 
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();//barTop
         setContentView(R.layout.activity_main);
         listQuote = (ListView) findViewById(R.id.listQuote);
-        listQuote.setScrollContainer(false);
-//        listPromotion = (ListView) findViewById(R.id.listPromotion);
+        listQuote.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+        listPromotion = (ListView) findViewById(R.id.listPromotion);
 
         messageQuote = (TextView) findViewById(R.id.messageQuote);
         subjectMess = (TextView) findViewById(R.id.subjectMess);
@@ -85,8 +104,44 @@ public class MainActivity extends AppCompatActivity {
 
         imageBook = (ImageView) findViewById(R.id.imageBook);
         imageBookPro = (ImageView) findViewById(R.id.imageBookPro);
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+////
+////        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+////        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+////        recyclerView.setLayoutManager(layoutManager);
+//
+//         adapter = new MyAdapter(arrQuote,mcontext);
+//        recyclerView.setAdapter(adapter);
 
-       
+        DatabaseReference promotionReference = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl("https://booklink-94984.firebaseio.com/Promotion");
+
+        promotionReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Map<String, String> map = (Map) ds.getValue();
+
+                    arrPro.add(new ProDetail(ds.getKey(),map.get("namebook"),map.get("author"),map.get("lobpro"),map.get("bookimg"),map.get("exp")));
+
+//                    (String proId, String nameBookPro, String authorBookPro, String lobPro, String imageBookPro, String datePro)
+                }
+
+                ProAdapter proAdapter = new ProAdapter(arrPro,mcontext);
+                listPromotion.setAdapter(proAdapter);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        });
+
+
+
 
 //        // Get intent, action and MIME type
 //        Intent intent = getIntent();
@@ -245,10 +300,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-                    BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote, mcontext);
-                    listQuote.setAdapter(bookQuoteAdapter);
-                    bookQuoteAdapter.notifyDataSetChanged();
+//
+//                    BookQuoteAdapter bookQuoteAdapter = new BookQuoteAdapter(arrQuote, mcontext);
+//                    listQuote.setAdapter(bookQuoteAdapter);
+//                    bookQuoteAdapter.notifyDataSetChanged();
+                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+                    adapter = new MyAdapter(arrQuote,mcontext);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

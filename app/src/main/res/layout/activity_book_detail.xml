@@ -211,11 +211,57 @@
                 android:textColor="#000"
                 android:textSize="18dp" />
 
+            <LinearLayout
+                android:id="@+id/gonn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colordivi" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sukhumvitsettext"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="20dp"
+                    android:text="โปรโมชัน"
+                    android:textColor="#000"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/ProDetaill"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/csprajad"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textColor="#000"
+                    android:textSize="18dp" />
+                <ImageView
+                    android:id="@+id/ProImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
+
+            </LinearLayout>
+
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/colordivi" />
+
+
 
             <TextView
                 android:id="@+id/reviewCeleb"
