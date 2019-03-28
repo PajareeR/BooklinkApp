@@ -90,7 +90,6 @@ public class BookDetailActivity extends AppCompatActivity {
     String celebReview = "";
 
 
-
     ArrayList<CommentDetail> arrComment = new ArrayList<>();
 
     @Override
@@ -139,7 +138,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
         commentBox = (LinearLayout) findViewById(R.id.commentBox);
         layRec = (LinearLayout) findViewById(R.id.layRec);
-        gonn= (LinearLayout) findViewById(R.id.gonn);
+        gonn = (LinearLayout) findViewById(R.id.gonn);
         gonn.setVisibility(View.GONE);
 
 
@@ -224,7 +223,8 @@ public class BookDetailActivity extends AppCompatActivity {
         edtComment.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start,
@@ -234,9 +234,9 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                if(s.length() != 0){
+                if (s.length() != 0) {
                     btnSendComment.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     btnSendComment.setVisibility(View.GONE);
                 }
 
@@ -244,7 +244,7 @@ public class BookDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void getRecomemndandPro(String author, String category , String title) {
+    private void getRecomemndandPro(String author, String category, String title) {
         DatabaseReference recomemndReference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl("https://booklink-94984.firebaseio.com/");
 
@@ -289,8 +289,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     boolean sameBook = (title.equals(map.get("bookname").toString()));
 
 
-
-                    if (!sameBook && (sameAuthor || sameCategory) ) {
+                    if (!sameBook && (sameAuthor || sameCategory)) {
 
                         LinearLayout boder = new LinearLayout(mcontext);
                         LinearLayout.LayoutParams boderparams = new LinearLayout.LayoutParams(
@@ -298,7 +297,7 @@ public class BookDetailActivity extends AppCompatActivity {
                                 LinearLayout.LayoutParams.WRAP_CONTENT
                         );
                         boder.setLayoutParams(boderparams);
-                        boder.setPadding(20,20,20,20);
+                        boder.setPadding(20, 20, 20, 20);
                         boder.setOrientation(LinearLayout.VERTICAL);
 
                         ImageView imageView = new ImageView(mcontext);
@@ -309,7 +308,7 @@ public class BookDetailActivity extends AppCompatActivity {
 //                        int roundMargin = (int) (widthDevice * 0.03);
 //                        roundparams.setMargins( roundMargin, 0, roundMargin, 0);
                         imageView.setLayoutParams(roundparams);
-                        imageView.setPadding(5,5,5,5);
+                        imageView.setPadding(5, 5, 5, 5);
                         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         Picasso.get()
                                 .load(map.get("imgbook").toString())
