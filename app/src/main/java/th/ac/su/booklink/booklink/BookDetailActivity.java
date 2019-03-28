@@ -282,6 +282,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
+                layRec.removeAllViews();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Map<String, String> map = (Map) ds.getValue();
                     boolean sameAuthor = (author.equals(map.get("authorname").toString()));
@@ -365,7 +366,6 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 commentBox.removeAllViews();
-                layRec.removeAllViews();
                 arrComment.clear();
 
                 boolean haveLike = false;
